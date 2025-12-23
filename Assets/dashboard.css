@@ -1,0 +1,186 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: Arial;
+    background-color: white;
+    color: black;
+}
+
+
+header {
+    background-color: lightblue;
+    color: black;
+    padding: 15px;
+}
+
+header h1 {
+    margin-bottom: 5px;
+}
+
+
+nav {
+    background-color: lightgray;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin: 10px;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    padding: 5px;
+}
+
+
+main {
+    padding: 15px;
+}
+
+
+.card-blue {
+    background-color: lightblue;
+    color: black;
+    padding: 20px;
+}
+
+
+.card-green {
+    background-color: lightgreen;
+    color: black;
+    padding: 20px;
+}
+
+
+.card-orange {
+    background-color: lightcoral;
+    color: black;
+    padding: 20px;
+}
+
+.card-blue h3,
+.card-green h3,
+.card-orange h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.card-blue h1,
+.card-green h1,
+.card-orange h1 {
+    font-size: 40px;
+    margin: 15px;
+}
+
+.card-blue p,
+.card-green p,
+.card-orange p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.card-blue a,
+.card-green a,
+.card-orange a {
+    color: black;
+    text-decoration: none;
+    padding: 5px 10px 5px 10px;
+    background-color: lightyellow;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+
+table {
+    background-color: white;
+    border-collapse: collapse;
+}
+
+table th {
+    background-color: lightblue;
+    color: black;
+    padding: 10px;
+    text-align: left;
+}
+
+table td {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
+
+table tbody tr:nth-child(even) {
+    background-color: lightyellow;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+
+.status-normal {
+    color: green;
+    font-weight: bold;
+}
+
+.status-critical {
+    color: red;
+    font-weight: bold;
+}
+
+
+button {
+    background-color: lightblue;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#resetBtn {
+    background-color: lightcoral;
+}
+
+/* Input Fields Styling */
+/* input[type="text"],
+input[type="number"],
+input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid black;
+    font-size: 14px;
+} */
+
+
+.quick-actions a {
+    color: blue;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+footer {
+    background-color: lightblue;
+    color: black;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+footer a {
+    color: black;
+    text-decoration: none;
+}
