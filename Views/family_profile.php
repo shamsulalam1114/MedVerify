@@ -35,11 +35,11 @@
     <nav>
         <center>
             <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="view_reports.html">View Reports</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.html">Upload Report</a></li>
-                <li><a href="family_profile.html"><b>Family Profile</b></a></li>
-                <li><a href="logout.html">Logout</a></li>
+                <li><a href="family_profile.php"><b>Family Profile</b></a></li>
+                <li><a href="../Controllers/logout.php">Logout</a></li>
             </ul>
         </center>
     </nav>

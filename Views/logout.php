@@ -19,11 +19,11 @@
     <nav>
         <center>
             <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="view_reports.html">View Reports</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.html">Upload Report</a></li>
-                <li><a href="family_profile.html">Family Profile</a></li>
-                <li><a href="logout.html"><b>Logout</b></a></li>
+                <li><a href="family_profile.php">Family Profile</a></li>
+                <li><a href="../Controllers/logout.php"><b>Logout</b></a></li>
             </ul>
         </center>
     </nav>
