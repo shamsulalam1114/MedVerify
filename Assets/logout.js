@@ -1,13 +1,13 @@
 
 function loginAgain() {
     alert("Redirecting to login page...");
-    window.location.href = "dashboard.html";
+    window.location.href = "login.php";
 }
 
 
 function goHome() {
     alert("Redirecting to homepage...");
-    window.location.href = "dashboard.html";
+    window.location.href = "dashboard.php";
 }
 
 

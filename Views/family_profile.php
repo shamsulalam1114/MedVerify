@@ -1,19 +1,3 @@
-<?php include '../Controllers/family_profile_session.php'; ?>
-<?php
-    if(isset($_POST['addMember'])){
-        $memberName = $_POST['memberName'];
-        $memberRelation = $_POST['memberRelation'];
-        $memberAge = $_POST['memberAge'];
-        $memberBlood = $_POST['memberBlood'];
-
-        if($memberName == "" || $memberRelation == "" || $memberAge == "" || $memberBlood == ""){
-            echo "Please fill all fields!";
-        }else{
-            // Process the member addition
-            echo "Family member added successfully!";
-        }
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +8,6 @@
     <script src="../Assets/family_profile.js"></script>
 </head>
 <body id="top">
-    <form action="../Controllers/home.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -35,11 +18,11 @@
     <nav>
         <center>
             <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="view_reports.html">View Reports</a></li>
                 <li><a href="upload_report.html">Upload Report</a></li>
-                <li><a href="family_profile.php"><b>Family Profile</b></a></li>
-                <li><a href="../Controllers/logout.php">Logout</a></li>
+                <li><a href="family_profile.html"><b>Family Profile</b></a></li>
+                <li><a href="logout.html">Logout</a></li>
             </ul>
         </center>
     </nav>
@@ -178,6 +161,5 @@
             <p>&copy; 2025 MedVerify | All Rights Reserved</p>
         </center>
     </footer>
-    </form>
 </body>
 </html>

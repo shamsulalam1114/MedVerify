@@ -1,25 +1,13 @@
-<?php include '../Controllers/dashboard_session.php'; ?>
+
 <?php
-    if(isset($_POST['addVerification'])){
-        // Validation for adding verification
-        if(isset($_POST['verificationsCount'])){
-            $verificationsCount = $_POST['verificationsCount'];
-            if($verificationsCount == ""){
-                echo "Verification count cannot be empty!";
-            }
-        }
+    session_start();
+
+    if(isset($_SESSION['status']) !== true){
+        header('location: ../Views/login.php');
     }
 
-    if(isset($_POST['addReport'])){
-        // Validation for adding report
-        if(isset($_POST['reportsCount'])){
-            $reportsCount = $_POST['reportsCount'];
-            if($reportsCount == ""){
-                echo "Report count cannot be empty!";
-            }
-        }
-    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +17,6 @@
     <script src="../Assets/dashboard.js"></script>
 </head>
 <body id="top">
-    <form action="../Controllers/home.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -42,9 +29,10 @@
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
-                <li><a href="upload_report.html">Upload Report</a></li>
+                <li><a href="upload_report.php">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="../Controllers/logout.php">Logout</a></li>
+                <li><a href="verification.php">Verification</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </center>
     </nav>
@@ -56,7 +44,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h2>Welcome Md Shamsul Alam</h2>
+                   <h1>Welcome Home! <?php echo $_SESSION['username'];?></h1>
                 </td>
             </tr>
         </table>
@@ -201,6 +189,5 @@
 
         </center>
     </footer>
-    </form>
 </body>
 </html>

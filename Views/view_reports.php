@@ -1,19 +1,3 @@
-<?php include '../Controllers/view_reports_session.php'; ?>
-<?php
-    if(isset($_POST['addReport'])){
-        $reportDate = $_POST['reportDate'];
-        $reportTest = $_POST['reportTest'];
-        $reportDoctor = $_POST['reportDoctor'];
-        $reportStatus = $_POST['reportStatus'];
-
-        if($reportDate == "" || $reportTest == "" || $reportDoctor == "" || $reportStatus == ""){
-            echo "Please fill all fields!";
-        }else{
-            // Process the report addition
-            echo "Report added successfully!";
-        }
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +8,6 @@
     <script src="../Assets/view_reports.js"></script>
 </head>
 <body id="top">
-    <form action="../Controllers/home.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -34,11 +17,11 @@
     <nav>
         <center>
             <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="view_reports.php"><b>View Reports</b></a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="view_reports.html"><b>View Reports</b></a></li>
                 <li><a href="upload_report.html">Upload Report</a></li>
-                <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="../Controllers/logout.php">Logout</a></li>
+                <li><a href="family_profile.html">Family Profile</a></li>
+                <li><a href="logout.html">Logout</a></li>
             </ul>
         </center>
     </nav>
@@ -179,6 +162,5 @@
 
         </center>
     </footer>
-    </form>
 </body>
 </html>

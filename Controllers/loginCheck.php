@@ -15,13 +15,13 @@
                 $_SESSION['status'] = true;
                 $_SESSION['username'] = $username;
 
-                header('location: home.php');
+                header('location: ../Views/dashboard.php');
             }else{
                 echo "invalid user!";
             }
         }
     }else{
         //echo "please submit login form!";
-        header('location: login.html');
+        header('location: ../Views/login.php');
     }
 ?>
