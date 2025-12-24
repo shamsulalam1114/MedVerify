@@ -18,6 +18,14 @@
 </head>
 <body>
         <h1>Welcome Home! <?php echo $_SESSION['username'];?></h1>
-        <a href="logout.php">logout </a>
+        <br>
+        <nav>
+            <ul>
+                <li><a href="../Views/dashboard.php">Dashboard</a></li>
+                <li><a href="../Views/view_reports.php">View Reports</a></li>
+                <li><a href="../Views/family_profile.php">Family Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </nav>
 </body>
 </html>
