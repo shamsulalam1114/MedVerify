@@ -1,4 +1,19 @@
 <?php include '../Controllers/view_reports_session.php'; ?>
+<?php
+    if(isset($_POST['addReport'])){
+        $reportDate = $_POST['reportDate'];
+        $reportTest = $_POST['reportTest'];
+        $reportDoctor = $_POST['reportDoctor'];
+        $reportStatus = $_POST['reportStatus'];
+
+        if($reportDate == "" || $reportTest == "" || $reportDoctor == "" || $reportStatus == ""){
+            echo "Please fill all fields!";
+        }else{
+            // Process the report addition
+            echo "Report added successfully!";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

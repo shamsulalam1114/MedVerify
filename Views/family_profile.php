@@ -1,4 +1,19 @@
 <?php include '../Controllers/family_profile_session.php'; ?>
+<?php
+    if(isset($_POST['addMember'])){
+        $memberName = $_POST['memberName'];
+        $memberRelation = $_POST['memberRelation'];
+        $memberAge = $_POST['memberAge'];
+        $memberBlood = $_POST['memberBlood'];
+
+        if($memberName == "" || $memberRelation == "" || $memberAge == "" || $memberBlood == ""){
+            echo "Please fill all fields!";
+        }else{
+            // Process the member addition
+            echo "Family member added successfully!";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
