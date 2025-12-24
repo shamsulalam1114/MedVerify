@@ -9,6 +9,7 @@
     <script src="../Assets/logout.js"></script>
 </head>
 <body id="top">
+    <form action="../Controllers/logout.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -116,5 +117,6 @@
 
         </center>
     </footer>
+    </form>
 </body>
 </html>

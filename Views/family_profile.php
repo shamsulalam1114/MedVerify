@@ -9,6 +9,7 @@
     <script src="../Assets/family_profile.js"></script>
 </head>
 <body id="top">
+    <form action="../Controllers/home.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -162,5 +163,6 @@
             <p>&copy; 2025 MedVerify | All Rights Reserved</p>
         </center>
     </footer>
+    </form>
 </body>
 </html>

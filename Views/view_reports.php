@@ -9,6 +9,7 @@
     <script src="../Assets/view_reports.js"></script>
 </head>
 <body id="top">
+    <form action="../Controllers/home.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -163,5 +164,6 @@
 
         </center>
     </footer>
+    </form>
 </body>
 </html>
