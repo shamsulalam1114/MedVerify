@@ -1,3 +1,4 @@
+<?php include '../Controllers/view_reports_session.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,3 +1,4 @@
+<?php include '../Controllers/family_profile_session.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
