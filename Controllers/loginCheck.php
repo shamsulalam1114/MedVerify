@@ -3,11 +3,11 @@
     //print_r($_GET);
     //var_dump($_GET);
     if(isset($_POST['submit'])){
-        $username = $_REQUEST['username'];
-        $password = $_REQUEST['password'];
+        $username = trim($_REQUEST['username']);
+        $password = trim($_REQUEST['password']);
 
-        if($username == "null" || $password == ""){
-            echo "null value!";
+        if(empty($username) || empty($password)){
+            echo "Username and password are required!";
         }else{
 
             if($username == $password){
@@ -22,6 +22,6 @@
         }
     }else{
         //echo "please submit login form!";
-        header('location: login.html');
+        header('location: ../Views/login.php');
     }
 ?>

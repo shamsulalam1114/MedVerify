@@ -5,6 +5,6 @@
 
     unset($_SESSION['status']);
 
-    header('location: login.html');
+    header('location: ../Views/login.php');
 
 ?>
