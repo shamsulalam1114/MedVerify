@@ -9,7 +9,7 @@
         if($memberName == "" || $memberRelation == "" || $memberAge == "" || $memberBlood == ""){
             echo "Please fill all fields!";
         }else{
-            // Process the member addition
+            
             echo "Family member added successfully!";
         }
     }

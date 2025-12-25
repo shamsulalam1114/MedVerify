@@ -1,7 +1,7 @@
 <?php include '../Controllers/dashboard_session.php'; ?>
 <?php
     if(isset($_POST['addVerification'])){
-        // Validation for adding verification
+        
         if(isset($_POST['verificationsCount'])){
             $verificationsCount = $_POST['verificationsCount'];
             if($verificationsCount == ""){
@@ -11,7 +11,7 @@
     }
 
     if(isset($_POST['addReport'])){
-        // Validation for adding report
+        
         if(isset($_POST['reportsCount'])){
             $reportsCount = $_POST['reportsCount'];
             if($reportsCount == ""){

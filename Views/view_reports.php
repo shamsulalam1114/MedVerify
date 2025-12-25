@@ -9,7 +9,7 @@
         if($reportDate == "" || $reportTest == "" || $reportDoctor == "" || $reportStatus == ""){
             echo "Please fill all fields!";
         }else{
-            // Process the report addition
+            
             echo "Report added successfully!";
         }
     }
