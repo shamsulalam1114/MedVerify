@@ -35,7 +35,7 @@
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
-                <li><a href="upload_report.html">Upload Report</a></li>
+                <li><a href="upload_report.php">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
