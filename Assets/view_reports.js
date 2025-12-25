@@ -1,55 +1,83 @@
-
-let reportCounter = 7;
-
-
-function addReportToTable(date, testName, doctor, status) {
-    let table = document.getElementById("reportsTable");
-    
-    let newRow = "<tr>";
-    newRow = newRow + "<td>" + date + "</td>";
-    newRow = newRow + "<td>" + testName + "</td>";
-    newRow = newRow + "<td>" + doctor + "</td>";
-    newRow = newRow + "<td>" + status + "</td>";
-    newRow = newRow + '<td><button type="button" onclick="alert(\'Downloading Report\')">Download</button></td>';
-    newRow = newRow + "</tr>";
-    
-    table.innerHTML = table.innerHTML + newRow;
-}
-
-
-function addReport() {
-    let dateInput = document.getElementById("reportDate");
-    let testInput = document.getElementById("reportTest");
-    let doctorInput = document.getElementById("reportDoctor");
-    let statusInput = document.getElementById("reportStatus");
-    
-    let date = dateInput.value;
-    let testName = testInput.value;
-    let doctor = doctorInput.value;
-    let status = statusInput.value;
-    
-    if (date === "" || testName === "" || doctor === "" || status === "") {
-        alert("Please fill all fields!");
-        return;
-    }
-    
-    addReportToTable(date, testName, doctor, status);
-    
-    alert("Report added successfully!\nTest: " + testName + "\nStatus: " + status);
-    
-    clearForm();
-}
-
-
-function clearForm() {
-    document.getElementById("reportDate").value = "";
-    document.getElementById("reportTest").value = "";
-    document.getElementById("reportDoctor").value = "";
-    document.getElementById("reportStatus").value = "";
-}
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("addReportBtn").addEventListener("click", addReport);
-    document.getElementById("clearFormBtn").addEventListener("click", clearForm);
+    const addReportBtn = document.getElementById("addReportBtn");
+    const clearFormBtn = document.getElementById("clearFormBtn");
+    const reportDateInput = document.getElementById("reportDate");
+    const reportTestInput = document.getElementById("reportTest");
+    const reportDoctorInput = document.getElementById("reportDoctor");
+    const reportStatusInput = document.getElementById("reportStatus");
+    const reportsTable = document.getElementById("reportsTable");
+
+    addReportBtn.addEventListener("click", function() {
+        
+        let reportDate = reportDateInput.value.trim();
+        let reportTest = reportTestInput.value.trim();
+        let reportDoctor = reportDoctorInput.value.trim();
+        let reportStatus = reportStatusInput.value.trim();
+
+        if (reportDate === "") {
+            alert("Date field cannot be empty!");
+            return;
+        }
+
+        if (reportTest === "") {
+            alert("Test name field cannot be empty!");
+            return;
+        }
+
+        if (reportDoctor === "") {
+            alert("Doctor/Lab field cannot be empty!");
+            return;
+        }
+
+        if (reportStatus === "") {
+            alert("Status field cannot be empty!");
+            return;
+        }
+
+        const newRow = document.createElement("tr");
+
+        const dateCell = document.createElement("td");
+        dateCell.innerHTML = reportDate;
+
+        const testCell = document.createElement("td");
+        testCell.innerHTML = reportTest;
+
+        const doctorCell = document.createElement("td");
+        doctorCell.innerHTML = reportDoctor;
+
+        const statusCell = document.createElement("td");
+        statusCell.innerHTML = reportStatus;
+
+        const actionCell = document.createElement("td");
+        const downloadBtn = document.createElement("button");
+        downloadBtn.type = "button";
+        downloadBtn.innerHTML = "Download";
+        downloadBtn.onclick = function() {
+            alert("Downloading Report");
+        };
+        actionCell.appendChild(downloadBtn);
+
+        newRow.appendChild(dateCell);
+        newRow.appendChild(testCell);
+        newRow.appendChild(doctorCell);
+        newRow.appendChild(statusCell);
+        newRow.appendChild(actionCell);
+
+        reportsTable.appendChild(newRow);
+
+        alert("Report added successfully!");
+
+        reportDateInput.value = "";
+        reportTestInput.value = "";
+        reportDoctorInput.value = "";
+        reportStatusInput.value = "";
+    });
+
+    clearFormBtn.addEventListener("click", function() {
+        reportDateInput.value = "";
+        reportTestInput.value = "";
+        reportDoctorInput.value = "";
+        reportStatusInput.value = "";
+    });
 });
+
