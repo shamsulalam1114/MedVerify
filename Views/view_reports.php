@@ -79,42 +79,42 @@
                 <td>CBC</td>
                 <td>Dr.1</td>
                 <td>Normal</td>
-                <td><button onclick="alert('Downloading Report')">Download</button></td>
+                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
             <tr>
                 <td>2025-09-15</td>
                 <td>X-Ray</td>
                 <td>City Lab</td>
                 <td>Critical</td>
-                <td><button onclick="alert('Downloading Report')">Download</button></td>
+                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
             <tr>
                 <td>2025-09-10</td>
                 <td>Urine Test</td>
                 <td>Dr. 2</td>
                 <td>Normal</td>
-                <td><button onclick="alert('Downloading Report')">Download</button></td>
+                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
             <tr>
                 <td>2025-08-22</td>
                 <td>MRI Brain</td>
                 <td>ABC</td>
                 <td>Normal</td>
-                <td><button onclick="alert('Downloading Report')">Download</button></td>
+                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
             <tr>
                 <td>2025-08-15</td>
                 <td>Liver Function Test</td>
                 <td>Dr.3</td>
                 <td>Critical</td>
-                <td><button onclick="alert('Downloading Report')">Download</button></td>
+                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
             <tr>
                 <td>2025-07-30</td>
                 <td>ECG</td>
                 <td>Heart Clinic</td>
                 <td>Normal</td>
-                <td><button onclick="alert('Downloading Report')">Download</button></td>
+                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
         </table>
 
@@ -153,8 +153,8 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button id="addReportBtn">Add Report</button>
-                    <button id="clearFormBtn">Clear Form</button>
+                    <button type="button" id="addReportBtn">Add Report</button>
+                    <button type="button" id="clearFormBtn">Clear Form</button>
                 </td>
             </tr>
         </table>

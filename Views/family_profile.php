@@ -153,8 +153,8 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button id="addMemberBtn">Add Family Member</button>
-                    <button id="clearFormBtn">Clear Form</button>
+                    <button type="button" id="addMemberBtn">Add Family Member</button>
+                    <button type="button" id="clearFormBtn">Clear Form</button>
                 </td>
             </tr>
         </table>

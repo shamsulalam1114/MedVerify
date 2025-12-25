@@ -10,7 +10,7 @@ function addReportToTable(date, testName, doctor, status) {
     newRow = newRow + "<td>" + testName + "</td>";
     newRow = newRow + "<td>" + doctor + "</td>";
     newRow = newRow + "<td>" + status + "</td>";
-    newRow = newRow + '<td><button onclick="alert(\'Downloading Report\')">Download</button></td>';
+    newRow = newRow + '<td><button type="button" onclick="alert(\'Downloading Report\')">Download</button></td>';
     newRow = newRow + "</tr>";
     
     table.innerHTML = table.innerHTML + newRow;

@@ -101,9 +101,9 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button id="addVerificationBtn">Add Verification</button>
-                    <button id="addReportBtn">Add Report</button>
-                    <button id="resetBtn">Reset Counts</button>
+                    <button type="button" id="addVerificationBtn">Add Verification</button>
+                    <button type="button" id="addReportBtn">Add Report</button>
+                    <button type="button" id="resetBtn">Reset Counts</button>
                 </td>
             </tr>
         </table>
