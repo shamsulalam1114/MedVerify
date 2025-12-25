@@ -28,14 +28,14 @@ function addAppointment() {
     clearForm();
 }
 
-// Function to clear form
+
 function clearForm() {
     document.getElementById("appointmentDate").value = "";
     document.getElementById("appointmentDoctor").value = "";
     document.getElementById("appointmentType").value = "";
 }
 
-// Wait for page to load
+
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("addAppointmentBtn").addEventListener("click", addAppointment);
     document.getElementById("clearFormBtn").addEventListener("click", clearForm);
