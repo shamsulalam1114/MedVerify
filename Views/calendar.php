@@ -9,7 +9,7 @@
         if($appointmentDate == "" || $appointmentTime == "" || $appointmentDoctor == "" || $appointmentType == ""){
             echo "Please fill all fields!";
         }else{
-            // Process the appointment addition
+            
             echo "Appointment added successfully!";
         }
     }

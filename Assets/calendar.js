@@ -1,6 +1,4 @@
-// Calendar Page JavaScript
 
-// Function to add appointment to table
 function addAppointment() {
     let dateInput = document.getElementById("appointmentDate");
     let doctorInput = document.getElementById("appointmentDoctor");
