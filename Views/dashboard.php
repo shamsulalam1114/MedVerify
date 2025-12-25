@@ -81,7 +81,7 @@
                     <h1 id="appointmentsCount">Oct 24</h1>
                     <p>Next Appointment</p>
                     <br>
-                    <a href="#">View Calendar</a>
+                    <a href="calendar.php">View Calendar</a>
                 </td>
 
                 <td  align="center"class="card-orange" id="card3">
