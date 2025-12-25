@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    
+    // Destroy session
+    session_destroy();
+    unset($_SESSION['status']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +16,6 @@
     <script src="../Assets/logout.js"></script>
 </head>
 <body id="top">
-    <form action="../Controllers/logout.php" method="post" enctype="">
     <header>
         <center>
             <h1>MedVerify</h1>
@@ -23,7 +29,7 @@
                 <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.html">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="../Controllers/logout.php"><b>Logout</b></a></li>
+                <li><a href="login.php"><b>Login</b></a></li>
             </ul>
         </center>
     </nav>
@@ -117,6 +123,5 @@
 
         </center>
     </footer>
-    </form>
 </body>
 </html>

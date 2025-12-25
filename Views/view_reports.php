@@ -38,7 +38,7 @@
                 <li><a href="view_reports.php"><b>View Reports</b></a></li>
                 <li><a href="upload_report.html">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="../Controllers/logout.php">Logout</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </center>
     </nav>
