@@ -1,17 +1,17 @@
 <?php
     session_start();
-
     if(isset($_POST['submit'])){
-        $username = trim($_REQUEST['username']);
-        $password = trim($_REQUEST['password']);
+        $username = $_REQUEST['username'];
+        $password = $_REQUEST['password'];
 
-        if(empty($username) || empty($password)){
-            echo "Username and password are required!";
+        if($username == "null" || $password == ""){
+            echo "null value!";
         }else{
 
             if($username == $password){
                 
                 setcookie('status', 'true', time()+3000, '/');
+                //$_SESSION['status'] = true;
                 $_SESSION['username'] = $username;
 
                 header('location: home.php');
@@ -20,7 +20,6 @@
             }
         }
     }else{
-        
         header('location: ../Views/login.php');
     }
 ?>

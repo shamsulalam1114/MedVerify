@@ -5,4 +5,5 @@
         header('location: ../Views/login.php');
     }
 
+    //print_r($_SERVER);
 ?>
