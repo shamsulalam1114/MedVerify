@@ -11,7 +11,7 @@
 
             if($username == $password){
                 
-                $_SESSION['status'] = true;
+                setcookie('status', 'true', time()+3000, '/');
                 $_SESSION['username'] = $username;
 
                 header('location: home.php');
