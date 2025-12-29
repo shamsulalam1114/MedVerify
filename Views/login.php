@@ -1,8 +1,7 @@
 <?php
     session_start();
     
-    
-    if(isset($_SESSION['status']) && $_SESSION['status'] === true){
+    if(isset($_COOKIE['status'])){
         header('location: dashboard.php');
         exit();
     }
