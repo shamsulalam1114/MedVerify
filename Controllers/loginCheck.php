@@ -4,7 +4,7 @@
         $username = $_REQUEST['username'];
         $password = $_REQUEST['password'];
 
-        if($username == "null" || $password == ""){
+        if($username == "" || $password == ""){
             echo "null value!";
         }else{
 
