@@ -2,7 +2,7 @@
     session_start();
     
     if(isset($_COOKIE['status'])){
-        header('location: dashboard.php');
+        header('location: ../Controllers/home.php');
         exit();
     }
 ?>
