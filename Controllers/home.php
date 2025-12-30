@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if(!isset($_COOKIE['status']) || !isset($_SESSION['username'])){
+    if(!isset($_COOKIE['status'])){
         header('location: ../Views/login.php');
         exit();
     }
