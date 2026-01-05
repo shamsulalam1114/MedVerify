@@ -65,7 +65,7 @@ function deleteUser($id){
 
 function updateUser($user){
     $con = getConnection();
-    $sql = "update users set username='{$user['username']}', password='{$user['password']}', email='{$user['email']}', full_name='{$user['full_name']}', blood_group='{$user['blood_group']}', age='{$user['age']}' where user_id='{$user['user_id']}'";
+    $sql = "update users set username='{$user['username']}', password='{$user['password']}', full_name='{$user['full_name']}', user_type='{$user['user_type']}' where user_id='{$user['user_id']}'";
     
     if(mysqli_query($con, $sql)){
         return true;
