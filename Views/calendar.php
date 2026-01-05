@@ -29,7 +29,7 @@
     <nav>
         <center>
             <ul>
-                <?php if($_SESSION['user_type'] == 'admin'){ ?>
+                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <?php } ?>
