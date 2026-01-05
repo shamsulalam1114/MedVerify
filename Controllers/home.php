@@ -5,11 +5,6 @@
         header('location: ../Views/login.php');
         exit();
     }
-    
-    if(!isset($_SESSION['username'])){
-        header('location: ../Views/login.php');
-        exit();
-    }
 
 ?>
 
