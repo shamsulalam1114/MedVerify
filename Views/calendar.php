@@ -8,7 +8,12 @@
     }
     
     $user_id = $_SESSION['user_id'];
-    $appointments = getAppointments($user_id);
+    
+    if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){
+        $appointments = getAllAppointments();
+    }else{
+        $appointments = getAppointments($user_id);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +54,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h2>My Appointments</h2>
+                    <h2><?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? 'All Appointments' : 'My Appointments'; ?></h2>
                 </td>
             </tr>
         </table>
@@ -60,13 +65,16 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>Upcoming Appointments</h3>
+                    <h3><?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? 'All Users Appointments' : 'Upcoming Appointments'; ?></h3>
                 </td>
             </tr>
         </table>
 
         <table border="1" width="100%" id="appointmentsTable">
             <tr>
+                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+                <th>Username</th>
+                <?php } ?>
                 <th>Date</th>
                 <th>Doctor/Lab</th>
                 <th>Type</th>
@@ -77,6 +85,9 @@
                 foreach($appointments as $appointment){
             ?>
             <tr>
+                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+                <td><?php echo $appointment['username']; ?></td>
+                <?php } ?>
                 <td><?php echo $appointment['appointment_date']; ?></td>
                 <td><?php echo $appointment['doctor_lab']; ?></td>
                 <td><?php echo $appointment['appointment_type']; ?></td>
@@ -90,7 +101,7 @@
             }else{
             ?>
             <tr>
-                <td colspan="4" align="center">No appointments found</td>
+                <td colspan="<?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? '5' : '4'; ?>" align="center">No appointments found</td>
             </tr>
             <?php
             }
