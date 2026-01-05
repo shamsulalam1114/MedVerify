@@ -2,6 +2,11 @@
     session_start();
     require_once('../Models/verificationModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     if(isset($_POST['submit'])){
         $user_id = $_SESSION['user_id'];
         $verification_type = $_REQUEST['verification_type'];
