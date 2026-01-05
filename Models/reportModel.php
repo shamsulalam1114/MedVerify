@@ -39,7 +39,7 @@ function getReportCount($user_id){
 
 function addReport($report){
     $con = getConnection();
-    $sql = "insert into medical_reports (user_id, family_member_id, report_type, report_name, file_path, upload_date, notes) values('{$report['user_id']}', '{$report['family_member_id']}', '{$report['report_type']}', '{$report['report_name']}', '{$report['file_path']}', '{$report['upload_date']}', '{$report['notes']}')";
+    $sql = "insert into medical_reports (user_id, report_type, report_name, file_path, upload_date, notes) values('{$report['user_id']}', '{$report['report_type']}', '{$report['report_name']}', '{$report['file_path']}', '{$report['upload_date']}', '{$report['notes']}')";
     
     if(mysqli_query($con, $sql)){
         return true;
