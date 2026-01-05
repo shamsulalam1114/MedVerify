@@ -77,7 +77,7 @@
                 <td><?php echo $appointment['doctor_lab']; ?></td>
                 <td><?php echo $appointment['appointment_type']; ?></td>
                 <td>
-                    <a href="edit_appointment.php?id=<?php echo $appointment['appointment_id']; ?>">Edit</a> | 
+                    <!-- <a href="edit_appointment.php?id=<?php echo $appointment['appointment_id']; ?>">Edit</a> | -->
                     <a href="../Controllers/delete_appointment.php?id=<?php echo $appointment['appointment_id']; ?>" onclick="return confirm('Are you sure you want to delete this appointment?')">Delete</a>
                 </td>
             </tr>
