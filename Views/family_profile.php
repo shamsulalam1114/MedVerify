@@ -33,9 +33,12 @@
     <nav>
         <center>
             <ul>
+                <?php if($_SESSION['user_type'] == 'admin'){ ?>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
+                <?php } ?>
                 <li><a href="upload_report.php">Upload Report</a></li>
+                <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="family_profile.php"><b>Family Profile</b></a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>

@@ -32,5 +32,9 @@
             </table>
             </fieldset>
         </form>
+        <br>
+        <center>
+            Don't have an account? <a href="signup.php">Signup here</a>
+        </center>
 </body>
 </html>

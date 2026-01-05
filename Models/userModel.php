@@ -43,7 +43,7 @@ function getAllUsers(){
 
 function addUser($user){
     $con = getConnection();
-    $sql = "insert into users values(null, '{$user['username']}', '{$user['password']}', '{$user['email']}', '{$user['full_name']}', '{$user['blood_group']}', '{$user['age']}', null)";
+    $sql = "insert into users (username, password, user_type, full_name) values('{$user['username']}', '{$user['password']}', '{$user['user_type']}', '{$user['full_name']}')";
     
     if(mysqli_query($con, $sql)){
         return true;
