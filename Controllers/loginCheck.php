@@ -1,7 +1,7 @@
 <?php
     session_start();
     
-    // Database connection
+    
     $con = mysqli_connect('127.0.0.1', 'root', '', 'medverify_new');
     
     if(isset($_POST['submit'])){
@@ -12,7 +12,7 @@
             echo "null value!";
         }else{
 
-            // Check user in database
+            
             $sql = "select * from users where username='$username' and password='$password'";
             $result = mysqli_query($con, $sql);
             
