@@ -1,18 +1,9 @@
 <?php include '../Controllers/calendar_session.php'; ?>
 <?php
-    if(isset($_POST['addAppointment'])){
-        $appointmentDate = $_POST['appointmentDate'];
-        $appointmentTime = $_POST['appointmentTime'];
-        $appointmentDoctor = $_POST['appointmentDoctor'];
-        $appointmentType = $_POST['appointmentType'];
-
-        if($appointmentDate == "" || $appointmentTime == "" || $appointmentDoctor == "" || $appointmentType == ""){
-            echo "Please fill all fields!";
-        }else{
-            
-            echo "Appointment added successfully!";
-        }
-    }
+    require_once('../Models/appointmentModel.php');
+    
+    $user_id = $_SESSION['user_id'];
+    $appointments = getAppointments($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,16 +62,25 @@
                 <th>Doctor/Lab</th>
                 <th>Type</th>
             </tr>
+            <?php
+            if(count($appointments) > 0){
+                foreach($appointments as $appointment){
+            ?>
             <tr>
-                <td>Dec 26, 2025</td>
-                <td>Dr. Ahmed</td>
-                <td>Checkup</td>
+                <td><?php echo $appointment['appointment_date']; ?></td>
+                <td><?php echo $appointment['doctor_lab']; ?></td>
+                <td><?php echo $appointment['appointment_type']; ?></td>
             </tr>
+            <?php
+                }
+            }else{
+            ?>
             <tr>
-                <td>Dec 28, 2025</td>
-                <td>City Lab</td>
-                <td>Blood Test</td>
+                <td colspan="3" align="center">No appointments found</td>
             </tr>
+            <?php
+            }
+            ?>
         </table>
 
         <br><br>
