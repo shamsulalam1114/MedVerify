@@ -66,6 +66,7 @@
                 <th>Date</th>
                 <th>Doctor/Lab</th>
                 <th>Type</th>
+                <th>Action</th>
             </tr>
             <?php
             if(count($appointments) > 0){
@@ -75,13 +76,17 @@
                 <td><?php echo $appointment['appointment_date']; ?></td>
                 <td><?php echo $appointment['doctor_lab']; ?></td>
                 <td><?php echo $appointment['appointment_type']; ?></td>
+                <td>
+                    <a href="edit_appointment.php?id=<?php echo $appointment['appointment_id']; ?>">Edit</a> | 
+                    <a href="../Controllers/delete_appointment.php?id=<?php echo $appointment['appointment_id']; ?>" onclick="return confirm('Are you sure you want to delete this appointment?')">Delete</a>
+                </td>
             </tr>
             <?php
                 }
             }else{
             ?>
             <tr>
-                <td colspan="3" align="center">No appointments found</td>
+                <td colspan="4" align="center">No appointments found</td>
             </tr>
             <?php
             }
