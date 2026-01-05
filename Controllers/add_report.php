@@ -35,7 +35,7 @@
                 $result = addReport($report);
                 
                 if($result){
-                    header('location: ../Views/view_reports.php');
+                    header('location: ../Views/upload_report.php');
                 }else{
                     echo "Failed to add report!";
                 }
@@ -45,6 +45,6 @@
             }
         }
     }else{
-        header('location: ../Views/view_reports.php');
+        header('location: ../Views/upload_report.php');
     }
 ?>
