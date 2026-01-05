@@ -1,18 +1,9 @@
 <?php include '../Controllers/upload_report_session.php'; ?>
 <?php
-    if(isset($_POST['uploadReport'])){
-        $reportName = $_POST['reportName'];
-        $reportDate = $_POST['reportDate'];
-        $reportType = $_POST['reportType'];
-        $reportFile = $_POST['reportFile'];
-
-        if($reportName == "" || $reportDate == "" || $reportType == "" || $reportFile == ""){
-            echo "Please fill all fields!";
-        }else{
-            // Process the report upload
-            echo "Report uploaded successfully!";
-        }
-    }
+    require_once('../Models/reportModel.php');
+    
+    $user_id = $_SESSION['user_id'];
+    $recentReports = getReports($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,16 +103,25 @@
                 <th>Date</th>
                 <th>Type</th>
             </tr>
+            <?php
+            if(count($recentReports) > 0){
+                foreach($recentReports as $report){
+            ?>
             <tr>
-                <td>Blood Test Report</td>
-                <td>Dec 20, 2025</td>
-                <td>Blood Test</td>
+                <td><?php echo $report['report_name']; ?></td>
+                <td><?php echo $report['report_date']; ?></td>
+                <td><?php echo $report['report_type']; ?></td>
             </tr>
+            <?php
+                }
+            }else{
+            ?>
             <tr>
-                <td>X-Ray Chest</td>
-                <td>Dec 15, 2025</td>
-                <td>X-Ray</td>
+                <td colspan="3" align="center">No reports uploaded</td>
             </tr>
+            <?php
+            }
+            ?>
         </table>
 
         <br>

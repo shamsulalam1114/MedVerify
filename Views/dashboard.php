@@ -1,23 +1,19 @@
 <?php include '../Controllers/dashboard_session.php'; ?>
 <?php
-    if(isset($_POST['addVerification'])){
-        
-        if(isset($_POST['verificationsCount'])){
-            $verificationsCount = $_POST['verificationsCount'];
-            if($verificationsCount == ""){
-                echo "Verification count cannot be empty!";
-            }
-        }
-    }
-
-    if(isset($_POST['addReport'])){
-        
-        if(isset($_POST['reportsCount'])){
-            $reportsCount = $_POST['reportsCount'];
-            if($reportsCount == ""){
-                echo "Report count cannot be empty!";
-            }
-        }
+    require_once('../Models/verificationModel.php');
+    require_once('../Models/reportModel.php');
+    require_once('../Models/appointmentModel.php');
+    
+    $user_id = $_SESSION['user_id'];
+    
+    $verificationsCount = getVerificationCount($user_id);
+    $reportsCount = getReportCount($user_id);
+    $upcomingAppointment = getUpcomingAppointment($user_id);
+    $recentActivities = getRecentActivity($user_id);
+    
+    $appointmentDate = "No Appointment";
+    if($upcomingAppointment != false){
+        $appointmentDate = $upcomingAppointment['appointment_date'];
     }
 ?>
 <!DOCTYPE html>
@@ -56,7 +52,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h2>Welcome Md Shamsul Alam</h2>
+                    <h2>Welcome <?php echo $_SESSION['full_name']; ?></h2>
                 </td>
             </tr>
         </table>
@@ -69,16 +65,16 @@
                 <td align="center" class="card-blue" id="card1">
                     <h3>Total Verifications</h3>
                     <br>
-                    <h1 id="verificationsCount">12</h1>
+                    <h1 id="verificationsCount"><?php echo $verificationsCount; ?></h1>
                     <p>Checks Completed</p>
                     <br>
-                    <a href="view_reports.html">View Details</a>
+                    <a href="view_reports.php">View Details</a>
                 </td>
 
                 <td align="center" class="card-green" id="card2">
                     <h3>Upcoming Appointments</h3>
                     <br>
-                    <h1 id="appointmentsCount">Oct 24</h1>
+                    <h1 id="appointmentsCount"><?php echo $appointmentDate; ?></h1>
                     <p>Next Appointment</p>
                     <br>
                     <a href="calendar.php">View Calendar</a>
@@ -87,10 +83,10 @@
                 <td  align="center"class="card-orange" id="card3">
                     <h3>Total Reports</h3>
                     <br>
-                    <h1 id="reportsCount">5</h1>
+                    <h1 id="reportsCount"><?php echo $reportsCount; ?></h1>
                     <p>Reports Available</p>
                     <br>
-                    <a href="view_reports.html">View Reports</a>
+                    <a href="view_reports.php">View Reports</a>
                 </td>
             </tr>
         </table>
@@ -125,21 +121,25 @@
                 <th>Activity</th>
                 <th>Status</th>
             </tr>
+            <?php
+            if(count($recentActivities) > 0){
+                foreach($recentActivities as $activity){
+            ?>
             <tr>
-                <td>Dec 5, 2025</td>
-                <td>Medical Verification</td>
+                <td><?php echo $activity['created_at']; ?></td>
+                <td><?php echo $activity['activity_description']; ?></td>
                 <td>Completed</td>
             </tr>
+            <?php
+                }
+            }else{
+            ?>
             <tr>
-                <td>Dec 3, 2025</td>
-                <td>Lab Report Upload</td>
-                <td>Completed</td>
+                <td colspan="3" align="center">No recent activity</td>
             </tr>
-            <tr>
-                <td>Nov 28, 2025</td>
-                <td>Doctor Consultation</td>
-                <td>Completed</td>
-            </tr>
+            <?php
+            }
+            ?>
         </table>
 
         <br><br>

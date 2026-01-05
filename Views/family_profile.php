@@ -1,18 +1,10 @@
 <?php include '../Controllers/family_profile_session.php'; ?>
 <?php
-    if(isset($_POST['addMember'])){
-        $memberName = $_POST['memberName'];
-        $memberRelation = $_POST['memberRelation'];
-        $memberAge = $_POST['memberAge'];
-        $memberBlood = $_POST['memberBlood'];
-
-        if($memberName == "" || $memberRelation == "" || $memberAge == "" || $memberBlood == ""){
-            echo "Please fill all fields!";
-        }else{
-            
-            echo "Family member added successfully!";
-        }
-    }
+    require_once('../Models/familyModel.php');
+    
+    $user_id = $_SESSION['user_id'];
+    $members = getFamilyMembers($user_id);
+    $memberCount = getFamilyMemberCount($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +57,7 @@
                 <td width="100%" align="center" >
                     <h3>Total Family Members</h3>
                     <br>
-                    <h1 id="familyMembersCount">3</h1>
+                    <h1 id="familyMembersCount"><?php echo $memberCount; ?></h1>
                     <p>Registered Members</p>
                 </td>
             </tr>
@@ -91,30 +83,28 @@
                 <th>Blood Group</th>
                 <th>Action</th>
             </tr>
+            <?php
+            if(count($members) > 0){
+                foreach($members as $member){
+            ?>
             <tr>
-                <td>232345</td>
-                <td>Md. Shamsul Alam</td>
-                <td>Self</td>
-                <td>25</td>
-                <td>A+</td>
+                <td><?php echo $member['member_id']; ?></td>
+                <td><?php echo $member['name']; ?></td>
+                <td><?php echo $member['relationship']; ?></td>
+                <td><?php echo $member['age']; ?></td>
+                <td><?php echo $member['blood_group']; ?></td>
                 <td><a href="#">View Profile</a></td>
             </tr>
+            <?php
+                }
+            }else{
+            ?>
             <tr>
-                <td>435345345</td>
-                <td>Md. Sadi</td>
-                <td>Brother</td>
-                <td>32</td>
-                <td>B+</td>
-                <td><a href="#">View Profile</a></td>
+                <td colspan="6" align="center">No family members found</td>
             </tr>
-            <tr>
-                <td>6575673</td>
-                <td>Md. Ahsan</td>
-                <td>Cousin</td>
-                <td>26</td>
-                <td>A+</td>
-                <td><a href="#">View Profile</a></td>
-            </tr>
+            <?php
+            }
+            ?>
         </table>
 
         <br><br>

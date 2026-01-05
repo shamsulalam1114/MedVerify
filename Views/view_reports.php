@@ -1,18 +1,9 @@
 <?php include '../Controllers/view_reports_session.php'; ?>
 <?php
-    if(isset($_POST['addReport'])){
-        $reportDate = $_POST['reportDate'];
-        $reportTest = $_POST['reportTest'];
-        $reportDoctor = $_POST['reportDoctor'];
-        $reportStatus = $_POST['reportStatus'];
-
-        if($reportDate == "" || $reportTest == "" || $reportDoctor == "" || $reportStatus == ""){
-            echo "Please fill all fields!";
-        }else{
-            
-            echo "Report added successfully!";
-        }
-    }
+    require_once('../Models/reportModel.php');
+    
+    $user_id = $_SESSION['user_id'];
+    $reports = getReports($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,48 +65,27 @@
                 <th>Status</th>
                 <th>Action</th>
             </tr>
+            <?php
+            if(count($reports) > 0){
+                foreach($reports as $report){
+            ?>
             <tr>
-                <td>2025-10-01</td>
-                <td>CBC</td>
-                <td>Dr.1</td>
-                <td>Normal</td>
+                <td><?php echo $report['report_date']; ?></td>
+                <td><?php echo $report['report_name']; ?></td>
+                <td><?php echo $report['doctor_lab']; ?></td>
+                <td><?php echo $report['status']; ?></td>
                 <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
+            <?php
+                }
+            }else{
+            ?>
             <tr>
-                <td>2025-09-15</td>
-                <td>X-Ray</td>
-                <td>City Lab</td>
-                <td>Critical</td>
-                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
+                <td colspan="5" align="center">No reports found</td>
             </tr>
-            <tr>
-                <td>2025-09-10</td>
-                <td>Urine Test</td>
-                <td>Dr. 2</td>
-                <td>Normal</td>
-                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
-            </tr>
-            <tr>
-                <td>2025-08-22</td>
-                <td>MRI Brain</td>
-                <td>ABC</td>
-                <td>Normal</td>
-                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
-            </tr>
-            <tr>
-                <td>2025-08-15</td>
-                <td>Liver Function Test</td>
-                <td>Dr.3</td>
-                <td>Critical</td>
-                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
-            </tr>
-            <tr>
-                <td>2025-07-30</td>
-                <td>ECG</td>
-                <td>Heart Clinic</td>
-                <td>Normal</td>
-                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
-            </tr>
+            <?php
+            }
+            ?>
         </table>
 
         <br><br>
