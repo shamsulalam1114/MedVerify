@@ -60,4 +60,26 @@ function getRecentActivity($user_id){
     return $activities;
 }
 
+function getAllVerifications(){
+    $con = getConnection();
+    $sql = "select * from verifications";
+    $result = mysqli_query($con, $sql);
+    
+    $verifications = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($verifications, $row);
+    }
+    
+    return $verifications;
+}
+
+function getAllVerificationsCount(){
+    $con = getConnection();
+    $sql = "select * from verifications";
+    $result = mysqli_query($con, $sql);
+    
+    $count = mysqli_num_rows($result);
+    return $count;
+}
+
 ?>

@@ -16,8 +16,14 @@
     
     $user_id = $_SESSION['user_id'];
     
-    $verificationsCount = getVerificationCount($user_id);
-    $reportsCount = getReportCount($user_id);
+    if($_SESSION['user_type'] == 'admin'){
+        $verificationsCount = getAllVerificationsCount();
+        $reportsCount = getAllReportsCount();
+    }else{
+        $verificationsCount = getVerificationCount($user_id);
+        $reportsCount = getReportCount($user_id);
+    }
+    
     $upcomingAppointment = getUpcomingAppointment($user_id);
     $recentActivities = getRecentActivity($user_id);
     

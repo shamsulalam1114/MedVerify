@@ -13,7 +13,12 @@
     }
     
     $user_id = $_SESSION['user_id'];
-    $reports = getReports($user_id);
+    
+    if($_SESSION['user_type'] == 'admin'){
+        $reports = getAllReports();
+    }else{
+        $reports = getReports($user_id);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,13 +67,14 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>Your Medical Reports</h3>
+                    <h3>All Medical Reports</h3>
                 </td>
             </tr>
         </table>
 
         <table border="1" width="100%" id="reportsTable">
             <tr>
+                <th>Username</th>
                 <th>Upload Date</th>
                 <th>Report Name</th>
                 <th>Report Type</th>
@@ -80,6 +86,7 @@
                 foreach($reports as $report){
             ?>
             <tr>
+                <td><?php echo $report['username']; ?></td>
                 <td><?php echo $report['upload_date']; ?></td>
                 <td><?php echo $report['report_name']; ?></td>
                 <td><?php echo $report['report_type']; ?></td>
@@ -94,7 +101,7 @@
             }else{
             ?>
             <tr>
-                <td colspan="5" align="center">No reports found</td>
+                <td colspan="6" align="center">No reports found</td>
             </tr>
             <?php
             }
