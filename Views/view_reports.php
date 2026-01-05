@@ -106,20 +106,20 @@
 
         <table border="1" width="100%">
             <tr>
-                <td width="30%">Date:</td>
-                <td width="70%"><input type="text" id="reportDate" placeholder="dd-mm-yyyy" ></td>
+                <td width="30%">Report Name:</td>
+                <td width="70%"><input type="text" id="reportName" placeholder="Enter report name" ></td>
             </tr>
             <tr>
-                <td>Test Name:</td>
-                <td><input type="text" id="reportTest" placeholder="Enter test name" ></td>
+                <td>Report Type:</td>
+                <td><input type="text" id="reportType" placeholder="Blood Test, X-Ray, MRI, etc." ></td>
             </tr>
             <tr>
-                <td>Doctor/Lab:</td>
-                <td><input type="text" id="reportDoctor" placeholder="Enter doctor or lab name" ></td>
+                <td>File Path:</td>
+                <td><input type="text" id="filePath" placeholder="/uploads/filename.pdf" ></td>
             </tr>
             <tr>
-                <td>Status:</td>
-                <td><input type="text" id="reportStatus" placeholder="Normal or Critical" ></td>
+                <td>Notes:</td>
+                <td><input type="text" id="notes" placeholder="Additional notes (optional)" ></td>
             </tr>
         </table>
 
