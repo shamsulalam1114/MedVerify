@@ -8,8 +8,14 @@
     }
     
     $user_id = $_SESSION['user_id'];
-    $members = getFamilyMembers($user_id);
-    $memberCount = getFamilyMemberCount($user_id);
+    
+    if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){
+        $members = getAllFamilyMembers();
+        $memberCount = getAllFamilyMembersCount();
+    }else{
+        $members = getFamilyMembers($user_id);
+        $memberCount = getFamilyMemberCount($user_id);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +84,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>Family Members</h3>
+                    <h3><?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? 'All Users Family Members' : 'Family Members'; ?></h3>
                 </td>
             </tr>
         </table>
@@ -86,6 +92,9 @@
         <table border="1" width="100%" id="familyMembersTable">
             <tr>
                 <th>Member ID</th>
+                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+                <th>Username</th>
+                <?php } ?>
                 <th>Name</th>
                 <th>Relationship</th>
                 <th>Age</th>
@@ -98,6 +107,9 @@
             ?>
             <tr>
                 <td><?php echo $member['member_id']; ?></td>
+                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+                <td><?php echo $member['username']; ?></td>
+                <?php } ?>
                 <td><?php echo $member['name']; ?></td>
                 <td><?php echo $member['relationship']; ?></td>
                 <td><?php echo $member['age']; ?></td>
@@ -112,7 +124,7 @@
             }else{
             ?>
             <tr>
-                <td colspan="6" align="center">No family members found</td>
+                <td colspan="<?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? '7' : '6'; ?>" align="center">No family members found</td>
             </tr>
             <?php
             }

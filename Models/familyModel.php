@@ -70,4 +70,26 @@ function updateFamilyMember($member){
     }
 }
 
+function getAllFamilyMembers(){
+    $con = getConnection();
+    $sql = "select family_members.*, users.username from family_members join users on family_members.user_id = users.user_id";
+    $result = mysqli_query($con, $sql);
+    
+    $members = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($members, $row);
+    }
+    
+    return $members;
+}
+
+function getAllFamilyMembersCount(){
+    $con = getConnection();
+    $sql = "select * from family_members";
+    $result = mysqli_query($con, $sql);
+    
+    $count = mysqli_num_rows($result);
+    return $count;
+}
+
 ?>

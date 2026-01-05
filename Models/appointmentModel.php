@@ -74,4 +74,26 @@ function updateAppointment($appointment){
     }
 }
 
+function getAllAppointments(){
+    $con = getConnection();
+    $sql = "select appointments.*, users.username from appointments join users on appointments.user_id = users.user_id";
+    $result = mysqli_query($con, $sql);
+    
+    $appointments = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($appointments, $row);
+    }
+    
+    return $appointments;
+}
+
+function getAllAppointmentsCount(){
+    $con = getConnection();
+    $sql = "select * from appointments";
+    $result = mysqli_query($con, $sql);
+    
+    $count = mysqli_num_rows($result);
+    return $count;
+}
+
 ?>
