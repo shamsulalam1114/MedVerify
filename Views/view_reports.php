@@ -95,7 +95,7 @@
 
         <br><br>
 
-        
+        <!-- 
         <form action="../Controllers/add_report.php" method="post" enctype="multipart/form-data">
         <table width="100%">
             <tr>
@@ -135,6 +135,7 @@
             </tr>
         </table>
         </form>
+        -->
 
         <br>
 
