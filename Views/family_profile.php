@@ -98,7 +98,10 @@
                 <td><?php echo $member['relationship']; ?></td>
                 <td><?php echo $member['age']; ?></td>
                 <td><?php echo $member['blood_group']; ?></td>
-                <td><a href="#">View Profile</a></td>
+                <td>
+                    <a href="edit_family_member.php?id=<?php echo $member['member_id']; ?>">Edit</a> | 
+                    <a href="../Controllers/delete_family_member.php?id=<?php echo $member['member_id']; ?>" onclick="return confirm('Are you sure you want to delete this member?')">Delete</a>
+                </td>
             </tr>
             <?php
                 }

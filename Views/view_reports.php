@@ -79,7 +79,10 @@
                 <td><?php echo $report['report_name']; ?></td>
                 <td><?php echo $report['report_type']; ?></td>
                 <td><?php echo $report['notes'] ? $report['notes'] : 'N/A'; ?></td>
-                <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
+                <td>
+                    <a href="edit_report.php?id=<?php echo $report['report_id']; ?>">Edit</a> | 
+                    <a href="../Controllers/delete_report.php?id=<?php echo $report['report_id']; ?>" onclick="return confirm('Are you sure you want to delete this report?')">Delete</a>
+                </td>
             </tr>
             <?php
                 }
