@@ -7,6 +7,11 @@
         exit();
     }
     
+    if($_SESSION['user_type'] != 'admin'){
+        header('location: ../Views/calendar.php');
+        exit();
+    }
+    
     $user_id = $_SESSION['user_id'];
     $reports = getReports($user_id);
 ?>

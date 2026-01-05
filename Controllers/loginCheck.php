@@ -19,8 +19,13 @@
                 $_SESSION['user_id'] = $result['user_id'];
                 $_SESSION['username'] = $result['username'];
                 $_SESSION['full_name'] = $result['full_name'];
+                $_SESSION['user_type'] = $result['user_type'];
 
-                header('location: home.php');
+                if($result['user_type'] == 'admin'){
+                    header('location: home.php');
+                }else{
+                    header('location: ../Views/calendar.php');
+                }
             }else{
                 echo "invalid user!";
             }
