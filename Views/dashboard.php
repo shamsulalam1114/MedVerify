@@ -9,7 +9,7 @@
         exit();
     }
     
-    if($_SESSION['user_type'] != 'admin'){
+    if(!isset($_SESSION['user_type']) || $_SESSION['user_type'] != 'admin'){
         header('location: ../Views/calendar.php');
         exit();
     }
