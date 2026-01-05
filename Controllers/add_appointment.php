@@ -9,8 +9,12 @@
         $doctor_lab = $_REQUEST['doctor_lab'];
         $appointment_type = $_REQUEST['appointment_type'];
         
-        if($appointment_date == "" || $doctor_lab == "" || $appointment_type == ""){
-            echo "All fields are required!";
+        if($appointment_date == ""){
+            echo "Appointment date is required!";
+        }else if($doctor_lab == ""){
+            echo "Doctor/Lab name is required!";
+        }else if($appointment_type == ""){
+            echo "Appointment type is required!";
         }else{
             
             $appointment = [

@@ -8,8 +8,12 @@
         $report_type = $_REQUEST['report_type'];
         $notes = $_REQUEST['notes'];
         
-        if($report_name == "" || $report_type == ""){
-            echo "Report name and type are required!";
+        if($report_name == ""){
+            echo "Report name is required!";
+        }else if($report_type == ""){
+            echo "Report type is required!";
+        }else if(!isset($_FILES['myfile']) || $_FILES['myfile']['error'] != 0){
+            echo "Please select a file to upload!";
         }else{
             
             $src = $_FILES['myfile']['tmp_name'];

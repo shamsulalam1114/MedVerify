@@ -96,7 +96,7 @@
         <br><br>
 
         
-        <form action="../Controllers/add_appointment.php" method="post" enctype="">
+        <form action="../Controllers/add_appointment.php" method="post" enctype="" onsubmit="return validateAppointmentForm()">
         <table width="100%">
             <tr>
                 <td align="center">

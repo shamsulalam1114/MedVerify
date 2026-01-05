@@ -10,9 +10,10 @@
 <html lang="en">
 <head>
     <title>Login Page</title>
+    <script src="../Assets/validate_login.js"></script>
 </head>
 <body>
-        <form action="../Controllers/loginCheck.php" method="post" enctype="">
+        <form action="../Controllers/loginCheck.php" method="post" enctype="" onsubmit="return validateLoginForm()">
             <fieldset>
             <legend>Login Page</legend>
             <table>
