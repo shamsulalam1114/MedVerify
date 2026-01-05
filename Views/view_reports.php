@@ -64,10 +64,10 @@
 
         <table border="1" width="100%" id="reportsTable">
             <tr>
-                <th>Date</th>
-                <th>Test Name</th>
-                <th>Doctor/Lab</th>
-                <th>Status</th>
+                <th>Upload Date</th>
+                <th>Report Name</th>
+                <th>Report Type</th>
+                <th>Notes</th>
                 <th>Action</th>
             </tr>
             <?php
@@ -75,10 +75,10 @@
                 foreach($reports as $report){
             ?>
             <tr>
-                <td><?php echo $report['report_date']; ?></td>
+                <td><?php echo $report['upload_date']; ?></td>
                 <td><?php echo $report['report_name']; ?></td>
-                <td><?php echo $report['doctor_lab']; ?></td>
-                <td><?php echo $report['status']; ?></td>
+                <td><?php echo $report['report_type']; ?></td>
+                <td><?php echo $report['notes'] ? $report['notes'] : 'N/A'; ?></td>
                 <td><button type="button" onclick="alert('Downloading Report')">Download</button></td>
             </tr>
             <?php

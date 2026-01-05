@@ -39,7 +39,7 @@ function getReportCount($user_id){
 
 function addReport($report){
     $con = getConnection();
-    $sql = "insert into medical_reports values(null, '{$report['user_id']}', '{$report['report_name']}', '{$report['report_date']}', '{$report['report_type']}', '{$report['doctor_lab']}', '{$report['status']}', null, null)";
+    $sql = "insert into medical_reports (user_id, family_member_id, report_type, report_name, file_path, upload_date, notes) values('{$report['user_id']}', '{$report['family_member_id']}', '{$report['report_type']}', '{$report['report_name']}', '{$report['file_path']}', '{$report['upload_date']}', '{$report['notes']}')";
     
     if(mysqli_query($con, $sql)){
         return true;
@@ -61,7 +61,7 @@ function deleteReport($id){
 
 function updateReport($report){
     $con = getConnection();
-    $sql = "update medical_reports set report_name='{$report['report_name']}', report_date='{$report['report_date']}', report_type='{$report['report_type']}', doctor_lab='{$report['doctor_lab']}', status='{$report['status']}' where report_id='{$report['report_id']}'";
+    $sql = "update medical_reports set report_name='{$report['report_name']}', report_type='{$report['report_type']}', file_path='{$report['file_path']}', upload_date='{$report['upload_date']}', notes='{$report['notes']}', family_member_id='{$report['family_member_id']}' where report_id='{$report['report_id']}'";
     
     if(mysqli_query($con, $sql)){
         return true;

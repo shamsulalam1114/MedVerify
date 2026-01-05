@@ -105,7 +105,7 @@
         <table border="1" width="100%" id="uploadedReportsTable">
             <tr>
                 <th>Report Name</th>
-                <th>Date</th>
+                <th>Upload Date</th>
                 <th>Type</th>
             </tr>
             <?php
@@ -114,7 +114,7 @@
             ?>
             <tr>
                 <td><?php echo $report['report_name']; ?></td>
-                <td><?php echo $report['report_date']; ?></td>
+                <td><?php echo $report['upload_date']; ?></td>
                 <td><?php echo $report['report_type']; ?></td>
             </tr>
             <?php
