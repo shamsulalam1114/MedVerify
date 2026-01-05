@@ -91,6 +91,7 @@
         <br><br>
 
         
+        <form action="../Controllers/add_appointment.php" method="post" enctype="">
         <table width="100%">
             <tr>
                 <td align="center">
@@ -102,15 +103,19 @@
         <table border="1" width="100%">
             <tr>
                 <td width="30%">Date:</td>
-                <td width="70%"><input type="text" id="appointmentDate" placeholder="dd-mm-yyyy" style="width: 100%"></td>
+                <td width="70%"><input type="date" name="appointment_date" required style="width: 100%"></td>
+            </tr>
+            <tr>
+                <td>Time:</td>
+                <td><input type="time" name="appointment_time" style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Doctor/Lab:</td>
-                <td><input type="text" id="appointmentDoctor" placeholder="Enter doctor or lab name" style="width: 100%"></td>
+                <td><input type="text" name="doctor_lab" placeholder="Enter doctor or lab name" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Type:</td>
-                <td><input type="text" id="appointmentType" placeholder="e.g., Checkup, Blood Test" style="width: 100%"></td>
+                <td><input type="text" name="appointment_type" placeholder="e.g., Checkup, Blood Test" required style="width: 100%"></td>
             </tr>
         </table>
 
@@ -119,11 +124,12 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button type="button" id="addAppointmentBtn">Add Appointment</button>
-                    <button type="button" id="clearFormBtn">Clear Form</button>
+                    <input type="submit" name="submit" value="Add Appointment">
+                    <input type="reset" value="Clear Form">
                 </td>
             </tr>
         </table>
+        </form>
 
         <br>
 

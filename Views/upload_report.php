@@ -61,22 +61,23 @@
             </tr>
         </table>
 
+        <form action="../Controllers/add_report.php" method="post" enctype="multipart/form-data">
         <table border="1" width="100%">
             <tr>
                 <td width="30%">Report Name:</td>
-                <td width="70%"><input type="text" id="reportName" placeholder="Enter report name" style="width: 100%"></td>
-            </tr>
-            <tr>
-                <td>Report Date:</td>
-                <td><input type="text" id="reportDate" placeholder="dd-mm-yyyy" style="width: 100%"></td>
+                <td width="70%"><input type="text" name="report_name" placeholder="Enter report name" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Report Type:</td>
-                <td><input type="text" id="reportType" placeholder="e.g., Blood Test, X-Ray" style="width: 100%"></td>
+                <td><input type="text" name="report_type" placeholder="e.g., Blood Test, X-Ray" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Upload File:</td>
-                <td><input type="text" id="reportFile" placeholder="File name" style="width: 100%"></td>
+                <td><input type="file" name="myfile" required style="width: 100%"></td>
+            </tr>
+            <tr>
+                <td>Notes:</td>
+                <td><input type="text" name="notes" placeholder="Additional notes (optional)" style="width: 100%"></td>
             </tr>
         </table>
 
@@ -85,11 +86,12 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button type="button" id="uploadBtn">Upload Report</button>
-                    <button type="button" id="clearBtn">Clear Form</button>
+                    <input type="submit" name="submit" value="Upload Report">
+                    <input type="reset" value="Clear Form">
                 </td>
             </tr>
         </table>
+        </form>
 
         <br><br>
 

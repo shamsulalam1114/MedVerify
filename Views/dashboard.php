@@ -98,15 +98,13 @@
         <br>
 
         
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <button type="button" id="addVerificationBtn">Add Verification</button>
-                    <button type="button" id="addReportBtn">Add Report</button>
-                    <button type="button" id="resetBtn">Reset Counts</button>
-                </td>
-            </tr>
-        </table>
+        <form action="../Controllers/add_verification.php" method="post" enctype="" style="display: inline;">
+            <input type="hidden" name="verification_type" value="Manual Verification">
+            <input type="submit" name="submit" value="Add Verification">
+        </form>
+        <form action="../Controllers/add_report.php" method="get" style="display: inline;">
+            <input type="button" value="Add Report" onclick="location.href='view_reports.php'">
+        </form>
 
         <br><br>
 
