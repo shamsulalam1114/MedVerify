@@ -22,7 +22,6 @@
     <meta charset="UTF-8">
     <title>MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
-    <script src="../Assets/dashboard.js"></script>
 </head>
 <body id="top">
     <form action="../Controllers/home.php" method="post" enctype="">
