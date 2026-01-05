@@ -2,6 +2,11 @@
     session_start();
     require_once('../Models/familyModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     if(isset($_POST['submit'])){
         $user_id = $_SESSION['user_id'];
         $name = $_REQUEST['name'];

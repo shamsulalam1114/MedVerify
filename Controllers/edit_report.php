@@ -2,6 +2,11 @@
     session_start();
     require_once('../Models/reportModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     if(isset($_POST['submit'])){
         $report_id = $_REQUEST['report_id'];
         $user_id = $_REQUEST['user_id'];

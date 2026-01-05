@@ -18,6 +18,7 @@
     <title>My Appointments</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <script src="../Assets/calendar.js"></script>
+    <script src="../Assets/validate_appointment.js"></script>
 </head>
 <body id="top">
     <header>

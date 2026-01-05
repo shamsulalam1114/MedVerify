@@ -2,6 +2,11 @@
     session_start();
     require_once('../Models/appointmentModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     if(isset($_POST['submit'])){
         $user_id = $_SESSION['user_id'];
         $appointment_date = $_REQUEST['appointment_date'];
