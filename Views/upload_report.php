@@ -2,6 +2,11 @@
 <?php
     require_once('../Models/reportModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     $user_id = $_SESSION['user_id'];
     $recentReports = getReports($user_id);
 ?>
