@@ -1,20 +1,13 @@
 <?php
-
-$con = mysqli_connect('127.0.0.1', 'root', '', 'medverify_new');
-
-
-if(!$con){
-    echo "Database connection failed!";
-}
+require_once('db.php');
 
 
-function checkLogin($username, $password){
-    global $con;
+function login($user){
+    $con = getConnection();
+    $sql = "select * from users where username='{$user['username']}' and password='{$user['password']}'";
+    $result = mysqli_query($con, $sql);   
     
-    $sql = "select * from users where username='$username' and password='$password'";
-    $result = mysqli_query($con, $sql);
-    
-    if(mysqli_num_rows($result) > 0){
+    if(mysqli_num_rows($result) == 1){
         $row = mysqli_fetch_assoc($result);
         return $row;
     }else{
@@ -24,8 +17,7 @@ function checkLogin($username, $password){
 
 
 function getReports($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from medical_reports where user_id='$user_id'";
     $result = mysqli_query($con, $sql);
     
@@ -38,10 +30,9 @@ function getReports($user_id){
 }
 
 
-function addReport($user_id, $report_name, $report_date, $report_type, $doctor_lab, $status){
-    global $con;
-    
-    $sql = "insert into medical_reports values(null, '$user_id', '$report_name', '$report_date', '$report_type', '$doctor_lab', '$status', null, null)";
+function addReport($report){
+    $con = getConnection();
+    $sql = "insert into medical_reports values(null, '{$report['user_id']}', '{$report['report_name']}', '{$report['report_date']}', '{$report['report_type']}', '{$report['doctor_lab']}', '{$report['status']}', null, null)";
     
     if(mysqli_query($con, $sql)){
         return true;
@@ -52,8 +43,7 @@ function addReport($user_id, $report_name, $report_date, $report_type, $doctor_l
 
 
 function getFamilyMembers($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from family_members where user_id='$user_id'";
     $result = mysqli_query($con, $sql);
     
@@ -66,10 +56,9 @@ function getFamilyMembers($user_id){
 }
 
 
-function addFamilyMember($user_id, $name, $relationship, $age, $blood_group){
-    global $con;
-    
-    $sql = "insert into family_members values(null, '$user_id', '$name', '$relationship', '$age', '$blood_group', null)";
+function addFamilyMember($member){
+    $con = getConnection();
+    $sql = "insert into family_members values(null, '{$member['user_id']}', '{$member['name']}', '{$member['relationship']}', '{$member['age']}', '{$member['blood_group']}', null)";
     
     if(mysqli_query($con, $sql)){
         return true;
@@ -80,8 +69,7 @@ function addFamilyMember($user_id, $name, $relationship, $age, $blood_group){
 
 
 function getAppointments($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from appointments where user_id='$user_id'";
     $result = mysqli_query($con, $sql);
     
@@ -94,10 +82,9 @@ function getAppointments($user_id){
 }
 
 
-function addAppointment($user_id, $appointment_date, $appointment_time, $doctor_lab, $appointment_type){
-    global $con;
-    
-    $sql = "insert into appointments values(null, '$user_id', '$appointment_date', '$appointment_time', '$doctor_lab', '$appointment_type', 'Scheduled', null)";
+function addAppointment($appointment){
+    $con = getConnection();
+    $sql = "insert into appointments values(null, '{$appointment['user_id']}', '{$appointment['appointment_date']}', '{$appointment['appointment_time']}', '{$appointment['doctor_lab']}', '{$appointment['appointment_type']}', 'Scheduled', null)";
     
     if(mysqli_query($con, $sql)){
         return true;
@@ -108,8 +95,7 @@ function addAppointment($user_id, $appointment_date, $appointment_time, $doctor_
 
 
 function getVerificationCount($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from verifications where user_id='$user_id'";
     $result = mysqli_query($con, $sql);
     
@@ -118,11 +104,10 @@ function getVerificationCount($user_id){
 }
 
 
-function addVerification($user_id, $verification_type){
-    global $con;
-    
+function addVerification($verification){
+    $con = getConnection();
     $date = date('Y-m-d');
-    $sql = "insert into verifications values(null, '$user_id', '$date', '$verification_type', 'Completed', null, null)";
+    $sql = "insert into verifications values(null, '{$verification['user_id']}', '$date', '{$verification['verification_type']}', 'Completed', null, null)";
     
     if(mysqli_query($con, $sql)){
         return true;
@@ -133,8 +118,7 @@ function addVerification($user_id, $verification_type){
 
 
 function getReportCount($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from medical_reports where user_id='$user_id'";
     $result = mysqli_query($con, $sql);
     
@@ -144,8 +128,7 @@ function getReportCount($user_id){
 
 
 function getUpcomingAppointment($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from appointments where user_id='$user_id' and status='Scheduled' order by appointment_date asc limit 1";
     $result = mysqli_query($con, $sql);
     
@@ -159,8 +142,7 @@ function getUpcomingAppointment($user_id){
 
 
 function getFamilyMemberCount($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from family_members where user_id='$user_id'";
     $result = mysqli_query($con, $sql);
     
@@ -170,8 +152,7 @@ function getFamilyMemberCount($user_id){
 
 
 function getRecentActivity($user_id){
-    global $con;
-    
+    $con = getConnection();
     $sql = "select * from activity_log where user_id='$user_id' order by created_at desc limit 3";
     $result = mysqli_query($con, $sql);
     

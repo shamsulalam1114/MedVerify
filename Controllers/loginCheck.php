@@ -1,8 +1,6 @@
 <?php
     session_start();
-    
-    
-    $con = mysqli_connect('127.0.0.1', 'root', '', 'medverify_new');
+    require_once('../Models/model.php');
     
     if(isset($_POST['submit'])){
         $username = $_REQUEST['username'];
@@ -12,18 +10,15 @@
             echo "null value!";
         }else{
 
+            $user = ['username'=> $username, 'password'=> $password];
+            $result = login($user);
             
-            $sql = "select * from users where username='$username' and password='$password'";
-            $result = mysqli_query($con, $sql);
-            
-            if(mysqli_num_rows($result) > 0){
-                
-                $row = mysqli_fetch_assoc($result);
+            if($result){
                 
                 setcookie('status', 'true', time()+3000, '/');
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['full_name'] = $row['full_name'];
+                $_SESSION['user_id'] = $result['user_id'];
+                $_SESSION['username'] = $result['username'];
+                $_SESSION['full_name'] = $result['full_name'];
 
                 header('location: home.php');
             }else{
