@@ -96,6 +96,7 @@
         <br><br>
 
         
+        <form action="../Controllers/add_report.php" method="post" enctype="multipart/form-data">
         <table width="100%">
             <tr>
                 <td align="center">
@@ -107,19 +108,19 @@
         <table border="1" width="100%">
             <tr>
                 <td width="30%">Report Name:</td>
-                <td width="70%"><input type="text" id="reportName" placeholder="Enter report name" ></td>
+                <td width="70%"><input type="text" name="report_name" placeholder="Enter report name" required></td>
             </tr>
             <tr>
                 <td>Report Type:</td>
-                <td><input type="text" id="reportType" placeholder="Blood Test, X-Ray, MRI, etc." ></td>
+                <td><input type="text" name="report_type" placeholder="Blood Test, X-Ray, MRI, etc." required></td>
             </tr>
             <tr>
-                <td>File Path:</td>
-                <td><input type="text" id="filePath" placeholder="/uploads/filename.pdf" ></td>
+                <td>Upload File:</td>
+                <td><input type="file" name="myfile" required></td>
             </tr>
             <tr>
                 <td>Notes:</td>
-                <td><input type="text" id="notes" placeholder="Additional notes (optional)" ></td>
+                <td><input type="text" name="notes" placeholder="Additional notes (optional)" ></td>
             </tr>
         </table>
 
@@ -128,11 +129,12 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button type="button" id="addReportBtn">Add Report</button>
-                    <button type="button" id="clearFormBtn">Clear Form</button>
+                    <input type="submit" name="submit" value="Add Report">
+                    <input type="reset" value="Clear Form">
                 </td>
             </tr>
         </table>
+        </form>
 
         <br>
 

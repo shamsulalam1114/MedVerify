@@ -115,6 +115,7 @@
         <br><br>
 
         
+        <form action="../Controllers/add_family_member.php" method="post" enctype="">
         <table width="100%" >
             <tr>
                 <td align="center">
@@ -126,19 +127,19 @@
         <table border="1" width="100%" >
             <tr>
                 <td width="30%">Name:</td>
-                <td width="70%"><input type="text" id="memberName" placeholder="Enter name" style="width: 100%"></td>
+                <td width="70%"><input type="text" name="name" placeholder="Enter name" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Relationship:</td>
-                <td><input type="text" id="memberRelation" placeholder="e.g., Father, Mother, Child" style="width: 100%"></td>
+                <td><input type="text" name="relationship" placeholder="e.g., Father, Mother, Child" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Age:</td>
-                <td><input type="number" id="memberAge" placeholder="Enter age" style="width: 100%"></td>
+                <td><input type="number" name="age" placeholder="Enter age" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Blood Group:</td>
-                <td><input type="text" id="memberBlood" placeholder="e.g., A+, B-, O+" style="width: 100%"></td>
+                <td><input type="text" name="blood_group" placeholder="e.g., A+, B-, O+" style="width: 100%"></td>
             </tr>
         </table>
 
@@ -148,11 +149,12 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <button type="button" id="addMemberBtn">Add Family Member</button>
-                    <button type="button" id="clearFormBtn">Clear Form</button>
+                    <input type="submit" name="submit" value="Add Family Member">
+                    <input type="reset" value="Clear Form">
                 </td>
             </tr>
         </table>
+        </form>
 
         <br>
 
