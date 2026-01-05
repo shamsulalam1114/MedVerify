@@ -10,8 +10,14 @@
         $age = $_REQUEST['age'];
         $blood_group = $_REQUEST['blood_group'];
         
-        if($name == "" || $relationship == "" || $age == ""){
-            echo "Name, relationship and age are required!";
+        if($name == ""){
+            echo "Name is required!";
+        }else if($relationship == ""){
+            echo "Relationship is required!";
+        }else if($age == ""){
+            echo "Age is required!";
+        }else if($age < 0 || $age > 150){
+            echo "Age must be between 0 and 150!";
         }else{
             
             $member = [

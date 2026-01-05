@@ -26,6 +26,7 @@
     <meta charset="UTF-8">
     <title>Edit Family Member</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <script src="../Assets/validate_edit_family.js"></script>
 </head>
 <body>
     <header>
@@ -47,7 +48,7 @@
 
         <br>
 
-        <form action="../Controllers/edit_family_member.php" method="post" enctype="">
+        <form action="../Controllers/edit_family_member.php" method="post" enctype="" onsubmit="return validateEditFamilyForm()">
         <table border="1" width="100%">
             <tr>
                 <td width="30%">Name:</td>

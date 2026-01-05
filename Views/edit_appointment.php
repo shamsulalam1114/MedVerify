@@ -26,6 +26,7 @@
     <meta charset="UTF-8">
     <title>Edit Appointment</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <script src="../Assets/validate_edit_appointment.js"></script>
 </head>
 <body>
     <header>
@@ -47,7 +48,7 @@
 
         <br>
 
-        <form action="../Controllers/edit_appointment.php" method="post" enctype="">
+        <form action="../Controllers/edit_appointment.php" method="post" enctype="" onsubmit="return validateEditAppointmentForm()">
         <table border="1" width="100%">
             <tr>
                 <td width="30%">Date:</td>

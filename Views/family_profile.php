@@ -19,6 +19,7 @@
     <title>Family Profile</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <script src="../Assets/family_profile.js"></script>
+    <script src="../Assets/validate_family.js"></script>
 </head>
 <body id="top">
     <form action="../Controllers/home.php" method="post" enctype="">
@@ -118,7 +119,7 @@
         <br><br>
 
         </form>
-        <form action="../Controllers/add_family_member.php" method="post" enctype="">
+        <form action="../Controllers/add_family_member.php" method="post" enctype="" onsubmit="return validateFamilyForm()">
         <table width="100%" >
             <tr>
                 <td align="center">

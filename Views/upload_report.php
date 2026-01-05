@@ -18,6 +18,7 @@
     <title>Upload Report</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <script src="../Assets/upload_report.js"></script>
+    <script src="../Assets/validate_report.js"></script>
 </head>
 <body id="top">
     <header>
@@ -61,7 +62,7 @@
             </tr>
         </table>
 
-        <form action="../Controllers/add_report.php" method="post" enctype="multipart/form-data">
+        <form action="../Controllers/add_report.php" method="post" enctype="multipart/form-data" onsubmit="return validateReportForm()">
         <table border="1" width="100%">
             <tr>
                 <td width="30%">Report Name:</td>

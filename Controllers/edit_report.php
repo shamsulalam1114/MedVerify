@@ -11,8 +11,12 @@
         $upload_date = $_REQUEST['upload_date'];
         $notes = $_REQUEST['notes'];
         
-        if($report_name == "" || $report_type == ""){
-            echo "Report name and type are required!";
+        if($report_name == ""){
+            echo "Report name is required!";
+        }else if($report_type == ""){
+            echo "Report type is required!";
+        }else if($file_path == ""){
+            echo "File path is required!";
         }else{
             
             $report = [
