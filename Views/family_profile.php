@@ -114,7 +114,7 @@
 
         <br><br>
 
-        
+        </form>
         <form action="../Controllers/add_family_member.php" method="post" enctype="">
         <table width="100%" >
             <tr>
@@ -158,7 +158,7 @@
 
         <br>
 
-        
+        <form action="../Controllers/home.php" method="post" enctype="">
         <table  width="100%">
             <tr>
                 <td align="center">
