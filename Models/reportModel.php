@@ -70,4 +70,26 @@ function updateReport($report){
     }
 }
 
+function getAllReports(){
+    $con = getConnection();
+    $sql = "select medical_reports.*, users.username, users.full_name from medical_reports inner join users on medical_reports.user_id = users.user_id";
+    $result = mysqli_query($con, $sql);
+    
+    $reports = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($reports, $row);
+    }
+    
+    return $reports;
+}
+
+function getAllReportsCount(){
+    $con = getConnection();
+    $sql = "select * from medical_reports";
+    $result = mysqli_query($con, $sql);
+    
+    $count = mysqli_num_rows($result);
+    return $count;
+}
+
 ?>
