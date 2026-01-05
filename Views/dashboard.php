@@ -4,6 +4,11 @@
     require_once('../Models/reportModel.php');
     require_once('../Models/appointmentModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     $user_id = $_SESSION['user_id'];
     
     $verificationsCount = getVerificationCount($user_id);

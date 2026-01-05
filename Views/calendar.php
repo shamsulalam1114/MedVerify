@@ -2,6 +2,11 @@
 <?php
     require_once('../Models/appointmentModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     $user_id = $_SESSION['user_id'];
     $appointments = getAppointments($user_id);
 ?>

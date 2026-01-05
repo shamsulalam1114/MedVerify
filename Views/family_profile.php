@@ -2,6 +2,11 @@
 <?php
     require_once('../Models/familyModel.php');
     
+    if(!isset($_SESSION['user_id'])){
+        header('location: ../Views/login.php');
+        exit();
+    }
+    
     $user_id = $_SESSION['user_id'];
     $members = getFamilyMembers($user_id);
     $memberCount = getFamilyMemberCount($user_id);
