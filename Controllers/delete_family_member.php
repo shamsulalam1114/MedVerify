@@ -15,7 +15,7 @@
         if($result){
             header('location: ../Views/family_profile.php');
         }else{
-            echo "Failed to delete family member!";
+            echo "Failed to delete";
         }
     }else{
         header('location: ../Views/family_profile.php');

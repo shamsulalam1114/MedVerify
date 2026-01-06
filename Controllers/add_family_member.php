@@ -15,13 +15,13 @@
         $blood_group = $_REQUEST['blood_group'];
         
         if($name == ""){
-            echo "Name is required!";
+            echo "fill this field!";
         }else if($relationship == ""){
-            echo "Relationship is required!";
+            echo "fill this field!";
         }else if($age == ""){
-            echo "Age is required!";
+            echo "fill this field!";
         }else if($age < 0 || $age > 150){
-            echo "Age must be between 0 and 150!";
+            echo "age between 0-150";
         }else{
             
             $member = [
@@ -37,7 +37,7 @@
             if($result){
                 header('location: ../Views/family_profile.php');
             }else{
-                echo "Failed to add family member!";
+                echo "Failed!";
             }
         }
     }else{

@@ -14,11 +14,11 @@
         $notes = $_REQUEST['notes'];
         
         if($report_name == ""){
-            echo "Report name is required!";
+            echo "Report name needed!";
         }else if($report_type == ""){
-            echo "Report type is required!";
+            echo "Report type needed!";
         }else if(!isset($_FILES['myfile']) || $_FILES['myfile']['error'] != 0){
-            echo "Please select a file to upload!";
+            echo "upload file";
         }else{
             
             $src = $_FILES['myfile']['tmp_name'];
@@ -46,11 +46,11 @@
                 if($result){
                     header('location: ../Views/upload_report.php');
                 }else{
-                    echo "Failed to add report!";
+                    echo "Failed to add";
                 }
                 
             }else{
-                echo "File upload error!";
+                echo "upload error!";
             }
         }
     }else{

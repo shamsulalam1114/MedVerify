@@ -15,7 +15,7 @@
         if($result){
             header('location: ../Views/calendar.php');
         }else{
-            echo "Failed to delete appointment!";
+            echo "Failed to delete";
         }
     }else{
         header('location: ../Views/calendar.php');
