@@ -25,7 +25,7 @@
             if($result){
                 header('location: ../Views/dashboard.php');
             }else{
-                echo "Failed to add verification!";
+                echo "Failed to add";
             }
         }
     }else{

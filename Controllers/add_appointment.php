@@ -15,11 +15,11 @@
         $appointment_type = $_REQUEST['appointment_type'];
         
         if($appointment_date == ""){
-            echo "Appointment date is required!";
+            echo "date needed!";
         }else if($doctor_lab == ""){
-            echo "Doctor/Lab name is required!";
+            echo "Doctor/Lab name needed!";
         }else if($appointment_type == ""){
-            echo "Appointment type is required!";
+            echo "Appointment type needed!";
         }else{
             
             $appointment = [
@@ -35,7 +35,7 @@
             if($result){
                 header('location: ../Views/calendar.php');
             }else{
-                echo "Failed to add appointment!";
+                echo "Failed!";
             }
         }
     }else{
