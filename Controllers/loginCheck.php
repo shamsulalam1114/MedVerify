@@ -7,7 +7,9 @@
         $password = $_REQUEST['password'];
 
         if($username == "" || $password == ""){
-            echo "null value!";
+            $_SESSION['error'] = "Username and Password are required!";
+            header('location: ../Views/login.php');
+            exit();
         }else{
 
             $user = ['username'=> $username, 'password'=> $password];
@@ -27,7 +29,9 @@
                     header('location: ../Views/calendar.php');
                 }
             }else{
-                echo "invalid user!";
+                $_SESSION['error'] = "Invalid username or password!";
+                header('location: ../Views/login.php');
+                exit();
             }
         }
     }else{
