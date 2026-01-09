@@ -9,15 +9,25 @@
         $confirm_password = $_REQUEST['confirm_password'];
         
         if($full_name == ""){
-            echo "Full name is required!";
+            $_SESSION['error'] = "Full name is required!";
+            header('location: ../Views/signup.php');
+            exit();
         }else if($username == ""){
-            echo "Username is required!";
+            $_SESSION['error'] = "Username is required!";
+            header('location: ../Views/signup.php');
+            exit();
         }else if($password == ""){
-            echo "Password is required!";
+            $_SESSION['error'] = "Password is required!";
+            header('location: ../Views/signup.php');
+            exit();
         }else if($confirm_password == ""){
-            echo "Confirm password is required!";
+            $_SESSION['error'] = "Confirm password is required!";
+            header('location: ../Views/signup.php');
+            exit();
         }else if($password != $confirm_password){
-            echo "Passwords do not match!";
+            $_SESSION['error'] = "Passwords do not match!";
+            header('location: ../Views/signup.php');
+            exit();
         }else{
             
             $user = [
@@ -30,9 +40,13 @@
             $result = addUser($user);
             
             if($result){
-                header('location: ../Views/login.php?msg=registered');
+                $_SESSION['success'] = "Registration successful! Please login.";
+                header('location: ../Views/login.php');
+                exit();
             }else{
-                echo "Registration failed! Username may already exist.";
+                $_SESSION['error'] = "Registration failed! Username may already exist.";
+                header('location: ../Views/signup.php');
+                exit();
             }
         }
     }else{

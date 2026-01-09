@@ -11,6 +11,12 @@
         $error = $_SESSION['error'];
         unset($_SESSION['error']);
     }
+    
+    $success = "";
+    if(isset($_SESSION['success'])){
+        $success = $_SESSION['success'];
+        unset($_SESSION['success']);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +47,17 @@
         </table>
 
         <br>
+
+        <?php if($success != ""){ ?>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <p style="color: green; font-weight: bold;"><?php echo $success; ?></p>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <?php } ?>
 
         <?php if($error != ""){ ?>
         <table width="100%">
