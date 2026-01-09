@@ -27,7 +27,7 @@
             exit();
         }
         
-        // Check if full name contains only letters and spaces
+        
         $hasInvalidChar = false;
         for($i = 0; $i < strlen($full_name); $i++){
             $char = $full_name[$i];
@@ -43,7 +43,7 @@
             exit();
         }
         
-        // Username validation
+        
         if($username == ""){
             $_SESSION['error'] = "Username is required!";
             header('location: ../Views/signup.php');
@@ -68,7 +68,7 @@
             exit();
         }
         
-        // Password validation
+        
         if($password == ""){
             $_SESSION['error'] = "Password is required!";
             header('location: ../Views/signup.php');
@@ -87,7 +87,7 @@
             exit();
         }
         
-        // Confirm password validation
+        
         if($confirm_password == ""){
             $_SESSION['error'] = "Confirm password is required!";
             header('location: ../Views/signup.php');
@@ -100,7 +100,7 @@
             exit();
         }
         
-        // Check if username already exists
+        
         $allUsers = getAllUsers();
         foreach($allUsers as $existingUser){
             if($existingUser['username'] == $username){
