@@ -92,7 +92,7 @@
                 <td><?php echo $report['report_type']; ?></td>
                 <td><?php echo $report['notes'] ? $report['notes'] : 'N/A'; ?></td>
                 <td>
-                    <!-- <a href="edit_report.php?id=<?php echo $report['report_id']; ?>">Edit</a> | -->
+                    <a href="edit_report.php?id=<?php echo $report['report_id']; ?>">Edit</a> |
                     <a href="../Controllers/delete_report.php?id=<?php echo $report['report_id']; ?>" onclick="return confirm('Are you sure you want to delete this report?')">Delete</a>
                 </td>
             </tr>

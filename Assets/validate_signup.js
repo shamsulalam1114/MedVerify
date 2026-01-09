@@ -4,7 +4,7 @@ function validateSignupForm(){
     var password = document.getElementsByName('password')[0].value;
     var confirm_password = document.getElementsByName('confirm_password')[0].value;
     
-    // Full name validation
+    
     if(full_name == ""){
         alert("Full name is required!");
         return false;
@@ -20,7 +20,7 @@ function validateSignupForm(){
         return false;
     }
     
-    // Check if full name contains only letters and spaces
+    
     var hasInvalidChar = false;
     for(var i = 0; i < full_name.length; i++){
         var char = full_name[i];
@@ -35,7 +35,7 @@ function validateSignupForm(){
         return false;
     }
     
-    // Username validation
+    
     if(username == ""){
         alert("Username is required!");
         return false;
@@ -51,13 +51,13 @@ function validateSignupForm(){
         return false;
     }
     
-    // Check if username contains spaces
+    
     if(username.indexOf(' ') >= 0){
         alert("Username cannot contain spaces!");
         return false;
     }
     
-    // Password validation
+    
     if(password == ""){
         alert("Password is required!");
         return false;
@@ -73,7 +73,7 @@ function validateSignupForm(){
         return false;
     }
     
-    // Confirm password validation
+    
     if(confirm_password == ""){
         alert("Confirm password is required!");
         return false;
