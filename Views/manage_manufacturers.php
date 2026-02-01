@@ -5,37 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Manufacturers - MedVerify</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
     <link rel="stylesheet" href="../Assets/print.css">
     <script src="../Assets/autocomplete.js"></script>
 </head>
 <body>
     <header>
-        <center>
-            <h1>MedVerify</h1>
-            <p><b>Manage Manufacturers</b></p>
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Manufacturer Management System</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="verify_medicine.php">Verify Medicine</a></li>
-                <li><a href="verification_history.php">Verification History</a></li>
-                <li><a href="manage_medicines.php">Manage Medicines</a></li>
-                <li><a href="manage_manufacturers.php"><b>Manage Manufacturers</b></a></li>
-                <li><a href="analytics.php">Analytics</a></li>
-                <li><a href="review_counterfeits.php">Review Reports</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
-                <li><a href="upload_report.php">Upload Report</a></li>
-                <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="verify_medicine.php">Verify</a></li>
+            <li><a href="verification_history.php">History</a></li>
+            <li><a href="manage_medicines.php">Medicines</a></li>
+            <li><a href="manage_manufacturers.php" style="color: var(--primary-color);">Manufacturers</a></li>
+            <li><a href="analytics.php">Analytics</a></li>
+            <li><a href="review_counterfeits.php">Reports</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
-
-    <hr>
 
     <div class="container">
         <div class="header">

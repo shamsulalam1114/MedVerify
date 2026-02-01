@@ -24,8 +24,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Appointment</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <title>Edit Appointment - MedVerify</title>
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="../Assets/validate_edit_appointment.js"></script>
 </head>
 <body>

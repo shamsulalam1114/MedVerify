@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password - MedVerify</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
 </head>
 <body>
     <nav>

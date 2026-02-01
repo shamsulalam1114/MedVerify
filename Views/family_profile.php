@@ -22,40 +22,36 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Family Profile</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <title>Family Profile - MedVerify</title>
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="../Assets/family_profile.js"></script>
     <script src="../Assets/validate_family.js"></script>
 </head>
 <body id="top">
     <form action="../Controllers/home.php" method="post" enctype="">
     <header>
-        <center>
-            <h1>MedVerify</h1>
-
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Family Profile Management</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
-                <?php } ?>
-                <li><a href="verify_medicine.php">Verify Medicine</a></li>
-                <li><a href="upload_report.php">Upload Report</a></li>
-                <li><a href="calendar.php">Calendar</a></li>
-                <li><a href="family_profile.php"><b>Family Profile</b></a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="view_reports.php">Reports</a></li>
+            <?php } ?>
+            <li><a href="verify_medicine.php">Verify</a></li>
+            <li><a href="upload_report.php">Upload</a></li>
+            <li><a href="calendar.php">Calendar</a></li>
+            <li><a href="family_profile.php" style="color: var(--primary-color);">Family</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
-    <hr>
-
     <main>
-        
+        <div class="fade-in">
         <table width="100%">
             <tr>
                 <td align="center">

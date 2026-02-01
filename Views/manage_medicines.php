@@ -57,46 +57,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Medicines - MedVerify</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
     <link rel="stylesheet" href="../Assets/print.css" media="print">
     <script src="../Assets/autocomplete.js"></script>
 </head>
 <body id="top">
     <header>
-        <center>
-            <h1>MedVerify</h1>
-            <p><b>Medicine Database Management</b></p>
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Medicine Database Management</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="verify_medicine.php">Verify Medicine</a></li>
-                <li><a href="verification_history.php">Verification History</a></li>
-                <li><a href="manage_medicines.php"><b>Manage Medicines</b></a></li>
-                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="verify_medicine.php">Verify</a></li>
+            <li><a href="verification_history.php">History</a></li>
+            <li><a href="manage_medicines.php" style="color: var(--primary-color);">Medicines</a></li>
+            <li><a href="manage_manufacturers.php">Manufacturers</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
-    <hr>
-
     <main>
-        <!-- Title -->
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h2>💊 Medicine Database Management</h2>
-                    <p><i>Admin Panel - Add, Edit, Delete Medicines</i></p>
-                </td>
-            </tr>
-        </table>
-
-        <br>
+        <div class="fade-in">
+            <h2 class="section-title">💊 Medicine Database Management</h2>
 
         <!-- Success/Error Messages -->
         <?php if($success != ""){ ?>

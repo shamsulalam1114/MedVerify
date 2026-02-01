@@ -20,58 +20,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Appointments</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <title>My Appointments - MedVerify</title>
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="../Assets/calendar.js"></script>
     <script src="../Assets/validate_appointment.js"></script>
 </head>
 <body id="top">
     <header>
-        <center>
-            <h1>MedVerify</h1>
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Appointment Management System</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
-                <?php } ?>
-                <li><a href="verify_medicine.php">Verify Medicine</a></li>
-                <li><a href="upload_report.php">Upload Report</a></li>
-                <li><a href="calendar.php">Calendar</a></li>
-                <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="view_reports.php">View Reports</a></li>
+            <?php } ?>
+            <li><a href="verify_medicine.php">Verify Medicine</a></li>
+            <li><a href="upload_report.php">Upload Report</a></li>
+            <li><a href="calendar.php" style="color: var(--primary-color);">Calendar</a></li>
+            <li><a href="family_profile.php">Family Profile</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
-    <hr>
-
     <main>
-        
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h2><?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? 'All Appointments' : 'My Appointments'; ?></h2>
-                </td>
-            </tr>
-        </table>
-
-        <br><br>
-
-        
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h3><?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? 'All Users Appointments' : 'Upcoming Appointments'; ?></h3>
-                </td>
-            </tr>
-        </table>
-
-        <table border="1" width="100%" id="appointmentsTable">
+        <div class="fade-in">
+            <h2 class="section-title">📅 <?php echo (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') ? 'All Appointments' : 'My Appointments'; ?></h2>
             <tr>
                 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
                 <th>Username</th>

@@ -74,7 +74,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Counterfeit Reports - MedVerify</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
     <link rel="stylesheet" href="../Assets/print.css" media="print">
     <script src="../Assets/autocomplete.js"></script>
 </head>
