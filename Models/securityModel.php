@@ -1,18 +1,10 @@
 <?php
-/**
- * MedVerify Security Module
- * Implements CSRF protection, XSS prevention, rate limiting, and security headers
- */
 
-// Security Configuration
-define('CSRF_TOKEN_EXPIRE', 3600); // 1 hour
-define('RATE_LIMIT_REQUESTS', 100); // Max requests per window
-define('RATE_LIMIT_WINDOW', 3600); // 1 hour window
-define('SESSION_TIMEOUT', 1800); // 30 minutes
+define('CSRF_TOKEN_EXPIRE', 3600);
+define('RATE_LIMIT_REQUESTS', 100);
+define('RATE_LIMIT_WINDOW', 3600);
+define('SESSION_TIMEOUT', 1800);
 
-/**
- * Generate CSRF Token
- */
 function generateCSRFToken() {
     if (!isset($_SESSION['csrf_token']) || !isset($_SESSION['csrf_token_time']) || 
         (time() - $_SESSION['csrf_token_time']) > CSRF_TOKEN_EXPIRE) {
@@ -22,36 +14,25 @@ function generateCSRFToken() {
     return $_SESSION['csrf_token'];
 }
 
-/**
- * Validate CSRF Token
- */
 function validateCSRFToken($token) {
     if (!isset($_SESSION['csrf_token']) || !isset($_SESSION['csrf_token_time'])) {
         return false;
     }
     
-    // Check if token expired
     if ((time() - $_SESSION['csrf_token_time']) > CSRF_TOKEN_EXPIRE) {
         unset($_SESSION['csrf_token']);
         unset($_SESSION['csrf_token_time']);
         return false;
     }
     
-    // Timing-safe comparison
     return hash_equals($_SESSION['csrf_token'], $token);
 }
 
-/**
- * Get CSRF Token HTML Input
- */
 function getCSRFInput() {
     $token = generateCSRFToken();
     return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">';
 }
 
-/**
- * XSS Prevention - Clean user input
- */
 function cleanInput($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -59,16 +40,10 @@ function cleanInput($data) {
     return $data;
 }
 
-/**
- * SQL Injection Prevention - Enhanced escaping
- */
 function sanitizeSQL($con, $data) {
     return mysqli_real_escape_string($con, trim($data));
 }
 
-/**
- * Rate Limiting
- */
 function checkRateLimit($identifier = null) {
     if ($identifier === null) {
         $identifier = $_SERVER['REMOTE_ADDR'];
@@ -79,34 +54,26 @@ function checkRateLimit($identifier = null) {
     $currentTime = time();
     $requests = [];
     
-    // Load existing requests
     if (file_exists($rateLimitFile)) {
         $content = file_get_contents($rateLimitFile);
         $requests = json_decode($content, true) ?: [];
     }
     
-    // Filter requests within the time window
     $requests = array_filter($requests, function($timestamp) use ($currentTime) {
         return ($currentTime - $timestamp) < RATE_LIMIT_WINDOW;
     });
     
-    // Check if limit exceeded
     if (count($requests) >= RATE_LIMIT_REQUESTS) {
         return false;
     }
     
-    // Add current request
     $requests[] = $currentTime;
     file_put_contents($rateLimitFile, json_encode($requests));
     
     return true;
 }
 
-/**
- * Session Security
- */
 function secureSession() {
-    // Regenerate session ID periodically
     if (!isset($_SESSION['created'])) {
         $_SESSION['created'] = time();
     } else if (time() - $_SESSION['created'] > SESSION_TIMEOUT) {
@@ -114,7 +81,6 @@ function secureSession() {
         $_SESSION['created'] = time();
     }
     
-    // Session fixation prevention
     if (!isset($_SESSION['user_agent'])) {
         $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
     } else if ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
@@ -122,7 +88,6 @@ function secureSession() {
         return false;
     }
     
-    // IP validation (optional, can cause issues with load balancers)
     if (!isset($_SESSION['user_ip'])) {
         $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
     }
@@ -130,43 +95,23 @@ function secureSession() {
     return true;
 }
 
-/**
- * Set Security Headers
- */
 function setSecurityHeaders() {
-    // Prevent clickjacking
     header('X-Frame-Options: SAMEORIGIN');
-    
-    // XSS Protection
     header('X-XSS-Protection: 1; mode=block');
-    
-    // Prevent MIME type sniffing
     header('X-Content-Type-Options: nosniff');
-    
-    // Referrer Policy
     header('Referrer-Policy: strict-origin-when-cross-origin');
-    
-    // Content Security Policy (basic - adjust as needed)
     header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:;");
     
-    // HSTS (HTTP Strict Transport Security) - Enable on HTTPS only
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
     }
 }
 
-/**
- * Validate Email Format
- */
 function isValidEmail($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
-/**
- * Strong Password Validation
- */
 function isStrongPassword($password) {
-    // Minimum 8 characters, at least one uppercase, one lowercase, one number
     $uppercase = preg_match('@[A-Z]@', $password);
     $lowercase = preg_match('@[a-z]@', $password);
     $number    = preg_match('@[0-9]@', $password);
@@ -175,30 +120,18 @@ function isStrongPassword($password) {
     return $uppercase && $lowercase && $number && $length;
 }
 
-/**
- * Hash Password (use for new implementations)
- */
 function hashPassword($password) {
     return password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 }
 
-/**
- * Verify Password (use with hashPassword)
- */
 function verifyPassword($password, $hash) {
     return password_verify($password, $hash);
 }
 
-/**
- * Generate Random Token
- */
 function generateRandomToken($length = 32) {
     return bin2hex(random_bytes($length));
 }
 
-/**
- * Log Security Event
- */
 function logSecurityEvent($event, $details = []) {
     $logFile = dirname(__FILE__) . '/../logs/security_log.txt';
     $logDir = dirname($logFile);
@@ -218,9 +151,6 @@ function logSecurityEvent($event, $details = []) {
     file_put_contents($logFile, json_encode($logEntry) . "\n", FILE_APPEND);
 }
 
-/**
- * Check if IP is blacklisted
- */
 function isIPBlacklisted($ip) {
     $blacklistFile = dirname(__FILE__) . '/../config/ip_blacklist.txt';
     
@@ -232,20 +162,13 @@ function isIPBlacklisted($ip) {
     return in_array($ip, $blacklist);
 }
 
-/**
- * Add IP to blacklist
- */
 function addToBlacklist($ip, $reason = '') {
     $blacklistFile = dirname(__FILE__) . '/../config/ip_blacklist.txt';
     $logEntry = $ip . ' // ' . $reason . ' // ' . date('Y-m-d H:i:s') . "\n";
     file_put_contents($blacklistFile, $logEntry, FILE_APPEND);
 }
 
-/**
- * Initialize Security
- */
 function initSecurity() {
-    // Start session securely
     if (session_status() === PHP_SESSION_NONE) {
         ini_set('session.cookie_httponly', 1);
         ini_set('session.use_only_cookies', 1);
@@ -253,25 +176,20 @@ function initSecurity() {
         session_start();
     }
     
-    // Set security headers
     setSecurityHeaders();
     
-    // Check if IP is blacklisted
     if (isIPBlacklisted($_SERVER['REMOTE_ADDR'])) {
         http_response_code(403);
         die('Access Denied');
     }
     
-    // Check rate limit
     if (!checkRateLimit()) {
         http_response_code(429);
         die('Too Many Requests - Please try again later');
     }
     
-    // Secure existing session
     secureSession();
 }
 
-// Auto-initialize security on include
 initSecurity();
 ?>
