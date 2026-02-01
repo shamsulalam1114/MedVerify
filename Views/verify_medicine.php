@@ -27,7 +27,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Medicine - MedVerify</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="../Assets/validate_medicine.js"></script>
     <style>
@@ -35,119 +35,106 @@
             width: 100%;
             max-width: 600px;
             margin: 20px auto;
-            border: 3px solid #4CAF50;
-            border-radius: 10px;
+            border: 3px solid var(--secondary-color);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             display: none;
+            background: white;
+            box-shadow: var(--shadow-xl);
         }
         #scanner-region {
             position: relative;
             min-height: 300px;
         }
         .scanner-controls {
-            padding: 15px;
-            background-color: #f0f0f0;
+            padding: var(--spacing);
+            background: var(--gray-50);
             text-align: center;
         }
         .scanner-status {
-            padding: 12px;
-            background-color: #e6f7ff;
+            padding: var(--spacing);
+            background: var(--info-bg);
             text-align: center;
-            font-weight: bold;
-            color: #0066cc;
+            font-weight: 600;
+            color: var(--info-text);
         }
         #scanner-result {
-            padding: 15px;
-            background-color: #e6ffe6;
-            color: green;
-            font-weight: bold;
+            padding: var(--spacing);
+            background: var(--success-bg);
+            color: var(--success-text);
+            font-weight: 600;
             text-align: center;
             display: none;
         }
         .scan-button {
-            background-color: #4CAF50;
+            background: var(--secondary-color);
             color: white;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: var(--spacing) var(--spacing-lg);
+            font-size: 1rem;
+            font-weight: 600;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--radius);
             cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
         .scan-button:hover {
-            background-color: #45a049;
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
         .stop-button {
-            background-color: #f44336;
+            background: var(--accent-danger);
             color: white;
-            padding: 10px 20px;
-            font-weight: bold;
+            padding: var(--spacing-sm) var(--spacing);
+            font-weight: 600;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--radius);
             cursor: pointer;
         }
     </style>
 </head>
 <body id="top">
     <header>
-        <center>
-            <h1>MedVerify</h1>
-            <p><b>Medicine Authentication System</b></p>
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Medicine Authentication System</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="verification_history.php">Verification History</a></li>
-                <li><a href="manage_medicines.php">Manage Medicines</a></li>
-                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
-                <li><a href="analytics.php">Analytics</a></li>
-                <li><a href="review_counterfeits.php">Review Reports</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
-                <?php } ?>
-                <li><a href="verify_medicine.php"><b>Verify Medicine</b></a></li>
-                <li><a href="report_counterfeit.php">Report Counterfeit</a></li>
-                <li><a href="upload_report.php">Upload Report</a></li>
-                <li><a href="calendar.php">Calendar</a></li>
-                <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="verification_history.php">History</a></li>
+            <li><a href="manage_medicines.php">Medicines</a></li>
+            <li><a href="manage_manufacturers.php">Manufacturers</a></li>
+            <li><a href="analytics.php">Analytics</a></li>
+            <li><a href="review_counterfeits.php">Reports</a></li>
+            <li><a href="view_reports.php">View Reports</a></li>
+            <?php } ?>
+            <li><a href="verify_medicine.php" style="color: var(--primary-color);">Verify Medicine</a></li>
+            <li><a href="report_counterfeit.php">Report</a></li>
+            <li><a href="upload_report.php">Upload</a></li>
+            <li><a href="calendar.php">Calendar</a></li>
+            <li><a href="family_profile.php">Family</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
-    <hr>
-
     <main>
-        <!-- Title -->
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h2>🔍 Verify Medicine Authenticity</h2>
-                    <p><i>Check if your medicine is genuine or counterfeit</i></p>
-                </td>
-            </tr>
-        </table>
+        <div class="fade-in">
+            <h2 class="section-title">🔍 Verify Medicine Authenticity</h2>
+            <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">Check if your medicine is genuine or counterfeit using AI-powered analysis</p>
 
-        <br>
+            <?php if($error != ""){ ?>
+            <div class="alert alert-error">
+                ✕ <?php echo $error; ?>
+            </div>
+            <?php } ?>
 
-        <!-- Error Message -->
-        <?php if($error != ""){ ?>
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <p style="color: red; font-weight: bold;"><?php echo $error; ?></p>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <?php } ?>
-
-        <!-- Statistics Cards -->
-        <table border="1" width="100%">
-            <tr>
+            <!-- Statistics Cards -->
+            <div class="grid grid-3" style="margin-bottom: 2rem;">
                 <td align="center" class="card-blue" width="33%">
                     <h3>Today's Verifications</h3>
                     <br>

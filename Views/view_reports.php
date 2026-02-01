@@ -25,36 +25,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Reports</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <title>View Reports - MedVerify</title>
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="../Assets/view_reports.js"></script>
 </head>
 <body id="top">
     <form action="../Controllers/home.php" method="post" enctype="">
     <header>
-        <center>
-            <h1>MedVerify</h1>
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Medical Reports System</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="verify_medicine.php">Verify Medicine</a></li>
-                <li><a href="verification_history.php">Verification History</a></li>
-                <li><a href="view_reports.php"><b>View Reports</b></a></li>
-                <li><a href="upload_report.php">Upload Report</a></li>
-                <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="verify_medicine.php">Verify</a></li>
+            <li><a href="verification_history.php">History</a></li>
+            <li><a href="view_reports.php" style="color: var(--primary-color);">View Reports</a></li>
+            <li><a href="upload_report.php">Upload</a></li>
+            <li><a href="family_profile.php">Family</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
-    <hr>
-
     <main>
-        
+        <div class="fade-in">
         <table width="100%">
             <tr>
                 <td align="center">

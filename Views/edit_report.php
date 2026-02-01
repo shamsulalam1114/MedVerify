@@ -25,7 +25,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Report</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="../Assets/validate_edit_report.js"></script>
 </head>
 <body>

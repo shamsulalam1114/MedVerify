@@ -25,7 +25,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Family Member</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/professional.css">
     <script src="../Assets/validate_edit_family.js"></script>
 </head>
 <body>
