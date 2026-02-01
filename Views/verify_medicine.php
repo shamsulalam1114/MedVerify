@@ -45,9 +45,11 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="review_counterfeits.php">Review Reports</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <?php } ?>
                 <li><a href="verify_medicine.php"><b>Verify Medicine</b></a></li>
+                <li><a href="report_counterfeit.php">Report Counterfeit</a></li>
                 <li><a href="upload_report.php">Upload Report</a></li>
                 <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>

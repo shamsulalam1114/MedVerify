@@ -4,6 +4,7 @@
     require_once('../Models/reportModel.php');
     require_once('../Models/appointmentModel.php');
     require_once('../Models/medicineVerificationModel.php');
+    require_once('../Models/counterfeitModel.php');
     
     if(!isset($_SESSION['user_id'])){
         header('location: ../Views/login.php');
@@ -22,6 +23,10 @@
     $todayCount = getTodayVerificationCount();
     $recentVerifications = getRecentVerifications(5);
     $unresolvedAlerts = getUnresolvedAlertsCount();
+    
+    // Get counterfeit statistics
+    $counterfeitStats = getCounterfeitStats();
+    $pendingCounterfeits = getPendingCounterfeitCount();
     
     // Calculate percentages
     $totalVerifications = $verificationStats['total_verifications'];
@@ -64,6 +69,7 @@
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="review_counterfeits.php">Review Reports</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.php">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>
@@ -89,7 +95,7 @@
         
         <table border="1" width="100%">
             <tr>
-                <td align="center" class="card-blue" id="card1">
+                <td align="center" class="card-blue" id="card1" width="25%">
                     <h3>🔍 Today's Verifications</h3>
                     <br>
                     <h1 id="verificationsCount"><?php echo $todayCount; ?></h1>
@@ -98,7 +104,7 @@
                     <a href="verify_medicine.php">Verify Medicine</a>
                 </td>
 
-                <td align="center" class="card-green" id="card2">
+                <td align="center" class="card-green" id="card2" width="25%">
                     <h3>✅ Genuine Medicines</h3>
                     <br>
                     <h1 id="genuineCount"><?php echo $genuineCount; ?></h1>
@@ -107,13 +113,22 @@
                     <a href="verification_history.php">View History</a>
                 </td>
 
-                <td align="center" class="card-orange" id="card3">
+                <td align="center" class="card-orange" id="card3" width="25%">
                     <h3>⚠️ Alerts</h3>
                     <br>
                     <h1 id="alertsCount" style="color: <?php echo $counterfeitTotal > 0 ? 'red' : 'green'; ?>;"><?php echo $counterfeitTotal; ?></h1>
                     <p>Counterfeit/Suspicious Detected</p>
                     <br>
                     <a href="verification_history.php">View Alerts</a>
+                </td>
+
+                <td align="center" class="card-red" id="card4" width="25%">
+                    <h3>🚨 Counterfeit Reports</h3>
+                    <br>
+                    <h1 style="color: <?php echo $pendingCounterfeits > 0 ? 'red' : 'green'; ?>;"><?php echo $pendingCounterfeits; ?></h1>
+                    <p>Pending Review</p>
+                    <br>
+                    <a href="review_counterfeits.php">Review Reports</a>
                 </td>
             </tr>
         </table>
@@ -126,6 +141,7 @@
                 <td align="center">
                     <a href="verify_medicine.php"><button style="background-color: lightgreen; padding: 15px 30px; font-weight: bold;">🔍 Verify Medicine</button></a>
                     <a href="manage_medicines.php"><button style="background-color: lightblue; padding: 15px 30px; font-weight: bold;">💊 Manage Medicines</button></a>
+                    <a href="review_counterfeits.php"><button style="background-color: lightcoral; padding: 15px 30px; font-weight: bold;">🚨 Review Reports</button></a>
                     <a href="view_reports.php"><button>📄 View Reports</button></a>
                     <a href="calendar.php"><button>📅 Appointments</button></a>
                 </td>
