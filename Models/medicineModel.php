@@ -168,50 +168,6 @@ function getTotalMedicinesCount(){
     return 0;
 }
 
-// Add new medicine
-function addMedicine($medicine){
-    $con = getConnection();
-    $sql = "INSERT INTO medicines (medicine_name, generic_name, manufacturer_id, category, dosage_form, 
-            strength, barcode, batch_number, manufacturing_date, expiry_date, mrp, description, 
-            composition, prescription_required, status) 
-            VALUES ('{$medicine['medicine_name']}', '{$medicine['generic_name']}', '{$medicine['manufacturer_id']}', 
-            '{$medicine['category']}', '{$medicine['dosage_form']}', '{$medicine['strength']}', 
-            '{$medicine['barcode']}', '{$medicine['batch_number']}', '{$medicine['manufacturing_date']}', 
-            '{$medicine['expiry_date']}', '{$medicine['mrp']}', '{$medicine['description']}', 
-            '{$medicine['composition']}', '{$medicine['prescription_required']}', '{$medicine['status']}')";
-    
-    $result = mysqli_query($con, $sql);
-    return $result;
-}
-
-// Update medicine
-function updateMedicine($medicine){
-    $con = getConnection();
-    $sql = "UPDATE medicines SET 
-            medicine_name = '{$medicine['medicine_name']}', 
-            generic_name = '{$medicine['generic_name']}', 
-            manufacturer_id = '{$medicine['manufacturer_id']}', 
-            category = '{$medicine['category']}', 
-            dosage_form = '{$medicine['dosage_form']}', 
-            strength = '{$medicine['strength']}', 
-            mrp = '{$medicine['mrp']}', 
-            description = '{$medicine['description']}', 
-            prescription_required = '{$medicine['prescription_required']}', 
-            status = '{$medicine['status']}' 
-            WHERE medicine_id = '{$medicine['medicine_id']}'";
-    
-    $result = mysqli_query($con, $sql);
-    return $result;
-}
-
-// Delete medicine
-function deleteMedicine($id){
-    $con = getConnection();
-    $sql = "DELETE FROM medicines WHERE medicine_id = '$id'";
-    $result = mysqli_query($con, $sql);
-    return $result;
-}
-
 // Get medicines by category
 function getMedicinesByCategory($category){
     $con = getConnection();

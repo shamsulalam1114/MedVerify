@@ -20,7 +20,7 @@ function getAllCounterfeitReports(){
     $sql = "SELECT rc.*, m.medicine_name, m.manufacturer_id, mf.manufacturer_name, 
             u.username, u.email 
             FROM reported_counterfeits rc 
-            LEFT JOIN medicines m ON rc.medicine_id = m.medicine_id 
+            LEFT JOIN medicines m ON rc.report_medicine_id = m.medicine_id 
             LEFT JOIN manufacturers mf ON m.manufacturer_id = mf.manufacturer_id 
             LEFT JOIN users u ON rc.user_id = u.user_id 
             ORDER BY rc.reported_date DESC";
@@ -40,7 +40,7 @@ function getCounterfeitReportById($id){
     $sql = "SELECT rc.*, m.medicine_name, m.generic_name, m.manufacturer_id, 
             mf.manufacturer_name, u.username, u.email, u.phone 
             FROM reported_counterfeits rc 
-            LEFT JOIN medicines m ON rc.medicine_id = m.medicine_id 
+            LEFT JOIN medicines m ON rc.report_medicine_id = m.medicine_id 
             LEFT JOIN manufacturers mf ON m.manufacturer_id = mf.manufacturer_id 
             LEFT JOIN users u ON rc.user_id = u.user_id 
             WHERE rc.report_id = '$id'";
@@ -57,7 +57,7 @@ function getUserCounterfeitReports($user_id){
     $con = getConnection();
     $sql = "SELECT rc.*, m.medicine_name, mf.manufacturer_name 
             FROM reported_counterfeits rc 
-            LEFT JOIN medicines m ON rc.medicine_id = m.medicine_id 
+            LEFT JOIN medicines m ON rc.report_medicine_id = m.medicine_id 
             LEFT JOIN manufacturers mf ON m.manufacturer_id = mf.manufacturer_id 
             WHERE rc.user_id = '$user_id' 
             ORDER BY rc.reported_date DESC";
@@ -147,7 +147,7 @@ function getRecentCounterfeitReports($limit = 10){
     $con = getConnection();
     $sql = "SELECT rc.*, m.medicine_name, mf.manufacturer_name, u.username 
             FROM reported_counterfeits rc 
-            LEFT JOIN medicines m ON rc.medicine_id = m.medicine_id 
+            LEFT JOIN medicines m ON rc.report_medicine_id = m.medicine_id 
             LEFT JOIN manufacturers mf ON m.manufacturer_id = mf.manufacturer_id 
             LEFT JOIN users u ON rc.user_id = u.user_id 
             ORDER BY rc.reported_date DESC 
