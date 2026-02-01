@@ -13,20 +13,20 @@
         exit();
     }
     
-    // Get filter parameters
     $filter_result = isset($_GET['filter_result']) ? $_GET['filter_result'] : 'All';
     $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+    $date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $records_per_page = 20;
+    $offset = ($page - 1) * $records_per_page;
     
-    // Get all verifications
     $verifications = getAllVerifications();
     
-    // Apply filters
     $filtered_verifications = [];
     foreach($verifications as $verify){
-        // Filter by result
         $result_match = ($filter_result == 'All' || $verify['verification_result'] == $filter_result);
         
-        // Filter by search
         $search_match = true;
         if($search_query != ''){
             $search_match = (
@@ -37,10 +37,21 @@
             );
         }
         
-        if($result_match && $search_match){
+        $date_match = true;
+        if($date_from != '' || $date_to != ''){
+            $verify_date = date('Y-m-d', strtotime($verify['verified_at']));
+            if($date_from != '' && $verify_date < $date_from) $date_match = false;
+            if($date_to != '' && $verify_date > $date_to) $date_match = false;
+        }
+        
+        if($result_match && $search_match && $date_match){
             array_push($filtered_verifications, $verify);
         }
     }
+    
+    $total_records = count($filtered_verifications);
+    $total_pages = ceil($total_records / $records_per_page);
+    $filtered_verifications = array_slice($filtered_verifications, $offset, $records_per_page);
     
     // Get statistics
     $stats = getOverallVerificationStats();
@@ -54,6 +65,7 @@
     <title>Verification History - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <link rel="stylesheet" href="../Assets/print.css" media="print">
+    <script src="../Assets/autocomplete.js"></script>
 </head>
 <body id="top">
     <header>
@@ -141,8 +153,8 @@
 
         <table border="1" width="100%">
             <tr>
-                <td width="20%"><b>Filter by Result:</b></td>
-                <td width="30%">
+                <td width="15%"><b>Filter by Result:</b></td>
+                <td width="20%">
                     <select name="filter_result" style="width: 100%">
                         <option value="All" <?php echo $filter_result == 'All' ? 'selected' : ''; ?>>All Results</option>
                         <option value="Genuine" <?php echo $filter_result == 'Genuine' ? 'selected' : ''; ?>>✅ Genuine Only</option>
@@ -152,10 +164,21 @@
                         <option value="Not Found" <?php echo $filter_result == 'Not Found' ? 'selected' : ''; ?>>🔍 Not Found Only</option>
                     </select>
                 </td>
-                <td width="20%"><b>Search:</b></td>
-                <td width="30%">
-                    <input type="text" name="search" value="<?php echo htmlspecialchars($search_query); ?>" placeholder="Barcode, Medicine, User..." style="width: 100%">
+                <td width="15%"><b>Search:</b></td>
+                <td width="20%">
+                    <input type="text" name="search" id="search" value="<?php echo htmlspecialchars($search_query); ?>" placeholder="Barcode, Medicine, User..." style="width: 100%">
                 </td>
+                <td width="15%"><b>Date From:</b></td>
+                <td width="15%">
+                    <input type="date" name="date_from" value="<?php echo htmlspecialchars($date_from); ?>" style="width: 100%">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Date To:</b></td>
+                <td>
+                    <input type="date" name="date_to" value="<?php echo htmlspecialchars($date_to); ?>" style="width: 100%">
+                </td>
+                <td colspan="4"></td>
             </tr>
         </table>
 
@@ -177,7 +200,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>📋 Verification Records (<?php echo count($filtered_verifications); ?> results)</h3>
+                    <h3>📋 Verification Records (<?php echo $total_records; ?> results - Page <?php echo $page; ?> of <?php echo max(1, $total_pages); ?>)</h3>
                 </td>
             </tr>
         </table>
@@ -276,7 +299,44 @@
             ?>
         </table>
 
-        <br><br>
+        <br>
+
+        <!-- Pagination -->
+        <?php if($total_pages > 1){ ?>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <?php
+                    $query_params = "filter_result=" . urlencode($filter_result) . "&search=" . urlencode($search_query) . "&date_from=" . urlencode($date_from) . "&date_to=" . urlencode($date_to);
+                    
+                    if($page > 1){
+                        echo '<a href="?page=1&' . $query_params . '"><button>« First</button></a> ';
+                        echo '<a href="?page=' . ($page - 1) . '&' . $query_params . '"><button>‹ Prev</button></a> ';
+                    }
+                    
+                    $start_page = max(1, $page - 2);
+                    $end_page = min($total_pages, $page + 2);
+                    
+                    for($i = $start_page; $i <= $end_page; $i++){
+                        if($i == $page){
+                            echo '<button style="background-color: #667eea; color: white; font-weight: bold;">' . $i . '</button> ';
+                        }else{
+                            echo '<a href="?page=' . $i . '&' . $query_params . '"><button>' . $i . '</button></a> ';
+                        }
+                    }
+                    
+                    if($page < $total_pages){
+                        echo '<a href="?page=' . ($page + 1) . '&' . $query_params . '"><button>Next ›</button></a> ';
+                        echo '<a href="?page=' . $total_pages . '&' . $query_params . '"><button>Last »</button></a>';
+                    }
+                    ?>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <?php } ?>
+
+        <br>
 
         <!-- Export Options -->
         <table width="100%">
@@ -335,5 +395,9 @@
             <p>&copy; 2025 MedVerify | Admin Panel</p>
         </center>
     </footer>
+    
+    <script>
+        initAutocomplete('search', '../Controllers/autocomplete_medicines.php');
+    </script>
 </body>
 </html>

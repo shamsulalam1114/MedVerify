@@ -12,19 +12,45 @@
         exit();
     }
     
-    // Get filter parameter
     $filter_status = isset($_GET['filter_status']) ? $_GET['filter_status'] : 'All';
+    $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+    $date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $records_per_page = 20;
+    $offset = ($page - 1) * $records_per_page;
     
-    // Get all reports
     $allReports = getAllCounterfeitReports();
     
-    // Apply filter
-    $reports = [];
+    $filtered_reports = [];
     foreach($allReports as $report){
-        if($filter_status == 'All' || $report['status'] == $filter_status){
-            array_push($reports, $report);
+        $status_match = ($filter_status == 'All' || $report['status'] == $filter_status);
+        
+        $search_match = true;
+        if($search_query != ''){
+            $search_match = (
+                stripos($report['medicine_name'], $search_query) !== false ||
+                stripos($report['suspected_manufacturer'], $search_query) !== false ||
+                stripos($report['barcode'], $search_query) !== false ||
+                stripos($report['username'], $search_query) !== false
+            );
+        }
+        
+        $date_match = true;
+        if($date_from != '' || $date_to != ''){
+            $report_date = date('Y-m-d', strtotime($report['reported_at']));
+            if($date_from != '' && $report_date < $date_from) $date_match = false;
+            if($date_to != '' && $report_date > $date_to) $date_match = false;
+        }
+        
+        if($status_match && $search_match && $date_match){
+            array_push($filtered_reports, $report);
         }
     }
+    
+    $total_records = count($filtered_reports);
+    $total_pages = ceil($total_records / $records_per_page);
+    $reports = array_slice($filtered_reports, $offset, $records_per_page);
     
     // Get statistics
     $stats = getCounterfeitStats();
@@ -50,6 +76,7 @@
     <title>Review Counterfeit Reports - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <link rel="stylesheet" href="../Assets/print.css" media="print">
+    <script src="../Assets/autocomplete.js"></script>
 </head>
 <body id="top">
     <header>
@@ -167,7 +194,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>🔍 Filter Reports</h3>
+                    <h3>🔍 Search & Filter Reports</h3>
                 </td>
             </tr>
         </table>
@@ -175,14 +202,33 @@
         <form action="review_counterfeits.php" method="get">
         <table border="1" width="100%">
             <tr>
-                <td width="30%"><b>Filter by Status:</b></td>
-                <td width="70%">
-                    <select name="filter_status" style="width: 50%" onchange="this.form.submit()">
+                <td width="15%"><b>Filter by Status:</b></td>
+                <td width="20%">
+                    <select name="filter_status" style="width: 100%">
                         <option value="All" <?php echo ($filter_status == 'All') ? 'selected' : ''; ?>>All Reports</option>
-                        <option value="Pending" <?php echo ($filter_status == 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                        <option value="Verified" <?php echo ($filter_status == 'Verified') ? 'selected' : ''; ?>>Verified</option>
-                        <option value="Rejected" <?php echo ($filter_status == 'Rejected') ? 'selected' : ''; ?>>Rejected</option>
+                        <option value="Pending" <?php echo ($filter_status == 'Pending') ? 'selected' : ''; ?>>⏳ Pending</option>
+                        <option value="Verified Fake" <?php echo ($filter_status == 'Verified Fake') ? 'selected' : ''; ?>>✅ Verified Fake</option>
+                        <option value="Genuine" <?php echo ($filter_status == 'Genuine') ? 'selected' : ''; ?>>❌ Genuine</option>
+                        <option value="Under Investigation" <?php echo ($filter_status == 'Under Investigation') ? 'selected' : ''; ?>>🔍 Investigating</option>
                     </select>
+                </td>
+                <td width="15%"><b>Search:</b></td>
+                <td width="20%">
+                    <input type="text" name="search" id="search" value="<?php echo htmlspecialchars($search_query); ?>" placeholder="Medicine, Manufacturer..." style="width: 100%">
+                </td>
+                <td width="15%"><b>Date From:</b></td>
+                <td width="15%">
+                    <input type="date" name="date_from" value="<?php echo htmlspecialchars($date_from); ?>" style="width: 100%">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Date To:</b></td>
+                <td>
+                    <input type="date" name="date_to" value="<?php echo htmlspecialchars($date_to); ?>" style="width: 100%">
+                </td>
+                <td colspan="4" align="center">
+                    <input type="submit" value="🔍 Apply Filter" style="padding: 10px 30px;">
+                    <a href="review_counterfeits.php"><button type="button">🔄 Reset</button></a>
                 </td>
             </tr>
         </table>
@@ -194,7 +240,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>📋 Counterfeit Reports (<?php echo count($reports); ?> results)</h3>
+                    <h3>📋 Counterfeit Reports (<?php echo $total_records; ?> results - Page <?php echo $page; ?> of <?php echo max(1, $total_pages); ?>)</h3>
                 </td>
             </tr>
         </table>
@@ -291,7 +337,44 @@
         </table>
         <?php } ?>
 
-        <br><br>
+        <br>
+
+        <!-- Pagination -->
+        <?php if($total_pages > 1){ ?>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <?php
+                    $query_params = "filter_status=" . urlencode($filter_status) . "&search=" . urlencode($search_query) . "&date_from=" . urlencode($date_from) . "&date_to=" . urlencode($date_to);
+                    
+                    if($page > 1){
+                        echo '<a href="?page=1&' . $query_params . '"><button>« First</button></a> ';
+                        echo '<a href="?page=' . ($page - 1) . '&' . $query_params . '"><button>‹ Prev</button></a> ';
+                    }
+                    
+                    $start_page = max(1, $page - 2);
+                    $end_page = min($total_pages, $page + 2);
+                    
+                    for($i = $start_page; $i <= $end_page; $i++){
+                        if($i == $page){
+                            echo '<button style="background-color: #667eea; color: white; font-weight: bold;">' . $i . '</button> ';
+                        }else{
+                            echo '<a href="?page=' . $i . '&' . $query_params . '"><button>' . $i . '</button></a> ';
+                        }
+                    }
+                    
+                    if($page < $total_pages){
+                        echo '<a href="?page=' . ($page + 1) . '&' . $query_params . '"><button>Next ›</button></a> ';
+                        echo '<a href="?page=' . $total_pages . '&' . $query_params . '"><button>Last »</button></a>';
+                    }
+                    ?>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <?php } ?>
+
+        <br>
 
         <!-- Status Legend -->
         <table width="100%">
@@ -337,5 +420,9 @@
             <p>&copy; 2025 MedVerify | Admin Panel</p>
         </center>
     </footer>
+    
+    <script>
+        initAutocomplete('search', '../Controllers/autocomplete_medicines.php');
+    </script>
 </body>
 </html>
