@@ -34,6 +34,7 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <?php } ?>
+                <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="upload_report.php"><b>Upload Report</b></a></li>
                 <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>

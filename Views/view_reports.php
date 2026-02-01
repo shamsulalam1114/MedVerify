@@ -41,6 +41,7 @@
         <center>
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="view_reports.php"><b>View Reports</b></a></li>
                 <li><a href="upload_report.php">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>
