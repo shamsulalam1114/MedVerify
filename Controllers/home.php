@@ -30,6 +30,7 @@
                 <li><a href="../Views/dashboard.php">Dashboard</a></li>
                 <li><a href="../Views/view_reports.php">View Reports</a></li>
                 <?php } ?>
+                <li><a href="../Views/verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="../Views/upload_report.php">Upload Report</a></li>
                 <li><a href="../Views/calendar.php">Calendar</a></li>
                 <li><a href="../Views/family_profile.php">Family Profile</a></li>
