@@ -67,7 +67,11 @@
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
                 <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
+                <li><a href="analytics.php">Analytics</a></li>
                 <li><a href="review_counterfeits.php"><b>Review Reports</b></a></li>
+                <li><a href="view_reports.php">View Reports</a></li>
+                <li><a href="upload_report.php">Upload Report</a></li>
+                <li><a href="family_profile.php">Family Profile</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </center>

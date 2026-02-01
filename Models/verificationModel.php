@@ -36,17 +36,6 @@ function addVerification($verification){
     }
 }
 
-function deleteVerification($id){
-    $con = getConnection();
-    $sql = "delete from verifications where verification_id='$id'";
-    
-    if(mysqli_query($con, $sql)){
-        return true;
-    }else{
-        return false;
-    }
-}
-
 function getRecentActivity($user_id){
     $con = getConnection();
     $sql = "select * from activity_log where user_id='$user_id' order by created_at desc limit 3";

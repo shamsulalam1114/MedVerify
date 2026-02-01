@@ -9,23 +9,32 @@
     <link rel="stylesheet" href="../Assets/print.css">
 </head>
 <body>
+    <header>
+        <center>
+            <h1>MedVerify</h1>
+            <p><b>Manage Manufacturers</b></p>
+        </center>
+    </header>
+
     <nav>
-        <div class="nav-brand">MedVerify - AI-Powered Medicine Authentication</div>
-        <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="verify_medicine.php">Verify Medicine</a></li>
-            <li><a href="verification_history.php">Verification History</a></li>
-            <li><a href="manage_medicines.php">Manage Medicines</a></li>
-            <li><a href="manage_manufacturers.php" class="active">Manage Manufacturers</a></li>
-            <li><a href="review_counterfeits.php">Review Reports</a></li>
-            <li><a href="report_counterfeit.php">Report Counterfeit</a></li>
-            <li><a href="family_profile.php">Family Profile</a></li>
-            <li><a href="calendar.php">Calendar</a></li>
-            <li><a href="upload_report.php">Upload Report</a></li>
-            <li><a href="view_reports.php">View Reports</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
+        <center>
+            <ul>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="verify_medicine.php">Verify Medicine</a></li>
+                <li><a href="verification_history.php">Verification History</a></li>
+                <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="manage_manufacturers.php"><b>Manage Manufacturers</b></a></li>
+                <li><a href="analytics.php">Analytics</a></li>
+                <li><a href="review_counterfeits.php">Review Reports</a></li>
+                <li><a href="view_reports.php">View Reports</a></li>
+                <li><a href="upload_report.php">Upload Report</a></li>
+                <li><a href="family_profile.php">Family Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </center>
     </nav>
+
+    <hr>
 
     <div class="container">
         <div class="header">
