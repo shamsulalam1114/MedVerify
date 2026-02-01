@@ -2,7 +2,7 @@
 <?php
     require_once('../Models/medicineVerificationModel.php');
     require_once('../Models/medicineModel.php');
-    require_once('../Models/aiModel.php');
+    require_once('../Models/geminiAI.php');
     
     if(!isset($_SESSION['user_id'])){
         header('location: ../Views/login.php');
@@ -122,42 +122,75 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>🤖 AI Analysis Report</h3>
-                    <p><i>Advanced machine learning analysis completed</i></p>
+                    <h3>🤖 Gemini Pro AI Analysis Report</h3>
+                    <p><i>Powered by Google Generative AI - Real-time intelligent analysis</i></p>
                 </td>
             </tr>
         </table>
 
         <table border="1" width="100%">
-            <?php if(isset($aiReport['analysis_results']['image_verification'])){ 
-                $imgAnalysis = $aiReport['analysis_results']['image_verification'];
+            <?php if(isset($aiReport['analysis_results']['gemini_vision'])){ 
+                $visionAnalysis = $aiReport['analysis_results']['gemini_vision'];
             ?>
             <tr>
-                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
-                    <b>📷 Image Authenticity Analysis</b>
+                <td colspan="2" style="background-color: #4285f4; color: white; padding: 10px; font-weight: bold;">
+                    📷 Gemini Vision AI - Image Analysis
                 </td>
             </tr>
+            <?php if(isset($visionAnalysis['medicine_name'])){ ?>
             <tr>
-                <td width="30%">Authenticity Score:</td>
-                <td width="70%"><?php echo $imgAnalysis['authenticity_score']; ?>%</td>
+                <td width="30%">AI Detected Medicine:</td>
+                <td width="70%"><b><?php echo $visionAnalysis['medicine_name']; ?></b></td>
             </tr>
+            <?php } ?>
+            <?php if(isset($visionAnalysis['manufacturer'])){ ?>
             <tr>
-                <td>Features Detected:</td>
-                <td>
+                <td>AI Detected Manufacturer:</td>
+                <td><?php echo $visionAnalysis['manufacturer']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php if(isset($visionAnalysis['batch_number'])){ ?>
+            <tr>
+                <td>AI Detected Batch Number:</td>
+                <td><?php echo $visionAnalysis['batch_number']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php if(isset($visionAnalysis['expiry_date'])){ ?>
+            <tr>
+                <td>AI Detected Expiry:</td>
+                <td><?php echo $visionAnalysis['expiry_date']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php if(isset($visionAnalysis['authenticity_assessment'])){ ?>
+            <tr>
+                <td>Gemini Assessment:</td>
+                <td style="font-weight: bold; font-size: 16px; color: <?php echo $visionAnalysis['authenticity_assessment'] == 'Genuine' ? 'green' : ($visionAnalysis['authenticity_assessment'] == 'Counterfeit' ? 'red' : 'orange'); ?>;">
+                    <?php echo $visionAnalysis['authenticity_assessment']; ?> 
+                    <?php if(isset($visionAnalysis['confidence_score'])){ ?>
+                        (<?php echo $visionAnalysis['confidence_score']; ?>% confidence)
+                    <?php } ?>
+                </td>
+            </tr>
+            <?php } ?>
+            <?php if(isset($visionAnalysis['counterfeit_signs']) && is_array($visionAnalysis['counterfeit_signs']) && count($visionAnalysis['counterfeit_signs']) > 0){ ?>
+            <tr>
+                <td>Counterfeit Signs Detected:</td>
+                <td style="color: red;">
                     <ul style="margin: 5px 0;">
-                    <?php foreach($imgAnalysis['features_detected'] as $feature){ ?>
-                        <li><?php echo $feature; ?></li>
+                    <?php foreach($visionAnalysis['counterfeit_signs'] as $sign){ ?>
+                        <li><?php echo $sign; ?></li>
                     <?php } ?>
                     </ul>
                 </td>
             </tr>
-            <?php if(count($imgAnalysis['warnings']) > 0){ ?>
+            <?php } ?>
+            <?php if(isset($visionAnalysis['concerns']) && is_array($visionAnalysis['concerns']) && count($visionAnalysis['concerns']) > 0){ ?>
             <tr>
-                <td>AI Warnings:</td>
+                <td>AI Concerns:</td>
                 <td style="color: orange;">
                     <ul style="margin: 5px 0;">
-                    <?php foreach($imgAnalysis['warnings'] as $warning){ ?>
-                        <li><?php echo $warning; ?></li>
+                    <?php foreach($visionAnalysis['concerns'] as $concern){ ?>
+                        <li><?php echo $concern; ?></li>
                     <?php } ?>
                     </ul>
                 </td>
@@ -165,59 +198,99 @@
             <?php } ?>
             <?php } ?>
 
-            <?php if(isset($aiReport['analysis_results']['barcode_verification'])){ 
-                $barcodeAnalysis = $aiReport['analysis_results']['barcode_verification'];
+            <?php if(isset($aiReport['analysis_results']['ocr_extraction'])){ 
+                $ocrResult = $aiReport['analysis_results']['ocr_extraction'];
             ?>
             <tr>
-                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
-                    <b>🔢 Barcode AI Validation</b>
+                <td colspan="2" style="background-color: #4285f4; color: white; padding: 10px; font-weight: bold;">
+                    📝 Gemini OCR - Text Extraction
                 </td>
             </tr>
+            <tr>
+                <td>Extracted Text:</td>
+                <td>
+                    <div style="background-color: #f5f5f5; padding: 10px; font-family: monospace; max-height: 200px; overflow-y: auto;">
+                        <?php echo nl2br(htmlspecialchars($ocrResult['extracted_text'])); ?>
+                    </div>
+                </td>
+            </tr>
+            <?php } ?>
+
+            <?php if(isset($aiReport['analysis_results']['barcode_ai'])){ 
+                $barcodeAI = $aiReport['analysis_results']['barcode_ai'];
+            ?>
+            <tr>
+                <td colspan="2" style="background-color: #4285f4; color: white; padding: 10px; font-weight: bold;">
+                    🔢 Gemini Barcode Analysis
+                </td>
+            </tr>
+            <?php if(isset($barcodeAI['barcode_type'])){ ?>
             <tr>
                 <td>Barcode Type:</td>
-                <td><?php echo $barcodeAnalysis['barcode_type']; ?></td>
+                <td><?php echo $barcodeAI['barcode_type']; ?></td>
             </tr>
+            <?php } ?>
+            <?php if(isset($barcodeAI['is_valid'])){ ?>
             <tr>
-                <td>Validity:</td>
-                <td style="color: <?php echo $barcodeAnalysis['is_valid'] ? 'green' : 'red'; ?>; font-weight: bold;">
-                    <?php echo $barcodeAnalysis['is_valid'] ? '✅ Valid' : '❌ Invalid'; ?>
+                <td>Checksum Validation:</td>
+                <td style="color: <?php echo $barcodeAI['is_valid'] ? 'green' : 'red'; ?>; font-weight: bold;">
+                    <?php echo $barcodeAI['is_valid'] ? '✅ Valid' : '❌ Invalid'; ?>
                 </td>
             </tr>
+            <?php } ?>
+            <?php if(isset($barcodeAI['country_code'])){ ?>
             <tr>
-                <td>AI Confidence:</td>
-                <td><?php echo $barcodeAnalysis['confidence']; ?>%</td>
+                <td>Country Code:</td>
+                <td><?php echo $barcodeAI['country_code']; ?></td>
             </tr>
-            <?php if(count($barcodeAnalysis['warnings']) > 0){ ?>
+            <?php } ?>
+            <?php if(isset($barcodeAI['suspicious_patterns']) && is_array($barcodeAI['suspicious_patterns']) && count($barcodeAI['suspicious_patterns']) > 0){ ?>
             <tr>
-                <td>Pattern Warnings:</td>
+                <td>Suspicious Patterns:</td>
                 <td style="color: orange;">
                     <ul style="margin: 5px 0;">
-                    <?php foreach($barcodeAnalysis['warnings'] as $warning){ ?>
-                        <li><?php echo $warning; ?></li>
+                    <?php foreach($barcodeAI['suspicious_patterns'] as $pattern){ ?>
+                        <li><?php echo $pattern; ?></li>
                     <?php } ?>
                     </ul>
                 </td>
             </tr>
             <?php } ?>
+            <?php if(isset($barcodeAI['authenticity'])){ ?>
+            <tr>
+                <td>Barcode Authenticity:</td>
+                <td style="font-weight: bold;">
+                    <?php echo $barcodeAI['authenticity']; ?>
+                    <?php if(isset($barcodeAI['confidence_score'])){ ?>
+                        (<?php echo $barcodeAI['confidence_score']; ?>% confidence)
+                    <?php } ?>
+                </td>
+            </tr>
+            <?php } ?>
             <?php } ?>
 
-            <?php if(isset($aiReport['analysis_results']['counterfeit_detection'])){ 
-                $counterfeitAI = $aiReport['analysis_results']['counterfeit_detection'];
+            <?php if(isset($aiReport['analysis_results']['counterfeit_ai'])){ 
+                $counterfeitAI = $aiReport['analysis_results']['counterfeit_ai'];
             ?>
             <tr>
-                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
-                    <b>🚨 Counterfeit Pattern Detection</b>
+                <td colspan="2" style="background-color: #4285f4; color: white; padding: 10px; font-weight: bold;">
+                    🚨 Gemini Counterfeit Detection AI
                 </td>
             </tr>
+            <?php if(isset($counterfeitAI['risk_level'])){ ?>
             <tr>
-                <td>Risk Level:</td>
-                <td style="color: <?php echo $counterfeitAI['risk_level'] == 'HIGH' ? 'red' : ($counterfeitAI['risk_level'] == 'MEDIUM' ? 'orange' : 'green'); ?>; font-weight: bold; font-size: 16px;">
-                    <?php echo $counterfeitAI['risk_level']; ?> (<?php echo $counterfeitAI['risk_score']; ?>%)
+                <td>AI Risk Assessment:</td>
+                <td style="color: <?php echo $counterfeitAI['risk_level'] == 'HIGH' ? 'red' : ($counterfeitAI['risk_level'] == 'MEDIUM' ? 'orange' : 'green'); ?>; font-weight: bold; font-size: 18px;">
+                    <?php echo $counterfeitAI['risk_level']; ?>
+                    <?php if(isset($counterfeitAI['risk_score'])){ ?>
+                        RISK (<?php echo $counterfeitAI['risk_score']; ?>/100)
+                    <?php } ?>
                 </td>
             </tr>
-            <?php if(count($counterfeitAI['risk_factors']) > 0){ ?>
+            <?php } ?>
+            <?php if(isset($counterfeitAI['risk_factors']) && is_array($counterfeitAI['risk_factors']) && count($counterfeitAI['risk_factors']) > 0){ ?>
             <tr>
-                <td>Risk Factors Identified:</td>
+                <td>AI Identified Risk Factors:</td>
                 <td>
                     <ul style="margin: 5px 0;">
                     <?php foreach($counterfeitAI['risk_factors'] as $factor){ ?>
@@ -227,47 +300,43 @@
                 </td>
             </tr>
             <?php } ?>
+            <?php if(isset($counterfeitAI['recommendations']) && is_array($counterfeitAI['recommendations']) && count($counterfeitAI['recommendations']) > 0){ ?>
             <tr>
-                <td>AI Recommendations:</td>
-                <td>
+                <td>Gemini Recommendations:</td>
+                <td style="background-color: #e6f7ff;">
                     <ul style="margin: 5px 0;">
                     <?php foreach($counterfeitAI['recommendations'] as $rec){ ?>
-                        <li><?php echo $rec; ?></li>
+                        <li><b><?php echo $rec; ?></b></li>
                     <?php } ?>
                     </ul>
                 </td>
             </tr>
             <?php } ?>
-
-            <?php if(isset($aiReport['analysis_results']['ai_prediction'])){ 
-                $prediction = $aiReport['analysis_results']['ai_prediction'];
-            ?>
+            <?php if(isset($counterfeitAI['action_items']) && is_array($counterfeitAI['action_items']) && count($counterfeitAI['action_items']) > 0){ ?>
             <tr>
-                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
-                    <b>🎯 AI Prediction Model</b>
-                </td>
-            </tr>
-            <tr>
-                <td>Predicted Outcome:</td>
-                <td style="font-weight: bold; font-size: 16px;">
-                    <?php echo $prediction['prediction']; ?> (<?php echo $prediction['confidence']; ?>% confidence)
-                </td>
-            </tr>
-            <tr>
-                <td>Genuine Probability:</td>
+                <td>Action Items:</td>
                 <td>
-                    <div style="background-color: #f0f0f0; border-radius: 10px; height: 25px; position: relative;">
-                        <div style="background-color: <?php echo $prediction['genuine_probability'] > 75 ? '#4CAF50' : ($prediction['genuine_probability'] > 50 ? 'orange' : 'red'); ?>; width: <?php echo $prediction['genuine_probability']; ?>%; height: 100%; border-radius: 10px; position: relative;">
-                            <span style="position: absolute; right: 10px; line-height: 25px; color: white; font-weight: bold;"><?php echo $prediction['genuine_probability']; ?>%</span>
-                        </div>
-                    </div>
+                    <ol style="margin: 5px 0;">
+                    <?php foreach($counterfeitAI['action_items'] as $action){ ?>
+                        <li><?php echo $action; ?></li>
+                    <?php } ?>
+                    </ol>
                 </td>
             </tr>
             <?php } ?>
+            <?php if(isset($counterfeitAI['detailed_analysis'])){ ?>
+            <tr>
+                <td>Detailed AI Analysis:</td>
+                <td style="background-color: #f9f9f9; padding: 10px;">
+                    <small><?php echo nl2br(htmlspecialchars($counterfeitAI['detailed_analysis'])); ?></small>
+                </td>
+            </tr>
+            <?php } ?>
+            <?php } ?>
 
             <tr>
-                <td colspan="2" style="background-color: #f0f0f0; padding: 10px; text-align: center;">
-                    <small><i>AI Version: <?php echo $aiReport['ai_version']; ?> | Analysis Time: <?php echo $aiReport['timestamp']; ?></i></small>
+                <td colspan="2" style="background-color: #34a853; color: white; padding: 10px; text-align: center; font-weight: bold;">
+                    <small>⚡ Powered by Google Gemini Pro AI | Version: <?php echo $aiReport['ai_version']; ?> | Analysis Time: <?php echo $aiReport['timestamp']; ?></small>
                 </td>
             </tr>
         </table>
