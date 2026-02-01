@@ -62,6 +62,7 @@
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
+                <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.php">Upload Report</a></li>
                 <li><a href="family_profile.php">Family Profile</a></li>

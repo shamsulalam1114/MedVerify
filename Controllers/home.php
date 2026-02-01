@@ -28,6 +28,7 @@
             <ul>
                 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
                 <li><a href="../Views/dashboard.php">Dashboard</a></li>
+                <li><a href="../Views/verification_history.php">Verification History</a></li>
                 <li><a href="../Views/view_reports.php">View Reports</a></li>
                 <?php } ?>
                 <li><a href="../Views/verify_medicine.php">Verify Medicine</a></li>
