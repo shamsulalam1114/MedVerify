@@ -226,6 +226,9 @@
         <table width="100%">
             <tr>
                 <td align="center">
+                    <?php if($verification['verification_result'] == 'Counterfeit' || $verification['verification_result'] == 'Suspicious'){ ?>
+                    <a href="report_counterfeit.php"><button style="background-color: red; color: white; padding: 15px 30px; font-weight: bold;">🚨 Report This Counterfeit</button></a>
+                    <?php } ?>
                     <a href="verify_medicine.php"><button style="background-color: lightgreen; padding: 15px 30px; font-weight: bold;">🔍 Verify Another Medicine</button></a>
                     <a href="dashboard.php"><button>📊 Go to Dashboard</button></a>
                     <button onclick="window.print()">🖨️ Print Result</button>
@@ -244,6 +247,7 @@
                     <p><b>Recommendations:</b></p>
                     <ul style="text-align: left; display: inline-block;">
                         <li>Do not consume this medicine</li>
+                        <li><a href="report_counterfeit.php" style="color: red; font-weight: bold;">Report this counterfeit medicine immediately</a></li>
                         <li>Report to nearest pharmacy or health authority</li>
                         <li>Contact the manufacturer directly</li>
                         <li>Consult a doctor if already consumed</li>
