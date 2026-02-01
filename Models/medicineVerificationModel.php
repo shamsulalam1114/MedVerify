@@ -9,11 +9,13 @@ function addMedicineVerification($verification){
     $image_uploaded = isset($verification['image_uploaded']) && $verification['image_uploaded'] !== '' ? "'{$verification['image_uploaded']}'" : "NULL";
     $ip_address = isset($verification['ip_address']) ? "'{$verification['ip_address']}'" : "NULL";
     $location = isset($verification['location']) && $verification['location'] !== '' ? "'{$verification['location']}'" : "NULL";
+    $ai_analysis = isset($verification['ai_analysis']) && $verification['ai_analysis'] !== '' ? "'{$verification['ai_analysis']}'" : "NULL";
+    $image_hash = isset($verification['image_hash']) && $verification['image_hash'] !== '' ? "'{$verification['image_hash']}'" : "NULL";
 
     $sql = "INSERT INTO medicine_verifications 
-            (user_id, medicine_id, barcode_scanned, batch_number_entered, verification_method, verification_result, confidence_score, expiry_check, manufacturer_match, batch_match, image_uploaded, verification_notes, ip_address, location) 
+            (user_id, medicine_id, barcode_scanned, batch_number_entered, verification_method, verification_result, confidence_score, expiry_check, manufacturer_match, batch_match, image_uploaded, verification_notes, ip_address, location, ai_analysis, image_hash) 
             VALUES 
-            ('{$verification['user_id']}', $medicine_id, '{$verification['barcode_scanned']}', '{$verification['batch_number_entered']}', '{$verification['verification_method']}', '{$verification['verification_result']}', $confidence_score, '{$verification['expiry_check']}', '{$verification['manufacturer_match']}', '{$verification['batch_match']}', $image_uploaded, '{$verification['verification_notes']}', $ip_address, $location)";
+            ('{$verification['user_id']}', $medicine_id, '{$verification['barcode_scanned']}', '{$verification['batch_number_entered']}', '{$verification['verification_method']}', '{$verification['verification_result']}', $confidence_score, '{$verification['expiry_check']}', '{$verification['manufacturer_match']}', '{$verification['batch_match']}', $image_uploaded, '{$verification['verification_notes']}', $ip_address, $location, $ai_analysis, $image_hash)";
 
     if(mysqli_query($con, $sql)){
         return mysqli_insert_id($con);
@@ -158,6 +160,40 @@ function getRecentVerifications($limit = 10, $user_id = null){
     }
 
     return $verifications;
+}
+
+function addVerification($user_id, $medicine_id, $barcode, $batch_number, $method, $result, $confidence, $expiry_check, $image_file = null, $ai_analysis = null){
+    $verification = [
+        'user_id' => $user_id,
+        'medicine_id' => $medicine_id,
+        'barcode_scanned' => $barcode,
+        'batch_number_entered' => $batch_number,
+        'verification_method' => $method,
+        'verification_result' => $result,
+        'confidence_score' => $confidence,
+        'expiry_check' => $expiry_check,
+        'manufacturer_match' => 'Yes',
+        'batch_match' => 'Yes',
+        'image_uploaded' => $image_file,
+        'verification_notes' => '',
+        'ip_address' => $_SERVER['REMOTE_ADDR'],
+        'location' => '',
+        'ai_analysis' => $ai_analysis,
+        'image_hash' => $image_file ? md5_file('../uploads/verifications/' . $image_file) : null
+    ];
+    
+    return addMedicineVerification($verification);
+}
+
+function createVerificationAlert($verification_id, $medicine_id, $user_id){
+    $alert = [
+        'verification_id' => $verification_id,
+        'alert_type' => 'Counterfeit Detected',
+        'severity' => 'High',
+        'alert_message' => 'AI detected potential counterfeit medicine'
+    ];
+    
+    return addVerificationAlert($alert);
 }
 
 function addVerificationAlert($alert){
