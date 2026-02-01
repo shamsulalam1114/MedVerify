@@ -20,6 +20,7 @@
     <title>Signup - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <script src="../Assets/validate_signup.js"></script>
+    <script src="../Assets/ajax_handler.js"></script>
 </head>
 <body id="top">
     <header>
