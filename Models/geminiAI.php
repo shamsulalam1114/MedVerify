@@ -1,8 +1,8 @@
 <?php
 
 define('GEMINI_API_KEY', 'AIzaSyBOQWF8tMrPbq5_AHaDfBtMxZr3HDiYqRg');
-define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent');
-define('GEMINI_VISION_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent');
+define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent');
+define('GEMINI_VISION_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent');
 
 function analyzeImageWithGemini($imagePath) {
     if (!file_exists($imagePath)) {
