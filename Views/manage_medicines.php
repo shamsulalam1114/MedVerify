@@ -13,15 +13,28 @@
         exit();
     }
     
-    // Get search parameter
     $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $filter_status = isset($_GET['filter_status']) ? $_GET['filter_status'] : 'All';
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $records_per_page = 20;
+    $offset = ($page - 1) * $records_per_page;
     
-    // Get all medicines
     if($search_query != ''){
-        $medicines = searchMedicineByName($search_query);
+        $all_medicines = searchMedicineByName($search_query);
     }else{
-        $medicines = getAllMedicines();
+        $all_medicines = getAllMedicines();
     }
+    
+    $filtered_medicines = [];
+    foreach($all_medicines as $med){
+        if($filter_status == 'All' || $med['status'] == $filter_status){
+            $filtered_medicines[] = $med;
+        }
+    }
+    
+    $total_records = count($filtered_medicines);
+    $total_pages = ceil($total_records / $records_per_page);
+    $medicines = array_slice($filtered_medicines, $offset, $records_per_page);
     
     $total_medicines = getTotalMedicinesCount();
     
@@ -46,6 +59,7 @@
     <title>Manage Medicines - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <link rel="stylesheet" href="../Assets/print.css" media="print">
+    <script src="../Assets/autocomplete.js"></script>
 </head>
 <body id="top">
     <header>
@@ -141,10 +155,24 @@
         <form action="manage_medicines.php" method="get" enctype="" style="display: inline;">
         <table border="1" width="100%">
             <tr>
-                <td width="30%"><b>Search Medicine:</b></td>
-                <td width="70%">
-                    <input type="text" name="search" value="<?php echo htmlspecialchars($search_query); ?>" placeholder="Medicine name, generic name..." style="width: 80%">
-                    <input type="submit" value="🔍 Search" style="width: 18%">
+                <td width="20%"><b>Search Medicine:</b></td>
+                <td width="35%">
+                    <input type="text" name="search" id="search" value="<?php echo htmlspecialchars($search_query); ?>" placeholder="Medicine name, generic name..." style="width: 100%">
+                </td>
+                <td width="20%"><b>Filter by Status:</b></td>
+                <td width="25%">
+                    <select name="filter_status" style="width: 100%">
+                        <option value="All" <?php echo $filter_status == 'All' ? 'selected' : ''; ?>>All Status</option>
+                        <option value="Active" <?php echo $filter_status == 'Active' ? 'selected' : ''; ?>>✅ Active</option>
+                        <option value="Discontinued" <?php echo $filter_status == 'Discontinued' ? 'selected' : ''; ?>>⚠️ Discontinued</option>
+                        <option value="Recalled" <?php echo $filter_status == 'Recalled' ? 'selected' : ''; ?>>❌ Recalled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+                    <input type="submit" value="🔍 Apply Filter" style="padding: 10px 30px;">
+                    <a href="manage_medicines.php"><button type="button">🔄 Reset</button></a>
                 </td>
             </tr>
         </table>
@@ -167,7 +195,7 @@
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>📋 All Medicines (<?php echo count($medicines); ?> results)</h3>
+                    <h3>📋 All Medicines (<?php echo $total_records; ?> results - Page <?php echo $page; ?> of <?php echo max(1, $total_pages); ?>)</h3>
                 </td>
             </tr>
         </table>
@@ -252,7 +280,44 @@
             ?>
         </table>
 
-        <br><br>
+        <br>
+
+        <!-- Pagination -->
+        <?php if($total_pages > 1){ ?>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <?php
+                    $query_params = "search=" . urlencode($search_query) . "&filter_status=" . urlencode($filter_status);
+                    
+                    if($page > 1){
+                        echo '<a href="?page=1&' . $query_params . '"><button>« First</button></a> ';
+                        echo '<a href="?page=' . ($page - 1) . '&' . $query_params . '"><button>‹ Prev</button></a> ';
+                    }
+                    
+                    $start_page = max(1, $page - 2);
+                    $end_page = min($total_pages, $page + 2);
+                    
+                    for($i = $start_page; $i <= $end_page; $i++){
+                        if($i == $page){
+                            echo '<button style="background-color: #667eea; color: white; font-weight: bold;">' . $i . '</button> ';
+                        }else{
+                            echo '<a href="?page=' . $i . '&' . $query_params . '"><button>' . $i . '</button></a> ';
+                        }
+                    }
+                    
+                    if($page < $total_pages){
+                        echo '<a href="?page=' . ($page + 1) . '&' . $query_params . '"><button>Next ›</button></a> ';
+                        echo '<a href="?page=' . $total_pages . '&' . $query_params . '"><button>Last »</button></a>';
+                    }
+                    ?>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <?php } ?>
+
+        <br>
 
         <!-- Legend -->
         <table width="100%">
@@ -303,5 +368,9 @@
             <p>&copy; 2025 MedVerify | Admin Panel</p>
         </center>
     </footer>
+    
+    <script>
+        initAutocomplete('search', '../Controllers/autocomplete_medicines.php');
+    </script>
 </body>
 </html>

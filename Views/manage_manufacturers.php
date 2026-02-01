@@ -7,6 +7,7 @@
     <title>Manage Manufacturers - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
     <link rel="stylesheet" href="../Assets/print.css">
+    <script src="../Assets/autocomplete.js"></script>
 </head>
 <body>
     <header>
@@ -69,7 +70,7 @@
         <!-- Search and Filter Form -->
         <div class="search-section no-print">
             <form method="GET" action="manage_manufacturers.php" class="search-form">
-                <input type="text" name="search" placeholder="Search by name, country, or license..." value="<?php echo htmlspecialchars($searchQuery); ?>" class="search-input">
+                <input type="text" name="search" id="search" placeholder="Search by name, country, or license..." value="<?php echo htmlspecialchars($searchQuery); ?>" class="search-input">
                 <select name="status" class="filter-select">
                     <option value="All" <?php echo $statusFilter === 'All' ? 'selected' : ''; ?>>All Status</option>
                     <option value="Active" <?php echo $statusFilter === 'Active' ? 'selected' : ''; ?>>Active</option>
@@ -82,7 +83,7 @@
 
         <!-- Manufacturers Table -->
         <div class="table-container">
-            <h2>Manufacturers List (<?php echo count($manufacturers); ?> records)</h2>
+            <h2>Manufacturers List (<?php echo $total_records; ?> records - Page <?php echo $page; ?> of <?php echo max(1, $total_pages); ?>)</h2>
             <?php if (count($manufacturers) > 0): ?>
             <table>
                 <thead>
@@ -162,9 +163,41 @@
             <p class="no-data">No manufacturers found. <a href="add_manufacturer.php">Add your first manufacturer</a></p>
             <?php endif; ?>
         </div>
+        
+        <!-- Pagination -->
+        <?php if($total_pages > 1){ ?>
+        <div style="text-align: center; margin: 30px 0;">
+            <?php
+            $query_params = "search=" . urlencode($searchQuery) . "&status=" . urlencode($statusFilter);
+            
+            if($page > 1){
+                echo '<a href="?page=1&' . $query_params . '"><button>« First</button></a> ';
+                echo '<a href="?page=' . ($page - 1) . '&' . $query_params . '"><button>‹ Prev</button></a> ';
+            }
+            
+            $start_page = max(1, $page - 2);
+            $end_page = min($total_pages, $page + 2);
+            
+            for($i = $start_page; $i <= $end_page; $i++){
+                if($i == $page){
+                    echo '<button style="background-color: #667eea; color: white; font-weight: bold;">' . $i . '</button> ';
+                }else{
+                    echo '<a href="?page=' . $i . '&' . $query_params . '"><button>' . $i . '</button></a> ';
+                }
+            }
+            
+            if($page < $total_pages){
+                echo '<a href="?page=' . ($page + 1) . '&' . $query_params . '"><button>Next ›</button></a> ';
+                echo '<a href="?page=' . $total_pages . '&' . $query_params . '"><button>Last »</button></a>';
+            }
+            ?>
+        </div>
+        <?php } ?>
     </div>
 
     <script>
+        initAutocomplete('search', '../Controllers/autocomplete_manufacturers.php');
+        
         function deleteManufacturer(id, name) {
             if (confirm('Are you sure you want to delete manufacturer "' + name + '"?\n\nThis will affect all associated medicines.')) {
                 window.location.href = '../Controllers/delete_manufacturer.php?id=' + id;
