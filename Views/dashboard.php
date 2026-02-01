@@ -3,6 +3,7 @@
     require_once('../Models/verificationModel.php');
     require_once('../Models/reportModel.php');
     require_once('../Models/appointmentModel.php');
+    require_once('../Models/medicineVerificationModel.php');
     
     if(!isset($_SESSION['user_id'])){
         header('location: ../Views/login.php');
@@ -16,16 +17,24 @@
     
     $user_id = $_SESSION['user_id'];
     
-    if($_SESSION['user_type'] == 'admin'){
-        $verificationsCount = getAllVerificationsCount();
-        $reportsCount = getAllReportsCount();
-    }else{
-        $verificationsCount = getVerificationCount($user_id);
-        $reportsCount = getReportCount($user_id);
-    }
+    // Get medicine verification statistics
+    $verificationStats = getOverallVerificationStats();
+    $todayCount = getTodayVerificationCount();
+    $recentVerifications = getRecentVerifications(5);
+    $unresolvedAlerts = getUnresolvedAlertsCount();
     
+    // Calculate percentages
+    $totalVerifications = $verificationStats['total_verifications'];
+    $genuineCount = $verificationStats['genuine_count'];
+    $counterfeitCount = $verificationStats['counterfeit_count'];
+    $suspiciousCount = $verificationStats['suspicious_count'];
+    
+    $genuinePercentage = $totalVerifications > 0 ? round(($genuineCount / $totalVerifications) * 100, 1) : 0;
+    $counterfeitTotal = $counterfeitCount + $suspiciousCount;
+    
+    // Get other stats
+    $reportsCount = getAllReportsCount();
     $upcomingAppointment = getUpcomingAppointment($user_id);
-    $recentActivities = getRecentActivity($user_id);
     
     $appointmentDate = "No Appointment";
     if($upcomingAppointment != false){
@@ -79,30 +88,30 @@
         <table border="1" width="100%">
             <tr>
                 <td align="center" class="card-blue" id="card1">
-                    <h3>Total Verifications</h3>
+                    <h3>🔍 Today's Verifications</h3>
                     <br>
-                    <h1 id="verificationsCount"><?php echo $verificationsCount; ?></h1>
-                    <p>Checks Completed</p>
+                    <h1 id="verificationsCount"><?php echo $todayCount; ?></h1>
+                    <p>Medicines Scanned Today</p>
                     <br>
-                    <a href="view_reports.php">View Details</a>
+                    <a href="verify_medicine.php">Verify Medicine</a>
                 </td>
 
                 <td align="center" class="card-green" id="card2">
-                    <h3>Upcoming Appointments</h3>
+                    <h3>✅ Genuine Medicines</h3>
                     <br>
-                    <h1 id="appointmentsCount"><?php echo $appointmentDate; ?></h1>
-                    <p>Next Appointment</p>
+                    <h1 id="genuineCount"><?php echo $genuineCount; ?></h1>
+                    <p><?php echo $genuinePercentage; ?>% Verified Authentic</p>
                     <br>
-                    <a href="calendar.php">View Calendar</a>
+                    <a href="verification_history.php">View History</a>
                 </td>
 
-                <td  align="center"class="card-orange" id="card3">
-                    <h3>Total Reports</h3>
+                <td align="center" class="card-orange" id="card3">
+                    <h3>⚠️ Alerts</h3>
                     <br>
-                    <h1 id="reportsCount"><?php echo $reportsCount; ?></h1>
-                    <p>Reports Available</p>
+                    <h1 id="alertsCount" style="color: <?php echo $counterfeitTotal > 0 ? 'red' : 'green'; ?>;"><?php echo $counterfeitTotal; ?></h1>
+                    <p>Counterfeit/Suspicious Detected</p>
                     <br>
-                    <a href="view_reports.php">View Reports</a>
+                    <a href="verification_history.php">View Alerts</a>
                 </td>
             </tr>
         </table>
@@ -110,13 +119,81 @@
         <br>
 
         
-        <form action="../Controllers/add_verification.php" method="post" enctype="" style="display: inline;">
-            <input type="hidden" name="verification_type" value="Manual Verification">
-            <input type="submit" name="submit" value="Add Verification">
-        </form>
-        <form action="../Controllers/add_report.php" method="get" style="display: inline;">
-            <input type="button" value="Add Report" onclick="location.href='view_reports.php'">
-        </form>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <a href="verify_medicine.php"><button style="background-color: lightgreen; padding: 15px 30px; font-weight: bold;">🔍 Verify Medicine</button></a>
+                    <a href="view_reports.php"><button>📄 View Reports</button></a>
+                    <a href="calendar.php"><button>📅 Appointments</button></a>
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <!-- Unresolved Alerts Notification -->
+        <?php if($unresolvedAlerts > 0){ ?>
+        <table width="10🕒 Recent Medicine Verifications</h3>
+                </td>
+            </tr>
+        </table>
+
+        <table border="1" width="100%">
+            <tr>
+                <th>Date & Time</th>
+                <th>User</th>
+                <th>Medicine</th>
+                <th>Barcode</th>
+                <th>Method</th>
+                <th>Result</th>
+                <th>Confidence</th>
+            </tr>
+            <?php
+            if(count($recentVerifications) > 0){
+                foreach($recentVerifications as $verify){
+                    $result_color = 'black';
+                    $result_bg = 'white';
+                    if($verify['verification_result'] == 'Genuine'){
+                        $result_color = 'green';
+                        $result_bg = '#e6ffe6';
+                    }else if($verify['verification_result'] == 'Counterfeit'){
+                        $result_color = 'red';
+                        $result_bg = '#ffe6e6';
+                    }else if($verify['verification_result'] == 'Suspicious'){
+                        $result_color = 'orange';
+                        $result_bg = '#fff3e6';
+                    }
+            ?>
+            <tr style="background-color: <?php echo $result_bg; ?>;">
+                <td><?php echo date('M d, H:i', strtotime($verify['verified_at'])); ?></td>
+                <td><?php echo $verify['username']; ?></td>
+                <td><?php echo $verify['medicine_name'] ? $verify['medicine_name'] : 'Unknown'; ?></td>
+                <td><?php echo $verify['barcode_scanned'] ? $verify['barcode_scanned'] : 'N/A'; ?></td>
+                <td><?php echo $verify['verification_method']; ?></td>
+                <td style="color: <?php echo $result_color; ?>; font-weight: bold;">
+                    <?php echo $verify['verification_result']; ?>
+                </td>
+                <td align="center"><?php echo $verify['confidence_score']; ?>%</td>
+            </tr>
+            <?php
+                }
+            }else{
+            ?>
+            <tr>
+                <td colspan="7" align="center">No verifications yet
+                <th style="color: orange;">Suspicious</th>
+                <th>Expired</th>
+                <th>Not Found</th>
+            </tr>
+            <tr>
+                <td align="center"><b><?php echo $totalVerifications; ?></b></td>
+                <td align="center" style="color: green;"><b><?php echo $genuineCount; ?></b></td>
+                <td align="center" style="color: red;"><b><?php echo $counterfeitCount; ?></b></td>
+                <td align="center" style="color: orange;"><b><?php echo $suspiciousCount; ?></b></td>
+                <td align="center"><b><?php echo $verificationStats['expired_count']; ?></b></td>
+                <td align="center"><b><?php echo $verificationStats['not_found_count']; ?></b></td>
+            </tr>
+        </table>
 
         <br><br>
 
