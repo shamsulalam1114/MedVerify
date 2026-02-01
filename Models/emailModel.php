@@ -1,17 +1,9 @@
 <?php
 require_once('emailConfig.php');
 
-// Note: This is a simplified email function
-// For production, download PHPMailer library from: https://github.com/PHPMailer/PHPMailer
-// Install via: composer require phpmailer/phpmailer
-
-/**
- * Send Email using PHP mail() function
- * For production, replace with PHPMailer SMTP
- */
 function sendEmail($to, $subject, $htmlBody, $plainTextBody = ''){
     if (!ENABLE_EMAIL_NOTIFICATIONS) {
-        return true; // Email notifications disabled
+        return true;
     }
     
     $headers = "MIME-Version: 1.0\r\n";
@@ -20,14 +12,9 @@ function sendEmail($to, $subject, $htmlBody, $plainTextBody = ''){
     $headers .= "Reply-To: " . SMTP_FROM_EMAIL . "\r\n";
     $headers .= "X-Mailer: PHP/" . phpversion();
     
-    // Use PHP mail() function (for basic setup)
-    // For production, use PHPMailer with SMTP
     return mail($to, $subject, $htmlBody, $headers);
 }
 
-/**
- * Send Welcome Email to New User
- */
 function sendWelcomeEmail($userEmail, $userName){
     $subject = "Welcome to " . SYSTEM_NAME;
     
@@ -40,9 +27,6 @@ function sendWelcomeEmail($userEmail, $userName){
     return sendEmail($userEmail, $subject, $htmlBody);
 }
 
-/**
- * Send Counterfeit Report Status Update Email
- */
 function sendCounterfeitStatusEmail($userEmail, $userName, $reportId, $status, $adminNotes = ''){
     $subject = "Counterfeit Report #$reportId - Status Update";
     
@@ -65,9 +49,6 @@ function sendCounterfeitStatusEmail($userEmail, $userName, $reportId, $status, $
     return sendEmail($userEmail, $subject, $htmlBody);
 }
 
-/**
- * Send Medicine Expiry Alert Email
- */
 function sendExpiryAlertEmail($userEmail, $userName, $medicines){
     $subject = "⚠️ Medicine Expiry Alert - MedVerify";
     
@@ -86,9 +67,6 @@ function sendExpiryAlertEmail($userEmail, $userName, $medicines){
     return sendEmail($userEmail, $subject, $htmlBody);
 }
 
-/**
- * Send Verification Summary Email (Weekly/Monthly)
- */
 function sendVerificationSummaryEmail($userEmail, $userName, $stats){
     $subject = "Your Verification Summary - MedVerify";
     
@@ -105,9 +83,6 @@ function sendVerificationSummaryEmail($userEmail, $userName, $stats){
     return sendEmail($userEmail, $subject, $htmlBody);
 }
 
-/**
- * Send Admin Alert for New Counterfeit Report
- */
 function sendAdminCounterfeitAlert($reportId, $medicineName, $userName){
     $subject = "🚨 New Counterfeit Report #$reportId";
     
@@ -121,9 +96,6 @@ function sendAdminCounterfeitAlert($reportId, $medicineName, $userName){
     return sendEmail(ADMIN_EMAIL, $subject, $htmlBody);
 }
 
-/**
- * Send Password Reset Email
- */
 function sendPasswordResetEmail($userEmail, $userName, $resetToken){
     $subject = "Password Reset Request - MedVerify";
     
@@ -138,20 +110,15 @@ function sendPasswordResetEmail($userEmail, $userName, $resetToken){
     return sendEmail($userEmail, $subject, $htmlBody);
 }
 
-/**
- * Get Email Template with Variable Replacement
- */
 function getEmailTemplate($templateName, $variables = []){
     $templatePath = EMAIL_TEMPLATES_DIR . $templateName . '.html';
     
     if (!file_exists($templatePath)) {
-        // Return generic template if specific not found
         return getGenericEmailTemplate($variables);
     }
     
     $template = file_get_contents($templatePath);
     
-    // Replace variables
     foreach ($variables as $key => $value) {
         $template = str_replace('{{' . $key . '}}', $value, $template);
     }
@@ -159,9 +126,6 @@ function getEmailTemplate($templateName, $variables = []){
     return $template;
 }
 
-/**
- * Generic Email Template
- */
 function getGenericEmailTemplate($variables){
     return "
 <!DOCTYPE html>
@@ -194,9 +158,6 @@ function getGenericEmailTemplate($variables){
 </html>";
 }
 
-/**
- * Log Email Activity (for debugging)
- */
 function logEmail($to, $subject, $status){
     $logFile = dirname(__FILE__) . '/../logs/email_log.txt';
     $logDir = dirname($logFile);

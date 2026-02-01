@@ -41,6 +41,9 @@
     $reportsCount = getAllReportsCount();
     $upcomingAppointment = getUpcomingAppointment($user_id);
     
+    // Get recent activity (empty for now - can be populated from activity log)
+    $recentActivities = [];
+    
     $appointmentDate = "No Appointment";
     if($upcomingAppointment != false){
         $appointmentDate = $upcomingAppointment['appointment_date'];
