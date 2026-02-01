@@ -6,16 +6,27 @@ function addMedicineVerification($verification){
 
     $medicine_id = $verification['medicine_id'] ? "'{$verification['medicine_id']}'" : "NULL";
     $confidence_score = isset($verification['confidence_score']) && $verification['confidence_score'] !== '' ? "'{$verification['confidence_score']}'" : "NULL";
-    $image_uploaded = isset($verification['image_uploaded']) && $verification['image_uploaded'] !== '' ? "'{$verification['image_uploaded']}'" : "NULL";
-    $ip_address = isset($verification['ip_address']) ? "'{$verification['ip_address']}'" : "NULL";
-    $location = isset($verification['location']) && $verification['location'] !== '' ? "'{$verification['location']}'" : "NULL";
-    $ai_analysis = isset($verification['ai_analysis']) && $verification['ai_analysis'] !== '' ? "'{$verification['ai_analysis']}'" : "NULL";
-    $image_hash = isset($verification['image_hash']) && $verification['image_hash'] !== '' ? "'{$verification['image_hash']}'" : "NULL";
+    $image_uploaded = isset($verification['image_uploaded']) && $verification['image_uploaded'] !== '' ? "'" . mysqli_real_escape_string($con, $verification['image_uploaded']) . "'" : "NULL";
+    $ip_address = isset($verification['ip_address']) ? "'" . mysqli_real_escape_string($con, $verification['ip_address']) . "'" : "NULL";
+    $location = isset($verification['location']) && $verification['location'] !== '' ? "'" . mysqli_real_escape_string($con, $verification['location']) . "'" : "NULL";
+    $ai_analysis = isset($verification['ai_analysis']) && $verification['ai_analysis'] !== '' ? "'" . mysqli_real_escape_string($con, $verification['ai_analysis']) . "'" : "NULL";
+    $image_hash = isset($verification['image_hash']) && $verification['image_hash'] !== '' ? "'" . mysqli_real_escape_string($con, $verification['image_hash']) . "'" : "NULL";
+
+    // Escape all string values
+    $user_id = mysqli_real_escape_string($con, $verification['user_id']);
+    $barcode_scanned = mysqli_real_escape_string($con, $verification['barcode_scanned']);
+    $batch_number_entered = mysqli_real_escape_string($con, $verification['batch_number_entered']);
+    $verification_method = mysqli_real_escape_string($con, $verification['verification_method']);
+    $verification_result = mysqli_real_escape_string($con, $verification['verification_result']);
+    $expiry_check = mysqli_real_escape_string($con, $verification['expiry_check']);
+    $manufacturer_match = mysqli_real_escape_string($con, $verification['manufacturer_match']);
+    $batch_match = mysqli_real_escape_string($con, $verification['batch_match']);
+    $verification_notes = mysqli_real_escape_string($con, $verification['verification_notes']);
 
     $sql = "INSERT INTO medicine_verifications 
             (user_id, medicine_id, barcode_scanned, batch_number_entered, verification_method, verification_result, confidence_score, expiry_check, manufacturer_match, batch_match, image_uploaded, verification_notes, ip_address, location, ai_analysis, image_hash) 
             VALUES 
-            ('{$verification['user_id']}', $medicine_id, '{$verification['barcode_scanned']}', '{$verification['batch_number_entered']}', '{$verification['verification_method']}', '{$verification['verification_result']}', $confidence_score, '{$verification['expiry_check']}', '{$verification['manufacturer_match']}', '{$verification['batch_match']}', $image_uploaded, '{$verification['verification_notes']}', $ip_address, $location, $ai_analysis, $image_hash)";
+            ('$user_id', $medicine_id, '$barcode_scanned', '$batch_number_entered', '$verification_method', '$verification_result', $confidence_score, '$expiry_check', '$manufacturer_match', '$batch_match', $image_uploaded, '$verification_notes', $ip_address, $location, $ai_analysis, $image_hash)";
 
     if(mysqli_query($con, $sql)){
         return mysqli_insert_id($con);
