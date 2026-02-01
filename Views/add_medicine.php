@@ -38,6 +38,7 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </center>

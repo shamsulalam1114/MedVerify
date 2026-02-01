@@ -45,6 +45,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Medicines - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/print.css" media="print">
 </head>
 <body id="top">
     <header>
@@ -61,6 +62,7 @@
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php"><b>Manage Medicines</b></a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
@@ -169,6 +171,19 @@
                 </td>
             </tr>
         </table>
+
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <a href="../Controllers/export_medicines_csv.php?search=<?php echo urlencode($search_query); ?>">
+                        <button type="button" style="background-color: #4CAF50; color: white; padding: 10px 20px; font-weight: bold;">📥 Export to CSV</button>
+                    </a>
+                    <button type="button" onclick="window.print()" style="background-color: #2196F3; color: white; padding: 10px 20px; font-weight: bold;">🖨️ Print Database</button>
+                </td>
+            </tr>
+        </table>
+
+        <br>
 
         <table border="1" width="100%" style="font-size: 13px;">
             <tr>

@@ -28,7 +28,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Medicine - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="../Assets/validate_medicine.js"></script>
+    <style>
+        #barcode-scanner {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 3px solid #4CAF50;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        #scanner-region {
+            position: relative;
+            min-height: 300px;
+        }
+        .scanner-controls {
+            padding: 15px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .scanner-status {
+            padding: 12px;
+            background-color: #e6f7ff;
+            text-align: center;
+            font-weight: bold;
+            color: #0066cc;
+        }
+        #scanner-result {
+            padding: 15px;
+            background-color: #e6ffe6;
+            color: green;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+        .scan-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .scan-button:hover {
+            background-color: #45a049;
+        }
+        .stop-button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body id="top">
     <header>
@@ -45,6 +103,8 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
+                <li><a href="analytics.php">Analytics</a></li>
                 <li><a href="review_counterfeits.php">Review Reports</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <?php } ?>
@@ -120,6 +180,46 @@
             <tr>
                 <td align="center">
                     <h3>🔎 Enter Medicine Details</h3>
+                    <p><i>Scan barcode with camera or enter manually</i></p>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Barcode Scanner Section -->
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <button type="button" class="scan-button" id="start-scan-btn" onclick="startBarcodeScanner()">
+                        📷 Scan Barcode with Camera
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <!-- Scanner Container -->
+        <div id="barcode-scanner">
+            <div class="scanner-status" id="scanner-status">
+                📷 Camera is starting... Please allow camera access
+            </div>
+            <div id="scanner-region"></div>
+            <div id="scanner-result"></div>
+            <div class="scanner-controls">
+                <button type="button" class="stop-button" onclick="stopBarcodeScanner()">
+                    ⏹️ Stop Scanner
+                </button>
+                <br><br>
+                <small>Position the barcode within the camera frame</small>
+            </div>
+        </div>
+
+        <br>
+
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <h3>📝 Manual Entry</h3>
                 </td>
             </tr>
         </table>
@@ -128,7 +228,7 @@
             <tr>
                 <td width="30%">Verification Method:</td>
                 <td width="70%">
-                    <select name="verification_method" style="width: 100%">
+                    <select name="verification_method" id="verification_method" style="width: 100%">
                         <option value="Manual">Manual Entry</option>
                         <option value="Barcode">Barcode Scan</option>
                         <option value="QR Code">QR Code</option>
@@ -137,11 +237,11 @@
             </tr>
             <tr>
                 <td>Barcode Number:</td>
-                <td><input type="text" name="barcode_scanned" placeholder="Enter barcode (e.g., 8901234567890)" style="width: 100%"></td>
+                <td><input type="text" name="barcode_scanned" id="barcode_scanned" placeholder="Enter barcode or use scanner above" style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Batch Number:</td>
-                <td><input type="text" name="batch_number_entered" placeholder="Enter batch number (e.g., BATCH001)" style="width: 100%"></td>
+                <td><input type="text" name="batch_number_entered" id="batch_number_entered" placeholder="Enter batch number (e.g., BATCH001)" style="width: 100%"></td>
             </tr>
             <tr>
                 <td colspan="2" align="center" style="background-color: lightyellow;">
@@ -263,5 +363,8 @@
             <p>&copy; 2025 MedVerify | Protecting Your Health</p>
         </center>
     </footer>
+
+    <!-- Barcode Scanner Script -->
+    <script src="../Assets/barcode_scanner.js"></script>
 </body>
 </html>

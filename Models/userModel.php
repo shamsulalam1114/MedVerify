@@ -74,4 +74,76 @@ function updateUser($user){
     }
 }
 
+// Profile Management Functions
+
+// Update user profile (edit profile)
+function updateUserProfile($userData){
+    $con = getConnection();
+    
+    $userId = mysqli_real_escape_string($con, $userData['user_id']);
+    $fullName = mysqli_real_escape_string($con, $userData['full_name']);
+    $email = mysqli_real_escape_string($con, $userData['email']);
+    $gender = mysqli_real_escape_string($con, $userData['gender'] ?? '');
+    $dateOfBirth = $userData['date_of_birth'] ? "'{$userData['date_of_birth']}'" : 'NULL';
+    $phone = mysqli_real_escape_string($con, $userData['phone'] ?? '');
+    $address = mysqli_real_escape_string($con, $userData['address'] ?? '');
+    
+    $sql = "UPDATE users 
+            SET full_name='$fullName', 
+                email='$email', 
+                gender='$gender', 
+                date_of_birth=$dateOfBirth, 
+                phone='$phone', 
+                address='$address' 
+            WHERE user_id='$userId'";
+    
+    if(mysqli_query($con, $sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+// Update user password
+function updateUserPassword($userId, $newPassword){
+    $con = getConnection();
+    $userId = mysqli_real_escape_string($con, $userId);
+    $hashedPassword = md5($newPassword); // Use password_hash() for production
+    
+    $sql = "UPDATE users SET password='$hashedPassword' WHERE user_id='$userId'";
+    
+    if(mysqli_query($con, $sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+// Verify user password
+function verifyUserPassword($userId, $password){
+    $con = getConnection();
+    $userId = mysqli_real_escape_string($con, $userId);
+    $hashedPassword = md5($password); // Match with current hashing
+    
+    $sql = "SELECT user_id FROM users WHERE user_id='$userId' AND password='$hashedPassword'";
+    $result = mysqli_query($con, $sql);
+    
+    return mysqli_num_rows($result) === 1;
+}
+
+// Check if email exists excluding specific user
+function emailExistsExcept($email, $userId){
+    $con = getConnection();
+    $email = mysqli_real_escape_string($con, $email);
+    $userId = mysqli_real_escape_string($con, $userId);
+    
+    $sql = "SELECT COUNT(*) as count FROM users WHERE email='$email' AND user_id != '$userId'";
+    $result = mysqli_query($con, $sql);
+    
+    if($row = mysqli_fetch_assoc($result)){
+        return $row['count'] > 0;
+    }
+    return false;
+}
+
 ?>

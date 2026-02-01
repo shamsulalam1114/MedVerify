@@ -32,7 +32,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report Counterfeit Medicine - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="../Assets/validate_counterfeit_report.js"></script>
+    <style>
+        #barcode-scanner-report {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+        #scanner-region-report {
+            position: relative;
+            min-height: 250px;
+        }
+        .scanner-controls-report {
+            padding: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .scanner-status-report {
+            padding: 10px;
+            background-color: #fff3e6;
+            text-align: center;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+    </style>
 </head>
 <body id="top">
     <header>
@@ -47,6 +75,7 @@
             <ul>
                 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin'){ ?>
                 <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
                 <li><a href="review_counterfeits.php">Review Reports</a></li>
                 <?php } ?>
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
@@ -102,18 +131,47 @@
             <tr>
                 <td align="center">
                     <h3>📋 Medicine Information</h3>
+                    <p><i>Scan barcode with camera or enter manually</i></p>
                 </td>
             </tr>
         </table>
 
+        <!-- Barcode Scanner for Report -->
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <button type="button" class="scan-button" style="background-color: #ff6b6b;" onclick="startBarcodeScannerReport()">
+                        📷 Scan Barcode with Camera
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <!-- Scanner Container -->
+        <div id="barcode-scanner-report">
+            <div class="scanner-status-report" id="scanner-status-report">
+                📷 Camera is starting...
+            </div>
+            <div id="scanner-region-report"></div>
+            <div class="scanner-controls-report">
+                <button type="button" class="stop-button" onclick="stopBarcodeScannerReport()">
+                    ⏹️ Stop Scanner
+                </button>
+            </div>
+        </div>
+
+        <br>
+
         <table border="1" width="100%">
             <tr>
                 <td width="30%"><b>Barcode Number:</b> <span style="color: red;">*</span></td>
-                <td width="70%"><input type="text" name="barcode" placeholder="Enter barcode from medicine package" required style="width: 100%"></td>
+                <td width="70%"><input type="text" name="barcode" id="barcode_report" placeholder="Enter barcode or use scanner above" required style="width: 100%"></td>
             </tr>
             <tr>
                 <td><b>Batch Number:</b> <span style="color: red;">*</span></td>
-                <td><input type="text" name="batch_number" placeholder="Enter batch number" required style="width: 100%"></td>
+                <td><input type="text" name="batch_number" id="batch_number_report" placeholder="Enter batch number" required style="width: 100%"></td>
             </tr>
         </table>
 
@@ -287,5 +345,63 @@
             <p>&copy; 2025 MedVerify | Report Counterfeit Medicine</p>
         </center>
     </footer>
+
+    <!-- Barcode Scanner Script for Report Page -->
+    <script>
+        let html5QrcodeScannerReport = null;
+        let isScanningReport = false;
+
+        function startBarcodeScannerReport() {
+            if (isScanningReport) return;
+
+            document.getElementById('barcode-scanner-report').style.display = 'block';
+            document.getElementById('scanner-status-report').textContent = '📷 Initializing camera...';
+
+            const config = {
+                fps: 10,
+                qrbox: { width: 250, height: 150 },
+                formatsToSupport: [
+                    Html5QrcodeSupportedFormats.EAN_13,
+                    Html5QrcodeSupportedFormats.EAN_8,
+                    Html5QrcodeSupportedFormats.UPC_A,
+                    Html5QrcodeSupportedFormats.CODE_128,
+                    Html5QrcodeSupportedFormats.CODE_39
+                ]
+            };
+
+            html5QrcodeScannerReport = new Html5Qrcode("scanner-region-report");
+
+            html5QrcodeScannerReport.start(
+                { facingMode: "environment" },
+                config,
+                (decodedText) => {
+                    document.getElementById('barcode_report').value = decodedText;
+                    document.getElementById('scanner-status-report').textContent = '✅ Barcode: ' + decodedText;
+                    document.getElementById('scanner-status-report').style.backgroundColor = '#e6ffe6';
+                    document.getElementById('scanner-status-report').style.color = 'green';
+                    setTimeout(() => stopBarcodeScannerReport(), 1500);
+                }
+            ).then(() => {
+                isScanningReport = true;
+                document.getElementById('scanner-status-report').textContent = '📷 Camera ready!';
+                document.getElementById('scanner-status-report').style.backgroundColor = '#e6ffe6';
+            }).catch(err => {
+                alert("Camera access denied. Please enter barcode manually.");
+                stopBarcodeScannerReport();
+            });
+        }
+
+        function stopBarcodeScannerReport() {
+            if (html5QrcodeScannerReport && isScanningReport) {
+                html5QrcodeScannerReport.stop().then(() => {
+                    html5QrcodeScannerReport.clear();
+                    isScanningReport = false;
+                    document.getElementById('barcode-scanner-report').style.display = 'none';
+                });
+            } else {
+                document.getElementById('barcode-scanner-report').style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

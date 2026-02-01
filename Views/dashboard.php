@@ -52,6 +52,7 @@
     <meta charset="UTF-8">
     <title>MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/print.css" media="print">
 </head>
 <body id="top">
     <form action="../Controllers/home.php" method="post" enctype="">
@@ -69,6 +70,8 @@
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
+                <li><a href="analytics.php">Analytics</a></li>
                 <li><a href="review_counterfeits.php">Review Reports</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.php">Upload Report</a></li>
@@ -140,10 +143,21 @@
             <tr>
                 <td align="center">
                     <a href="verify_medicine.php"><button style="background-color: lightgreen; padding: 15px 30px; font-weight: bold;">🔍 Verify Medicine</button></a>
-                    <a href="manage_medicines.php"><button style="background-color: lightblue; padding: 15px 30px; font-weight: bold;">💊 Manage Medicines</button></a>
-                    <a href="review_counterfeits.php"><button style="background-color: lightcoral; padding: 15px 30px; font-weight: bold;">🚨 Review Reports</button></a>
+                    <a href="manage_medicines.php"><button style="background-color: lightblue; padding: 15px 30px; font-weight: bold;">💊 Manage Medicines</button></a>                    <a href="manage_manufacturers.php"><button style="background-color: lightyellow; padding: 15px 30px; font-weight: bold;">🏭 Manage Manufacturers</button></a>                    <a href="review_counterfeits.php"><button style="background-color: lightcoral; padding: 15px 30px; font-weight: bold;">🚨 Review Reports</button></a>
                     <a href="view_reports.php"><button>📄 View Reports</button></a>
                     <a href="calendar.php"><button>📅 Appointments</button></a>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <a href="../Controllers/export_summary_report.php" target="_blank">
+                        <button style="background-color: #FF9800; color: white; padding: 12px 25px; font-weight: bold;">📊 Generate Summary Report (Print/PDF)</button>
+                    </a>
                 </td>
             </tr>
         </table>

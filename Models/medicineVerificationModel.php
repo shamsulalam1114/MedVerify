@@ -206,4 +206,135 @@ function deleteVerification($id){
     }
 }
 
+// Analytics Functions
+
+// Get verification trends by month (last 12 months)
+function getVerificationTrendsByMonth(){
+    $con = getConnection();
+    $sql = "SELECT 
+                DATE_FORMAT(verified_at, '%Y-%m') as month,
+                COUNT(*) as count,
+                SUM(CASE WHEN verification_result = 'Genuine' THEN 1 ELSE 0 END) as genuine,
+                SUM(CASE WHEN verification_result = 'Suspicious' THEN 1 ELSE 0 END) as suspicious,
+                SUM(CASE WHEN verification_result = 'Counterfeit' THEN 1 ELSE 0 END) as counterfeit
+            FROM medicine_verifications
+            WHERE verified_at >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+            GROUP BY DATE_FORMAT(verified_at, '%Y-%m')
+            ORDER BY month ASC";
+    $result = mysqli_query($con, $sql);
+    
+    $trends = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($trends, $row);
+    }
+    return $trends;
+}
+
+// Get verifications by category
+function getVerificationsByCategory(){
+    $con = getConnection();
+    $sql = "SELECT 
+                m.category,
+                COUNT(*) as count
+            FROM medicine_verifications mv
+            JOIN medicines m ON mv.medicine_id = m.medicine_id
+            GROUP BY m.category
+            ORDER BY count DESC
+            LIMIT 10";
+    $result = mysqli_query($con, $sql);
+    
+    $categories = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($categories, $row);
+    }
+    return $categories;
+}
+
+// Get top verified medicines
+function getTopVerifiedMedicines(){
+    $con = getConnection();
+    $sql = "SELECT 
+                m.medicine_name,
+                COUNT(*) as count
+            FROM medicine_verifications mv
+            JOIN medicines m ON mv.medicine_id = m.medicine_id
+            GROUP BY m.medicine_id
+            ORDER BY count DESC
+            LIMIT 10";
+    $result = mysqli_query($con, $sql);
+    
+    $medicines = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($medicines, $row);
+    }
+    return $medicines;
+}
+
+// Get manufacturer counterfeit rates
+function getManufacturerCounterfeitRates(){
+    $con = getConnection();
+    $sql = "SELECT 
+                mf.manufacturer_name,
+                COUNT(*) as total_verifications,
+                SUM(CASE WHEN mv.verification_result = 'Counterfeit' THEN 1 ELSE 0 END) as counterfeit_count,
+                ROUND((SUM(CASE WHEN mv.verification_result = 'Counterfeit' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 2) as counterfeit_rate
+            FROM medicine_verifications mv
+            JOIN medicines m ON mv.medicine_id = m.medicine_id
+            JOIN manufacturers mf ON m.manufacturer_id = mf.manufacturer_id
+            GROUP BY mf.manufacturer_id
+            HAVING total_verifications >= 5
+            ORDER BY counterfeit_rate DESC
+            LIMIT 10";
+    $result = mysqli_query($con, $sql);
+    
+    $manufacturers = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($manufacturers, $row);
+    }
+    return $manufacturers;
+}
+
+// Get verifications by country
+function getVerificationsByCountry(){
+    $con = getConnection();
+    $sql = "SELECT 
+                mf.country,
+                COUNT(*) as count
+            FROM medicine_verifications mv
+            JOIN medicines m ON mv.medicine_id = m.medicine_id
+            JOIN manufacturers mf ON m.manufacturer_id = mf.manufacturer_id
+            GROUP BY mf.country
+            ORDER BY count DESC
+            LIMIT 10";
+    $result = mysqli_query($con, $sql);
+    
+    $countries = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($countries, $row);
+    }
+    return $countries;
+}
+
+// Get last 7 days statistics
+function getLast7DaysStats(){
+    $con = getConnection();
+    $sql = "SELECT 
+                DATE(verified_at) as date,
+                COUNT(*) as count,
+                SUM(CASE WHEN verification_result = 'Genuine' THEN 1 ELSE 0 END) as genuine,
+                SUM(CASE WHEN verification_result = 'Suspicious' THEN 1 ELSE 0 END) as suspicious,
+                SUM(CASE WHEN verification_result = 'Counterfeit' THEN 1 ELSE 0 END) as counterfeit
+            FROM medicine_verifications
+            WHERE verified_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+            GROUP BY DATE(verified_at)
+            ORDER BY date ASC";
+    $result = mysqli_query($con, $sql);
+    
+    $stats = [];
+    while($row = mysqli_fetch_assoc($result)){
+        array_push($stats, $row);
+    }
+    return $stats;
+}
+
 ?>

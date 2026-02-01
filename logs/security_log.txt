@@ -1,0 +1,2 @@
+# MedVerify Security Logs
+# Auto-generated security event logs
