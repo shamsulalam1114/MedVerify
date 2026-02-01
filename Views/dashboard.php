@@ -53,317 +53,176 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MedVerify</title>
-    <link rel="stylesheet" href="../Assets/dashboard.css">
+    <title>Dashboard - MedVerify</title>
+    <link rel="stylesheet" href="../Assets/professional.css">
     <link rel="stylesheet" href="../Assets/print.css" media="print">
 </head>
 <body id="top">
     <form action="../Controllers/home.php" method="post" enctype="">
     <header>
-        <center>
-            <h1>MedVerify</h1>
-            <p><b>Dashboard</b></p>
-        </center>
+        <div class="text-center">
+            <h1>🏥 MedVerify</h1>
+            <p>Admin Dashboard - Medicine Verification System</p>
+        </div>
     </header>
 
     <nav>
-        <center>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="verify_medicine.php">Verify Medicine</a></li>
-                <li><a href="verification_history.php">Verification History</a></li>
-                <li><a href="manage_medicines.php">Manage Medicines</a></li>
-                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
-                <li><a href="analytics.php">Analytics</a></li>
-                <li><a href="review_counterfeits.php">Review Reports</a></li>
-                <li><a href="view_reports.php">View Reports</a></li>
-                <li><a href="upload_report.php">Upload Report</a></li>
-                <li><a href="family_profile.php">Family Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </center>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="verify_medicine.php">Verify Medicine</a></li>
+            <li><a href="verification_history.php">History</a></li>
+            <li><a href="manage_medicines.php">Medicines</a></li>
+            <li><a href="manage_manufacturers.php">Manufacturers</a></li>
+            <li><a href="analytics.php">Analytics</a></li>
+            <li><a href="review_counterfeits.php">Reports</a></li>
+            <li><a href="view_reports.php">View Reports</a></li>
+            <li><a href="upload_report.php">Upload</a></li>
+            <li><a href="family_profile.php">Family</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
-    <hr>
-
     <main>
-        
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h2>Welcome <?php echo $_SESSION['full_name']; ?></h2>
-                </td>
-            </tr>
-        </table>
+        <h2 class="section-title fade-in">Welcome, <?php echo $_SESSION['full_name']; ?> 👋</h2>
 
-        <br><br>
+        <!-- Stats Cards Grid -->
+        <div class="grid grid-4 fade-in" style="margin-bottom: 2rem;">
+            <div class="card card-blue">
+                <h3>🔍 Today's Verifications</h3>
+                <h1><?php echo $todayCount; ?></h1>
+                <p>Medicines Scanned Today</p>
+                <a href="verify_medicine.php">Verify Medicine →</a>
+            </div>
 
-        
-        <table border="1" width="100%">
-            <tr>
-                <td align="center" class="card-blue" id="card1" width="25%">
-                    <h3>🔍 Today's Verifications</h3>
-                    <br>
-                    <h1 id="verificationsCount"><?php echo $todayCount; ?></h1>
-                    <p>Medicines Scanned Today</p>
-                    <br>
-                    <a href="verify_medicine.php">Verify Medicine</a>
-                </td>
+            <div class="card card-green">
+                <h3>✅ Genuine Medicines</h3>
+                <h1><?php echo $genuineCount; ?></h1>
+                <p><?php echo $genuinePercentage; ?>% Verified Authentic</p>
+                <a href="verification_history.php">View History →</a>
+            </div>
 
-                <td align="center" class="card-green" id="card2" width="25%">
-                    <h3>✅ Genuine Medicines</h3>
-                    <br>
-                    <h1 id="genuineCount"><?php echo $genuineCount; ?></h1>
-                    <p><?php echo $genuinePercentage; ?>% Verified Authentic</p>
-                    <br>
-                    <a href="verification_history.php">View History</a>
-                </td>
+            <div class="card card-orange">
+                <h3>⚠️ Alerts</h3>
+                <h1 style="color: <?php echo $counterfeitTotal > 0 ? '#dc2626' : '#10b981'; ?>;"><?php echo $counterfeitTotal; ?></h1>
+                <p>Counterfeit/Suspicious Detected</p>
+                <a href="verification_history.php">View Alerts →</a>
+            </div>
 
-                <td align="center" class="card-orange" id="card3" width="25%">
-                    <h3>⚠️ Alerts</h3>
-                    <br>
-                    <h1 id="alertsCount" style="color: <?php echo $counterfeitTotal > 0 ? 'red' : 'green'; ?>;"><?php echo $counterfeitTotal; ?></h1>
-                    <p>Counterfeit/Suspicious Detected</p>
-                    <br>
-                    <a href="verification_history.php">View Alerts</a>
-                </td>
+            <div class="card card-red">
+                <h3>🚨 Counterfeit Reports</h3>
+                <h1><?php echo $pendingCounterfeits; ?></h1>
+                <p>Pending Review</p>
+                <a href="review_counterfeits.php">Review Reports →</a>
+            </div>
+        </div>
 
-                <td align="center" class="card-red" id="card4" width="25%">
-                    <h3>🚨 Counterfeit Reports</h3>
-                    <br>
-                    <h1 style="color: <?php echo $pendingCounterfeits > 0 ? 'red' : 'green'; ?>;"><?php echo $pendingCounterfeits; ?></h1>
-                    <p>Pending Review</p>
-                    <br>
-                    <a href="review_counterfeits.php">Review Reports</a>
-                </td>
-            </tr>
-        </table>
-
-        <br>
-
-        
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <a href="verify_medicine.php"><button style="background-color: lightgreen; padding: 15px 30px; font-weight: bold;">🔍 Verify Medicine</button></a>
-                    <a href="manage_medicines.php"><button style="background-color: lightblue; padding: 15px 30px; font-weight: bold;">💊 Manage Medicines</button></a>                    <a href="manage_manufacturers.php"><button style="background-color: lightyellow; padding: 15px 30px; font-weight: bold;">🏭 Manage Manufacturers</button></a>                    <a href="review_counterfeits.php"><button style="background-color: lightcoral; padding: 15px 30px; font-weight: bold;">🚨 Review Reports</button></a>
-                    <a href="view_reports.php"><button>📄 View Reports</button></a>
-                    <a href="calendar.php"><button>📅 Appointments</button></a>
-                </td>
-            </tr>
-        </table>
-
-        <br>
-
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <a href="../Controllers/export_summary_report.php" target="_blank">
-                        <button style="background-color: #FF9800; color: white; padding: 12px 25px; font-weight: bold;">📊 Generate Summary Report (Print/PDF)</button>
-                    </a>
-                </td>
-            </tr>
-        </table>
-
-        <br><br>
+        <!-- Quick Actions -->
+        <div class="card fade-in" style="margin-bottom: 2rem;">
+            <h3 style="margin-bottom: 1rem; color: var(--gray-900); font-size: 1.25rem;">⚡ Quick Actions</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                <a href="verify_medicine.php"><button class="btn btn-success">🔍 Verify Medicine</button></a>
+                <a href="manage_medicines.php"><button class="btn">💊 Manage Medicines</button></a>
+                <a href="manage_manufacturers.php"><button class="btn btn-info">🏭 Manufacturers</button></a>
+                <a href="review_counterfeits.php"><button class="btn btn-danger">🚨 Review Reports</button></a>
+                <a href="view_reports.php"><button class="btn">📄 View Reports</button></a>
+                <a href="calendar.php"><button class="btn">📅 Appointments</button></a>
+                <a href="../Controllers/export_summary_report.php" target="_blank"><button class="btn btn-warning">📊 Generate Report</button></a>
+            </div>
+        </div>
 
         <!-- Unresolved Alerts Notification -->
         <?php if($unresolvedAlerts > 0){ ?>
-        <table width="100%" style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px;">
-            <tr>
-                <td>
-                    <h3 style="color: #856404; margin: 0;">⚠️ Alert: You have <?php echo $unresolvedAlerts; ?> unresolved counterfeit/suspicious medicines!</h3>
-                    <p style="margin: 5px 0 0 0;"><a href="verification_history.php">Review Now</a></p>
-                </td>
-            </tr>
-        </table>
-        <br>
+        <div class="alert alert-warning fade-in" style="margin-bottom: 2rem;">
+            <strong>⚠️ Alert:</strong> You have <?php echo $unresolvedAlerts; ?> unresolved counterfeit/suspicious medicines! 
+            <a href="verification_history.php" style="color: var(--warning-text); text-decoration: underline; font-weight: 700;">Review Now →</a>
+        </div>
         <?php } ?>
 
         <!-- Recent Verifications -->
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h3>🕒 Recent Medicine Verifications</h3>
-                </td>
-            </tr>
-        </table>
-
-        <table border="1" width="100%">
-            <tr>
-                <th>Date & Time</th>
-                <th>User</th>
-                <th>Medicine</th>
-                <th>Barcode</th>
-                <th>Method</th>
-                <th>Result</th>
-                <th>Confidence</th>
-            </tr>
-            <?php
-            if(count($recentVerifications) > 0){
-                foreach($recentVerifications as $verify){
-                    $result_color = 'black';
-                    $result_bg = 'white';
-                    if($verify['verification_result'] == 'Genuine'){
-                        $result_color = 'green';
-                        $result_bg = '#e6ffe6';
-                    }else if($verify['verification_result'] == 'Counterfeit'){
-                        $result_color = 'red';
-                        $result_bg = '#ffe6e6';
-                    }else if($verify['verification_result'] == 'Suspicious'){
-                        $result_color = 'orange';
-                        $result_bg = '#fff3e6';
+        <div class="card fade-in">
+            <h3 class="section-title" style="border-color: var(--secondary-color);">🕒 Recent Medicine Verifications</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>User</th>
+                        <th>Medicine</th>
+                        <th>Barcode</th>
+                        <th>Method</th>
+                        <th>Result</th>
+                        <th>Confidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if(count($recentVerifications) > 0){
+                        foreach($recentVerifications as $verify){
+                            $resultClass = '';
+                            if($verify['verification_result'] == 'Genuine'){
+                                $resultClass = 'status-genuine';
+                            }else if($verify['verification_result'] == 'Counterfeit'){
+                                $resultClass = 'status-counterfeit';
+                            }else if($verify['verification_result'] == 'Suspicious'){
+                                $resultClass = 'status-suspicious';
+                            }
+                    ?>
+                    <tr>
+                        <td><?php echo date('M d, H:i', strtotime($verify['verified_at'])); ?></td>
+                        <td><?php echo $verify['username']; ?></td>
+                        <td><?php echo $verify['medicine_name'] ? $verify['medicine_name'] : 'Unknown'; ?></td>
+                        <td><?php echo $verify['barcode_scanned'] ? $verify['barcode_scanned'] : 'N/A'; ?></td>
+                        <td><?php echo $verify['verification_method']; ?></td>
+                        <td><span class="<?php echo $resultClass; ?>"><?php echo $verify['verification_result']; ?></span></td>
+                        <td style="text-align: center;"><?php echo $verify['confidence_score']; ?>%</td>
+                    </tr>
+                    <?php
+                        }
+                    }else{
+                    ?>
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: var(--gray-500);">No verifications yet</td>
+                    </tr>
+                    <?php
                     }
-            ?>
-            <tr style="background-color: <?php echo $result_bg; ?>;">
-                <td><?php echo date('M d, H:i', strtotime($verify['verified_at'])); ?></td>
-                <td><?php echo $verify['username']; ?></td>
-                <td><?php echo $verify['medicine_name'] ? $verify['medicine_name'] : 'Unknown'; ?></td>
-                <td><?php echo $verify['barcode_scanned'] ? $verify['barcode_scanned'] : 'N/A'; ?></td>
-                <td><?php echo $verify['verification_method']; ?></td>
-                <td style="color: <?php echo $result_color; ?>; font-weight: bold;">
-                    <?php echo $verify['verification_result']; ?>
-                </td>
-                <td align="center"><?php echo $verify['confidence_score']; ?>%</td>
-            </tr>
-            <?php
-                }
-            }else{
-            ?>
-            <tr>
-                <td colspan="7" align="center">No verifications yet</td>
-            </tr>
-            <?php
-            }
-            ?>
-        </table>
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
-        <br><br>
+        <!-- Overall Statistics -->
+        <div class="card fade-in" style="margin-top: 2rem;">
+            <h3 class="section-title" style="border-color: var(--accent-info);">📊 Overall Verification Statistics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Total Verifications</th>
+                        <th>Genuine</th>
+                        <th>Counterfeit</th>
+                        <th>Suspicious</th>
+                        <th>Expired</th>
+                        <th>Not Found</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; font-weight: 700; font-size: 1.25rem;"><?php echo $totalVerifications; ?></td>
+                        <td style="text-align: center;"><span class="status-genuine" style="font-size: 1.25rem;"><?php echo $genuineCount; ?></span></td>
+                        <td style="text-align: center;"><span class="status-counterfeit" style="font-size: 1.25rem;"><?php echo $counterfeitCount; ?></span></td>
+                        <td style="text-align: center;"><span class="status-suspicious" style="font-size: 1.25rem;"><?php echo $suspiciousCount; ?></span></td>
+                        <td style="text-align: center; font-weight: 700; font-size: 1.25rem; color: var(--gray-600);"><?php echo $verificationStats['expired_count']; ?></td>
+                        <td style="text-align: center; font-weight: 700; font-size: 1.25rem; color: var(--gray-600);"><?php echo $verificationStats['not_found_count']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <!-- Overall Verification Statistics -->
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h3>📊 Overall Verification Statistics</h3>
-                </td>
-            </tr>
-        </table>
-
-        <table border="1" width="100%">
-            <tr>
-                <th>Total Verifications</th>
-                <th style="color: green;">Genuine</th>
-                <th style="color: red;">Counterfeit</th>
-                <th style="color: orange;">Suspicious</th>
-                <th>Expired</th>
-                <th>Not Found</th>
-            </tr>
-            <tr>
-                <td align="center"><b><?php echo $totalVerifications; ?></b></td>
-                <td align="center" style="color: green;"><b><?php echo $genuineCount; ?></b></td>
-                <td align="center" style="color: red;"><b><?php echo $counterfeitCount; ?></b></td>
-                <td align="center" style="color: orange;"><b><?php echo $suspiciousCount; ?></b></td>
-                <td align="center"><b><?php echo $verificationStats['expired_count']; ?></b></td>
-                <td align="center"><b><?php echo $verificationStats['not_found_count']; ?></b></td>
-            </tr>
-        </table>
-
-        <br><br>
-
-        
-        <table width="100%">
-            <tr>
-                <td align="center">
-                    <h3>Recent Activity</h3>
-                </td>
-            </tr>
-        </table>
-
-        <table border="1" width="100%">
-            <tr>
-                <th>Date</th>
-                <th>Activity</th>
-                <th>Status</th>
-            </tr>
-            <?php
-            if(count($recentActivities) > 0){
-                foreach($recentActivities as $activity){
-            ?>
-            <tr>
-                <td><?php echo $activity['created_at']; ?></td>
-                <td><?php echo $activity['activity_description']; ?></td>
-                <td>Completed</td>
-            </tr>
-            <?php
-                }
-            }else{
-            ?>
-            <tr>
-                <td colspan="3" align="center">No recent activity</td>
-            </tr>
-            <?php
-            }
-            ?>
-        </table>
-
-        <br><br>
-
-        
-        <!-- <table width="100%">
-            <tr>
-                <td align="center">
-                    <h3>Quick Actions</h3>
-                    <p>
-                        <a href="#">Upload New Report</a> | 
-                        <a href="#">Book Appointment</a> | 
-                        <a href="#">Contact Support</a>
-                    </p>
-                </td>
-            </tr>
-        </table> -->
-
-        <br>
-
-        
-        <table border="0" width="100%" cellpadding="10px" cellspacing="0px">
-            <tr>
-                <td align="center">
-                    <a href="#top">Back to Top</a>
-                </td>
-            </tr>
-        </table>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="#top" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">↑ Back to Top</a>
+        </div>
     </main>
 
-    <hr>
-
     <footer>
-        <center>
-            <!-- <table>
-                <tr>
-                    <td>
-                        <p>&copy; 2025 MedVerify | All Rights Reserved</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>
-                            <a href="#">Privacy Policy</a> | 
-                            <a href="#">Terms of Service</a> | 
-                            <a href="#">Help</a>
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p><a href="#top">Back to Top</a></p>
-                    </td>
-                </tr>
-
-            </table> -->
-            <p>&copy; 2025 MedVerify | All Rights Reserved</p>
-
-
-        </center>
+        <p>&copy; 2026 MedVerify | All Rights Reserved</p>
     </footer>
     </form>
 </body>
