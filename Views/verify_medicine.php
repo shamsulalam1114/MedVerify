@@ -87,7 +87,6 @@
             cursor: pointer;
         }
     </style>
-    <script src="../Assets/ajax_handler.js"></script>
 </head>
 <body id="top">
     <header>
