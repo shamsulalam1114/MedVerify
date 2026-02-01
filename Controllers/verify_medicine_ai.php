@@ -2,7 +2,7 @@
 session_start();
 require_once('../Models/medicineVerificationModel.php');
 require_once('../Models/medicineModel.php');
-require_once('../Models/aiModel.php');
+require_once('../Models/geminiAI.php');
 
 if(!isset($_SESSION['user_id'])){
     header('location: ../Views/login.php');
@@ -50,10 +50,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         'batch_number' => $batch_number,
         'medicine_id' => $medicine ? $medicine['medicine_id'] : null,
         'medicine_name' => $medicine ? $medicine['medicine_name'] : null,
-        'manufacturer_id' => $medicine ? $medicine['manufacturer_id'] : null
+        'manufacturer_id' => $medicine ? $medicine['manufacturer_id'] : null,
+        'manufacturer' => $medicine ? $medicine['manufacturer_name'] : null,
+        'price' => $medicine ? $medicine['mrp'] : null
     ];
     
-    $aiReport = generateAIVerificationReport($medicineData, $imagePath);
+    $aiReport = generateComprehensiveAIReport($medicineData, $imagePath);
     
     $verification_result = $aiReport['final_verdict'];
     $confidence_score = $aiReport['overall_confidence'];
