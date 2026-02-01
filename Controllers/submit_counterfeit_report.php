@@ -2,6 +2,8 @@
     session_start();
     require_once('../Models/medicineModel.php');
     require_once('../Models/counterfeitModel.php');
+    require_once('../Models/emailModel.php');
+    require_once('../Models/userModel.php');
     
     if(!isset($_SESSION['user_id'])){
         header('location: ../Views/login.php');
@@ -96,6 +98,11 @@
         $result = addCounterfeitReport($report);
         
         if($result){
+            // Send email notification to admin
+            $userName = $_SESSION['username'] ?? 'User';
+            $medicineName = $medicine ? $medicine['medicine_name'] : "Unknown Medicine (Barcode: $barcode)";
+            sendAdminCounterfeitAlert($result, $medicineName, $userName);
+            
             $_SESSION['success'] = "Counterfeit report submitted successfully! Our admin team will review it soon.";
             header('location: ../Views/report_counterfeit.php');
         }else{

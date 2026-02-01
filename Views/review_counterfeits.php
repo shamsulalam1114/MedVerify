@@ -49,6 +49,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Counterfeit Reports - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/print.css" media="print">
 </head>
 <body id="top">
     <header>
@@ -65,6 +66,7 @@
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="verification_history.php">Verification History</a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
                 <li><a href="review_counterfeits.php"><b>Review Reports</b></a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
@@ -192,6 +194,19 @@
                 </td>
             </tr>
         </table>
+
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <a href="../Controllers/export_counterfeits_csv.php?filter_status=<?php echo $filter_status; ?>">
+                        <button type="button" style="background-color: #4CAF50; color: white; padding: 10px 20px; font-weight: bold;">📥 Export to CSV</button>
+                    </a>
+                    <button type="button" onclick="window.print()" style="background-color: #2196F3; color: white; padding: 10px 20px; font-weight: bold;">🖨️ Print Report</button>
+                </td>
+            </tr>
+        </table>
+
+        <br>
 
         <?php if(count($reports) > 0){ ?>
         <table border="1" width="100%" style="font-size: 12px;">

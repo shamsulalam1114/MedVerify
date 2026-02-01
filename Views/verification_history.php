@@ -53,6 +53,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verification History - MedVerify</title>
     <link rel="stylesheet" href="../Assets/dashboard.css">
+    <link rel="stylesheet" href="../Assets/print.css" media="print">
 </head>
 <body id="top">
     <header>
@@ -69,6 +70,8 @@
                 <li><a href="verify_medicine.php">Verify Medicine</a></li>
                 <li><a href="verification_history.php"><b>Verification History</b></a></li>
                 <li><a href="manage_medicines.php">Manage Medicines</a></li>
+                <li><a href="manage_manufacturers.php">Manage Manufacturers</a></li>
+                <li><a href="analytics.php">Analytics</a></li>
                 <li><a href="review_counterfeits.php">Review Reports</a></li>
                 <li><a href="view_reports.php">View Reports</a></li>
                 <li><a href="upload_report.php">Upload Report</a></li>
@@ -178,7 +181,18 @@
                 </td>
             </tr>
         </table>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <a href="../Controllers/export_verification_csv.php?filter_result=<?php echo $filter_result; ?>&search=<?php echo urlencode($search_query); ?>">
+                        <button type="button" style="background-color: #4CAF50; color: white; padding: 10px 20px; font-weight: bold;">📥 Export to CSV</button>
+                    </a>
+                    <button type="button" onclick="window.print()" style="background-color: #2196F3; color: white; padding: 10px 20px; font-weight: bold;">🖨️ Print Report</button>
+                </td>
+            </tr>
+        </table>
 
+        <br>
         <table border="1" width="100%" style="font-size: 13px;">
             <tr>
                 <th>ID</th>

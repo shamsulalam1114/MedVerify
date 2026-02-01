@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 28px; }
+        .content { padding: 40px 30px; background: #f9f9f9; }
+        .content h2 { color: #667eea; margin-top: 0; }
+        .button { display: inline-block; padding: 15px 35px; background: #667eea; color: white !important; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+        .button:hover { background: #764ba2; }
+        .footer { text-align: center; padding: 30px; background: #333; color: #999; font-size: 12px; }
+        .footer a { color: #667eea; text-decoration: none; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Welcome to MedVerify!</h1>
+        </div>
+        <div class="content">
+            <h2>Hello {{user_name}},</h2>
+            <p>Thank you for joining <strong>MedVerify</strong> - the AI-Powered Medicine Authentication & Verification System!</p>
+            
+            <p>Your account has been successfully created. You can now:</p>
+            <ul>
+                <li>✅ Verify medicine authenticity using barcode/batch scanning</li>
+                <li>✅ Access AI-powered counterfeit detection</li>
+                <li>✅ Track your verification history</li>
+                <li>✅ Report suspicious medicines</li>
+                <li>✅ Receive expiry alerts for your medicines</li>
+            </ul>
+            
+            <div class="highlight">
+                <strong>🔐 Security Tip:</strong> Never share your password with anyone. MedVerify will never ask for your password via email.
+            </div>
+            
+            <center>
+                <a href="{{dashboard_url}}" class="button">Go to Dashboard</a>
+            </center>
+            
+            <p>If you have any questions or need assistance, feel free to contact our support team.</p>
+            
+            <p>Best regards,<br><strong>The MedVerify Team</strong></p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message from MedVerify System.</p>
+            <p>&copy; 2026 MedVerify. All rights reserved.</p>
+            <p><a href="{{login_url}}">Login</a> | <a href="mailto:support@medverify.com">Support</a></p>
+        </div>
+    </div>
+</body>
+</html>

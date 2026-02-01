@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+        .header { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 40px 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 28px; }
+        .content { padding: 40px 30px; background: #f9f9f9; }
+        .content h2 { color: #4facfe; margin-top: 0; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .stat-card { background: white; padding: 20px; text-align: center; border-radius: 5px; border: 2px solid #4facfe; }
+        .stat-number { font-size: 36px; font-weight: bold; color: #4facfe; margin: 10px 0; }
+        .stat-label { font-size: 14px; color: #666; }
+        .button { display: inline-block; padding: 15px 35px; background: #4facfe; color: white !important; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+        .footer { text-align: center; padding: 30px; background: #333; color: #999; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Your Verification Summary</h1>
+        </div>
+        <div class="content">
+            <h2>Hello {{user_name}},</h2>
+            <p>Here's your verification activity summary for <strong>{{period}}</strong>:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{total_verifications}}</div>
+                    <div class="stat-label">Total Verifications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #28a745;">{{genuine_count}}</div>
+                    <div class="stat-label">Genuine</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #ffc107;">{{suspicious_count}}</div>
+                    <div class="stat-label">Suspicious</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #dc3545;">{{counterfeit_count}}</div>
+                    <div class="stat-label">Counterfeit</div>
+                </div>
+            </div>
+            
+            <p><strong>Keep up the great work!</strong> Your vigilance in verifying medicines helps ensure safety and authenticity.</p>
+            
+            <center>
+                <a href="{{dashboard_url}}" class="button">View Full Dashboard</a>
+            </center>
+            
+            <p>Best regards,<br><strong>The MedVerify Team</strong></p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 MedVerify. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

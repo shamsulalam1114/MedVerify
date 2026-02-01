@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+        .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 40px 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 28px; }
+        .content { padding: 40px 30px; background: #f9f9f9; }
+        .content h2 { color: #f5576c; margin-top: 0; }
+        .status-badge { display: inline-block; padding: 10px 20px; border-radius: 20px; font-weight: bold; margin: 10px 0; }
+        .status-verified { background: #28a745; color: white; }
+        .status-rejected { background: #dc3545; color: white; }
+        .button { display: inline-block; padding: 15px 35px; background: #f5576c; color: white !important; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+        .footer { text-align: center; padding: 30px; background: #333; color: #999; font-size: 12px; }
+        .report-box { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚠️ Counterfeit Report Update</h1>
+        </div>
+        <div class="content">
+            <h2>Hello {{user_name}},</h2>
+            <p>Your counterfeit medicine report has been reviewed by our team.</p>
+            
+            <div class="report-box">
+                <p><strong>Report ID:</strong> #{{report_id}}</p>
+                <p><strong>Status:</strong> <span class="status-badge status-{{status}}">{{status}}</span></p>
+                <p><strong>Update:</strong> {{status_message}}</p>
+                
+                {{admin_notes}}
+            </div>
+            
+            <p>Thank you for helping us maintain medicine safety and authenticity. Your vigilance helps protect the entire community.</p>
+            
+            <center>
+                <a href="{{view_url}}" class="button">View My Reports</a>
+            </center>
+            
+            <p>Best regards,<br><strong>The MedVerify Team</strong></p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 MedVerify. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

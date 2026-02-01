@@ -1,0 +1,196 @@
+/* Print-Friendly Stylesheet for MedVerify */
+
+@media print {
+    /* Hide navigation and non-essential elements */
+    nav,
+    header button,
+    .scan-button,
+    .stop-button,
+    button[onclick*="window.print"],
+    button[type="button"],
+    a button,
+    form button[type="reset"],
+    #barcode-scanner,
+    #barcode-scanner-report,
+    #start-scan-btn,
+    .scanner-controls,
+    footer {
+        display: none !important;
+    }
+
+    /* Page setup */
+    @page {
+        size: A4;
+        margin: 1.5cm;
+    }
+
+    body {
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #000;
+        background: white;
+    }
+
+    /* Headers */
+    header {
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 18pt;
+        color: #000;
+    }
+
+    h2 {
+        font-size: 14pt;
+        color: #000;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 12pt;
+        color: #000;
+        page-break-after: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+    }
+
+    table, th, td {
+        border: 1px solid #000;
+    }
+
+    th {
+        background-color: #e0e0e0 !important;
+        font-weight: bold;
+        padding: 8px;
+        text-align: left;
+    }
+
+    td {
+        padding: 6px;
+        background-color: white !important;
+    }
+
+    /* Remove background colors for print */
+    .card-blue,
+    .card-green,
+    .card-orange,
+    .card-red {
+        background-color: white !important;
+        border: 2px solid #000 !important;
+    }
+
+    /* Links */
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    a[href]:after {
+        content: "";
+    }
+
+    /* Action columns */
+    th:last-child,
+    td:last-child {
+        display: none; /* Hide action buttons column */
+    }
+
+    /* Color-coded text should remain visible */
+    [style*="color: green"] {
+        color: #006600 !important;
+        font-weight: bold;
+    }
+
+    [style*="color: red"] {
+        color: #cc0000 !important;
+        font-weight: bold;
+    }
+
+    [style*="color: orange"] {
+        color: #ff6600 !important;
+        font-weight: bold;
+    }
+
+    /* Page breaks */
+    tr {
+        page-break-inside: avoid;
+    }
+
+    /* Print metadata */
+    body::before {
+        content: "MedVerify Report - Generated: " attr(data-print-date);
+        display: block;
+        text-align: right;
+        font-size: 8pt;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    /* Forms - hide input buttons */
+    input[type="submit"],
+    input[type="reset"],
+    input[type="button"] {
+        display: none !important;
+    }
+
+    /* Search boxes and filters - show current values only */
+    select,
+    input[type="text"],
+    textarea {
+        border: none;
+        background: transparent;
+        font-weight: bold;
+    }
+
+    /* Status badges */
+    small {
+        font-size: 8pt;
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        page-break-inside: avoid;
+    }
+
+    /* Warning boxes */
+    [style*="background-color: #ffe6e6"] {
+        border: 2px solid #cc0000 !important;
+        background-color: white !important;
+        padding: 10px !important;
+    }
+
+    [style*="background-color: #e6ffe6"] {
+        border: 2px solid #006600 !important;
+        background-color: white !important;
+        padding: 10px !important;
+    }
+
+    [style*="background-color: #fff3e6"] {
+        border: 2px solid #ff6600 !important;
+        background-color: white !important;
+        padding: 10px !important;
+    }
+
+    /* Ensure good contrast */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Footer with page numbers */
+    @page {
+        @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+        }
+    }
+}
