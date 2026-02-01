@@ -175,12 +175,12 @@
         <br><br>
 
         <!-- Verification Form -->
-        <form action="../Controllers/verify_medicine.php" method="post" enctype="" onsubmit="return validateMedicineForm()">
+        <form action="../Controllers/verify_medicine_ai.php" method="post" enctype="multipart/form-data" onsubmit="return validateMedicineForm()">
         <table width="100%">
             <tr>
                 <td align="center">
-                    <h3>🔎 Enter Medicine Details</h3>
-                    <p><i>Scan barcode with camera or enter manually</i></p>
+                    <h3>🔎 AI-Powered Medicine Verification</h3>
+                    <p><i>Upload image, scan barcode, or enter details for AI analysis</i></p>
                 </td>
             </tr>
         </table>
@@ -228,24 +228,32 @@
             <tr>
                 <td width="30%">Verification Method:</td>
                 <td width="70%">
-                    <select name="verification_method" id="verification_method" style="width: 100%">
-                        <option value="Manual">Manual Entry</option>
-                        <option value="Barcode">Barcode Scan</option>
+                    <select name="method" id="verification_method" style="width: 100%">
+                        <option value="AI Image Analysis">AI Image Analysis</option>
+                        <option value="Barcode Scan">Barcode Scan</option>
+                        <option value="Manual Entry">Manual Entry</option>
                         <option value="QR Code">QR Code</option>
                     </select>
                 </td>
             </tr>
             <tr>
+                <td>Medicine Image (AI Analysis):</td>
+                <td>
+                    <input type="file" name="medicine_image" id="medicine_image" accept="image/*" style="width: 100%">
+                    <br><small style="color: #666;">Upload medicine photo for AI authenticity analysis</small>
+                </td>
+            </tr>
+            <tr>
                 <td>Barcode Number:</td>
-                <td><input type="text" name="barcode_scanned" id="barcode_scanned" placeholder="Enter barcode or use scanner above" style="width: 100%"></td>
+                <td><input type="text" name="barcode" id="barcode_scanned" placeholder="Enter barcode or use scanner above" style="width: 100%"></td>
             </tr>
             <tr>
                 <td>Batch Number:</td>
-                <td><input type="text" name="batch_number_entered" id="batch_number_entered" placeholder="Enter batch number (e.g., BATCH001)" style="width: 100%"></td>
+                <td><input type="text" name="batch_number" id="batch_number_entered" placeholder="Enter batch number (e.g., BATCH001)" style="width: 100%"></td>
             </tr>
             <tr>
-                <td colspan="2" align="center" style="background-color: lightyellow;">
-                    <small><i>💡 Enter either Barcode OR Batch Number (or both for better accuracy)</i></small>
+                <td colspan="2" align="center" style="background-color: #e6f7ff; padding: 10px;">
+                    <small><i>🤖 AI will analyze image, barcode pattern, and historical data for counterfeit detection</i></small>
                 </td>
             </tr>
         </table>

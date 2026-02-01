@@ -2,6 +2,7 @@
 <?php
     require_once('../Models/medicineVerificationModel.php');
     require_once('../Models/medicineModel.php');
+    require_once('../Models/aiModel.php');
     
     if(!isset($_SESSION['user_id'])){
         header('location: ../Views/login.php');
@@ -23,8 +24,14 @@
     
     // Get medicine details if found
     $medicine = null;
-    if($verification['medicine_id']){
+    if($medicine){
         $medicine = getMedicineById($verification['medicine_id']);
+    }
+    
+    $aiReport = null;
+    $aiEnabled = isset($_SESSION['ai_enabled']) && $_SESSION['ai_enabled'];
+    if($verification['ai_analysis']){
+        $aiReport = json_decode($verification['ai_analysis'], true);
     }
     
     // Determine result styling
@@ -96,6 +103,9 @@
                 <td align="center" class="<?php echo $result_class; ?>" style="padding: 30px;">
                     <h1 style="font-size: 60px; margin: 10px;"><?php echo $result_icon; ?></h1>
                     <h1><?php echo $result_message; ?></h1>
+                    <?php if($aiEnabled){ ?>
+                    <p style="font-size: 14px; color: #666;">🤖 AI-Powered Analysis</p>
+                    <?php } ?>
                     <br>
                     <p style="font-size: 18px;"><b>Confidence Score: <?php echo $verification['confidence_score']; ?>%</b></p>
                     <br>
@@ -106,6 +116,164 @@
         </table>
 
         <br><br>
+
+        <!-- AI Analysis Results -->
+        <?php if($aiReport && isset($aiReport['analysis_results'])){ ?>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <h3>🤖 AI Analysis Report</h3>
+                    <p><i>Advanced machine learning analysis completed</i></p>
+                </td>
+            </tr>
+        </table>
+
+        <table border="1" width="100%">
+            <?php if(isset($aiReport['analysis_results']['image_verification'])){ 
+                $imgAnalysis = $aiReport['analysis_results']['image_verification'];
+            ?>
+            <tr>
+                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
+                    <b>📷 Image Authenticity Analysis</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="30%">Authenticity Score:</td>
+                <td width="70%"><?php echo $imgAnalysis['authenticity_score']; ?>%</td>
+            </tr>
+            <tr>
+                <td>Features Detected:</td>
+                <td>
+                    <ul style="margin: 5px 0;">
+                    <?php foreach($imgAnalysis['features_detected'] as $feature){ ?>
+                        <li><?php echo $feature; ?></li>
+                    <?php } ?>
+                    </ul>
+                </td>
+            </tr>
+            <?php if(count($imgAnalysis['warnings']) > 0){ ?>
+            <tr>
+                <td>AI Warnings:</td>
+                <td style="color: orange;">
+                    <ul style="margin: 5px 0;">
+                    <?php foreach($imgAnalysis['warnings'] as $warning){ ?>
+                        <li><?php echo $warning; ?></li>
+                    <?php } ?>
+                    </ul>
+                </td>
+            </tr>
+            <?php } ?>
+            <?php } ?>
+
+            <?php if(isset($aiReport['analysis_results']['barcode_verification'])){ 
+                $barcodeAnalysis = $aiReport['analysis_results']['barcode_verification'];
+            ?>
+            <tr>
+                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
+                    <b>🔢 Barcode AI Validation</b>
+                </td>
+            </tr>
+            <tr>
+                <td>Barcode Type:</td>
+                <td><?php echo $barcodeAnalysis['barcode_type']; ?></td>
+            </tr>
+            <tr>
+                <td>Validity:</td>
+                <td style="color: <?php echo $barcodeAnalysis['is_valid'] ? 'green' : 'red'; ?>; font-weight: bold;">
+                    <?php echo $barcodeAnalysis['is_valid'] ? '✅ Valid' : '❌ Invalid'; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>AI Confidence:</td>
+                <td><?php echo $barcodeAnalysis['confidence']; ?>%</td>
+            </tr>
+            <?php if(count($barcodeAnalysis['warnings']) > 0){ ?>
+            <tr>
+                <td>Pattern Warnings:</td>
+                <td style="color: orange;">
+                    <ul style="margin: 5px 0;">
+                    <?php foreach($barcodeAnalysis['warnings'] as $warning){ ?>
+                        <li><?php echo $warning; ?></li>
+                    <?php } ?>
+                    </ul>
+                </td>
+            </tr>
+            <?php } ?>
+            <?php } ?>
+
+            <?php if(isset($aiReport['analysis_results']['counterfeit_detection'])){ 
+                $counterfeitAI = $aiReport['analysis_results']['counterfeit_detection'];
+            ?>
+            <tr>
+                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
+                    <b>🚨 Counterfeit Pattern Detection</b>
+                </td>
+            </tr>
+            <tr>
+                <td>Risk Level:</td>
+                <td style="color: <?php echo $counterfeitAI['risk_level'] == 'HIGH' ? 'red' : ($counterfeitAI['risk_level'] == 'MEDIUM' ? 'orange' : 'green'); ?>; font-weight: bold; font-size: 16px;">
+                    <?php echo $counterfeitAI['risk_level']; ?> (<?php echo $counterfeitAI['risk_score']; ?>%)
+                </td>
+            </tr>
+            <?php if(count($counterfeitAI['risk_factors']) > 0){ ?>
+            <tr>
+                <td>Risk Factors Identified:</td>
+                <td>
+                    <ul style="margin: 5px 0;">
+                    <?php foreach($counterfeitAI['risk_factors'] as $factor){ ?>
+                        <li><?php echo $factor; ?></li>
+                    <?php } ?>
+                    </ul>
+                </td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <td>AI Recommendations:</td>
+                <td>
+                    <ul style="margin: 5px 0;">
+                    <?php foreach($counterfeitAI['recommendations'] as $rec){ ?>
+                        <li><?php echo $rec; ?></li>
+                    <?php } ?>
+                    </ul>
+                </td>
+            </tr>
+            <?php } ?>
+
+            <?php if(isset($aiReport['analysis_results']['ai_prediction'])){ 
+                $prediction = $aiReport['analysis_results']['ai_prediction'];
+            ?>
+            <tr>
+                <td colspan="2" style="background-color: #e6f7ff; padding: 10px;">
+                    <b>🎯 AI Prediction Model</b>
+                </td>
+            </tr>
+            <tr>
+                <td>Predicted Outcome:</td>
+                <td style="font-weight: bold; font-size: 16px;">
+                    <?php echo $prediction['prediction']; ?> (<?php echo $prediction['confidence']; ?>% confidence)
+                </td>
+            </tr>
+            <tr>
+                <td>Genuine Probability:</td>
+                <td>
+                    <div style="background-color: #f0f0f0; border-radius: 10px; height: 25px; position: relative;">
+                        <div style="background-color: <?php echo $prediction['genuine_probability'] > 75 ? '#4CAF50' : ($prediction['genuine_probability'] > 50 ? 'orange' : 'red'); ?>; width: <?php echo $prediction['genuine_probability']; ?>%; height: 100%; border-radius: 10px; position: relative;">
+                            <span style="position: absolute; right: 10px; line-height: 25px; color: white; font-weight: bold;"><?php echo $prediction['genuine_probability']; ?>%</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <?php } ?>
+
+            <tr>
+                <td colspan="2" style="background-color: #f0f0f0; padding: 10px; text-align: center;">
+                    <small><i>AI Version: <?php echo $aiReport['ai_version']; ?> | Analysis Time: <?php echo $aiReport['timestamp']; ?></i></small>
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+        <?php } ?>
 
         <!-- Medicine Details (if found) -->
         <?php if($medicine){ ?>
