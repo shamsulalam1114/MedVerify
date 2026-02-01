@@ -65,23 +65,31 @@
 
         <table border="1" width="100%">
             <tr>
-                <td align="center" class="card-blue" width="33%">
+                <td align="center" class="card-green" width="25%">
+                    <h3>🔍 Verify Medicine</h3>
+                    <br>
+                    <p>Check medicine authenticity</p>
+                    <br>
+                    <a href="../Views/verify_medicine.php">Verify Now</a>
+                    <br><br>
+                </td>
+                <td align="center" class="card-blue" width="25%">
                     <h3>My Calendar</h3>
                     <br>
-                    <p>View and manage your appointments</p>
+                    <p>View and manage appointments</p>
                     <br>
                     <a href="../Views/calendar.php">Go to Calendar</a>
                     <br><br>
                 </td>
-                <td align="center" class="card-green" width="33%">
+                <td align="center" class="card-orange" width="25%">
                     <h3>Upload Report</h3>
                     <br>
-                    <p>Upload new medical reports</p>
+                    <p>Upload medical reports</p>
                     <br>
                     <a href="../Views/upload_report.php">Upload Now</a>
                     <br><br>
                 </td>
-                <td align="center" class="card-orange" width="34%">
+                <td align="center" class="card-blue" width="25%">
                     <h3>Family Profile</h3>
                     <br>
                     <p>Manage family members</p>
