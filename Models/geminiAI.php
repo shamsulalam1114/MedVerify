@@ -1,6 +1,6 @@
 <?php
 
-define('GEMINI_API_KEY', 'AIzaSyBOQWF8tMrPbq5_AHaDfBtMxZr3HDiYqRg');
+define('GEMINI_API_KEY', 'AIzaSyC60MQlGwt_IFdivT3YCTa31l93Uzfp1FA');
 define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent');
 define('GEMINI_VISION_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent');
 
