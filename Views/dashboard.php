@@ -213,7 +213,29 @@
             }else{
             ?>
             <tr>
-                <td colspan="7" align="center">No verifications yet
+                <td colspan="7" align="center">No verifications yet</td>
+            </tr>
+            <?php
+            }
+            ?>
+        </table>
+
+        <br><br>
+
+        <!-- Overall Verification Statistics -->
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    <h3>📊 Overall Verification Statistics</h3>
+                </td>
+            </tr>
+        </table>
+
+        <table border="1" width="100%">
+            <tr>
+                <th>Total Verifications</th>
+                <th style="color: green;">Genuine</th>
+                <th style="color: red;">Counterfeit</th>
                 <th style="color: orange;">Suspicious</th>
                 <th>Expired</th>
                 <th>Not Found</th>
